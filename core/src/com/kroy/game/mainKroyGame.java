@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class mainKroyGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	
+	World world = new World(new Vector2(0, 0), true); //this creates a new world without any force in either x or y direction bc top down view
 	@Override
 	public void create () {
+		Box2D.init();
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
 	}
 
 	@Override
@@ -24,7 +26,8 @@ public class mainKroyGame extends ApplicationAdapter {
 		batch.draw(img, 0, 0);
 		batch.end();
 	}
-	
+
+
 	@Override
 	public void dispose () {
 		batch.dispose();
