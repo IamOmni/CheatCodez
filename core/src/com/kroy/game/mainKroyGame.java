@@ -9,20 +9,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.kroy.modules.gdxWrapper;
 
-public class mainKroyGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	OrthographicCamera camera;
-	private Rectangle box;
+public class mainKroyGame extends GDXWrapper,ApplicationAdapter {
+	private SpriteBatch batch;
+	private Texture img;
+    private OrthographicCamera camera;
 	//mouse / finger position on screen when
-	Vector3 touchPos = new Vector3();
-	World world = new World(new Vector2(0, 0), true); //this creates a new world without any force in either x or y direction bc top down view
-
+	private Vector3 touchPos = new Vector3();
+	private World world;
+	//this creates a new world without any force in either x or y direction bc top down view
+	
+	public void mainKroyGame(){
+		world = new World(new Vector2(0, 0), true);
+	};
 
 	public void makeObject(){
-
-		box = new Rectangle();
+		Rectangle box = new Rectangle();
 		box.x = 820 / 2 - 64 / 2;
 		box.y = 20;
 		box.width = 32;
@@ -48,7 +51,7 @@ public class mainKroyGame extends ApplicationAdapter {
 	}
 
 	@Override
-	public void create () {
+	public void create() {
 		Box2D.init();
 
 		batch = new SpriteBatch();
@@ -60,7 +63,7 @@ public class mainKroyGame extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
@@ -71,25 +74,22 @@ public class mainKroyGame extends ApplicationAdapter {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			box.x = touchPos.x - 64 / 2;
-
 			box.y = touchPos.y - 64 / 2;
 		}
 
 		// Create an array to be filled with the bodies
-// (better don't create a new one every time though)
+		// (better don't create a new one every time though)
 		Array<Body> bodies = new Array<Body>();
-// Now fill the array with all bodies
+		// Now fill the array with all bodies
 		world.getBodies(bodies);
+
 		for (Body b : bodies) {
 			// Get the body's user data - in this example, our user
 			// data is an instance of the Entity class
-
 				// Update the entities/sprites position and angle
 				batch.draw(img, b.getPosition().x, b.getPosition().y);
 				// We need to convert our angle from
-				//
 				//		 radians to degrees
-
 		}
 		world.step(1/60f, 6, 2);
 		camera.update();
@@ -98,7 +98,7 @@ public class mainKroyGame extends ApplicationAdapter {
 
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
 		img.dispose();
 		world.dispose();
