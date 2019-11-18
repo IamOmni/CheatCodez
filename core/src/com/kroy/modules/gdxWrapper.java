@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
-public class GDXWrapper {
+public class gdxWrapper {
 	
     public void changeDisplaySize(int w, int h) {
         //Gdx.graphics.setDisplayMode(w, h);
