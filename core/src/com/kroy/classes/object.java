@@ -1,18 +1,24 @@
 package com.kroy.classes;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.kroy.classes.Pair;
 
 
-public class Object {
-    private Sprite model;
+public class Object{
+    public Texture model;
+    protected Vector3 position;
+
     private Pair<Integer, Integer> coords;
 
-    public Sprite getModel() {
+    public Object() {
+    }
+    public Texture getModel() {
         return model;
     }
 
-    public void setModel(Sprite model) {
+    public void setModel(Texture model) {
         this.model = model;
     }
 
@@ -24,11 +30,11 @@ public class Object {
         this.coords = coords;
     }
 
-    public Integer getX(){
-        return this.coords.getX();
+    public float getX(){
+        return position.x;  /*this.coords.getX();*/
     }
 
-    public Integer getY(){
-        return this.coords.getY();
+    public float getY(){
+        return  position.x; //this.coords.getY();
     }
 }

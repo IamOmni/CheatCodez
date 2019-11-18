@@ -1,8 +1,15 @@
 package com.kroy.classes;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class Entity extends Object{
     private int hitpoints, speedMove;
-    private int[] movement;
+    private Vector3 movement;
+    public Entity(){
+    }
+    public void update(float dt){
+        position.add(movement);
+    }
 
     public int getHitpoints() {
         return hitpoints;
@@ -20,11 +27,11 @@ public class Entity extends Object{
         this.speedMove = speedMove;
     }
 
-    public int[] getMovement() {
+    public Vector3 getMovement() {
         return movement;
     }
 
-    public void setMovement(int[] movement) {
+    public void setMovement(Vector3 movement) {
         this.movement = movement;
     }
 
