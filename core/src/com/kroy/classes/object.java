@@ -18,6 +18,9 @@ public class Object{
         return model;
     }
 
+    public void update(float dt){
+
+    }
     public void setModel(Texture model) {
         this.model = model;
     }
@@ -35,6 +38,6 @@ public class Object{
     }
 
     public float getY(){
-        return  position.x; //this.coords.getY();
+        return  position.y; //this.coords.getY();
     }
 }

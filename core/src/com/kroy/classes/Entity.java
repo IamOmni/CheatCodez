@@ -3,10 +3,11 @@ package com.kroy.classes;
 import com.badlogic.gdx.math.Vector3;
 
 public class Entity extends Object{
-    private int hitpoints, speedMove;
-    private Vector3 movement;
+    protected int hitpoints, speedMove;
+    protected Vector3 movement;
     public Entity(){
     }
+    @Override
     public void update(float dt){
         position.add(movement);
     }
