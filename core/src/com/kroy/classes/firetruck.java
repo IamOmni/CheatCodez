@@ -57,7 +57,7 @@ public class Firetruck extends Entity {
     @Override
     public void update(float dt){
         position.add(movement);
-        if(position.x < 0 || position.x > (kroyGame.WIDTH -  model.getWidth())){
+        if(position.x < -kroyGame.WIDTH/2 || position.x > (kroyGame.WIDTH/2 -  model.getWidth())){
             movement.scl(-1);
             System.out.println("at boundary");
         }

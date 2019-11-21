@@ -1,17 +1,17 @@
 package com.kroy.classes;
 
 public class gameMap {
-    private Stage[] stages;
+    private Sector[] sectors;
 
-    public gameMap(Stage[] stages) {
-        this.stages = stages;
+    public gameMap(Sector[] sectors) {
+        this.sectors = sectors;
     }
 
-    public Stage[] getStages() {
-        return stages;
+    public Sector[] getSectors() {
+        return sectors;
     }
 
-    public void setStages(Stage[] stages) {
-        this.stages = stages;
+    public void setSectors(Sector[] sectors) {
+        this.sectors = sectors;
     }
 }
