@@ -3,7 +3,7 @@ package com.kroy.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.kroy.game.mainKroyGame;
+import com.kroy.game.kroyGame;
 
 public class MenuState extends State {
     private Texture background;
@@ -32,8 +32,8 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(background, 0, 0, mainKroyGame.WIDTH, mainKroyGame.HEIGHT);
-        sb.draw(playBtn, mainKroyGame.WIDTH/2 - playBtn.getWidth()/2, mainKroyGame.HEIGHT/2);
+        sb.draw(background, 0, 0, kroyGame.WIDTH, kroyGame.HEIGHT);
+        sb.draw(playBtn, kroyGame.WIDTH/2 - playBtn.getWidth()/2, kroyGame.HEIGHT/2);
         sb.end();
     }
 

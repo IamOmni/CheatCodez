@@ -2,17 +2,18 @@ package com.kroy.classes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
-import com.kroy.game.mainKroyGame;
-import java.util.concurrent.ThreadLocalRandom;
+import com.kroy.game.kroyGame;
 
+
+import java.util.Random;
 public class Firetruck extends Entity {
     private int waterVol, waterDmg, waterRange;
     private boolean active;
     public Firetruck(int x, int y){
         position = new Vector3(x,y,0);
-        waterVol = ThreadLocalRandom.current().nextInt(5, 12 + 1);
+        waterVol =  new Random().nextInt(20);
         model = new Texture("Firetruck.png");
-        setMovement(new Vector3(1,0,0));
+        setMovement(new Vector3(10,0,0));
     }
     public int getWaterVol() {
         return waterVol;
@@ -56,9 +57,8 @@ public class Firetruck extends Entity {
     @Override
     public void update(float dt){
         position.add(movement);
-        if(position.x < 0 || position.x > (mainKroyGame.WIDTH -  model.getWidth())){
-            setMovement(new Vector3(-10,0,0));
-            position.add(movement);
+        if(position.x < 0 || position.x > (kroyGame.WIDTH -  model.getWidth())){
+            movement.scl(-1);
             System.out.println("at boundary");
         }
     }
