@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.graphics.GL20;
@@ -38,6 +39,7 @@ public class kroyGame extends Game {
 	private Array<Body> bodies = new Array<Body>();
 	//this creates a new world without any force in either x or y direction bc top down view
 
+
 	public void init(){
 
 	};
@@ -51,11 +53,6 @@ public class kroyGame extends Game {
 	@Override
 	public void create() {
 		System.out.println("running create()");
-		try {
-			loadGraph();
-		} catch (IOException e) {
-			System.out.println("Error reading file..." + e.toString());
-		}
 		batch = new SpriteBatch();
 		setScreen(new PlayScreen(this));
 
@@ -81,37 +78,4 @@ public class kroyGame extends Game {
 
 	}
 
-	public void loadGraph() throws IOException {
-	    // Read fle and fetch all lines
-		String workingDir = System.getProperty("user.dir");
-		File file = new File("../../core/assets/graph.txt");
-		List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
-
-		// Create Map to store all the coords
-        Map<String, Coord> Coords = new HashMap<>();
-		for (int i=0; i<lines.size();i++) {
-			String name = lines.get(i).split(" ")[0];
-			String[] connections = lines.get(i).split(":")[1].replace(" ", "").split(",");
-			String s = lines.get(i).split("\\(")[1].split("\\)")[0].replace(" ", "");
-			Integer x = Integer.parseInt(s.split(",")[0]);
-            Integer y = Integer.parseInt(s.split(",")[1]);
-            Coord c = new Coord(x, y, name, connections );
-			Coords.put(name, c);
-		}
-
-		// Calculate connections
-		ArrayList<Connection> connections = new ArrayList<>();
-
-		for (String key: Coords.keySet()) {
-			// Iterate through all connections
-			for (String conKey: Coords.get(key).connections) {
-				System.out.println(key + "=>" + conKey);
-				// Create a conneciton between the two nodes
-				Connection temp = new Connection(Coords.get(key), Coords.get(conKey));
-				System.out.println(temp.cost);
-				connections.add(temp);
-			}
-		}
-
-	}
 }

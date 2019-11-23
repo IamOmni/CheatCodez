@@ -19,7 +19,7 @@ public class MapGraph implements IndexedGraph<Coord> {
 
     private int lastNodeIndex = 0;
 
-    private void addPoint(Coord pnt){
+    public void addPoint(Coord pnt){
         pnt.index = lastNodeIndex;
         lastNodeIndex++;
 
