@@ -1,6 +1,6 @@
 package com.kroy.classes;
 
-public class Alien extends Entity {
+public class alien extends Entity {
     private int speed, damage;
 
     public int getSpeed() {

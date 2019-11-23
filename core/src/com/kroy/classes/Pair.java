@@ -5,15 +5,11 @@ public class Pair<A, B> {
     private B Y;
 
     public Pair(A X, B Y) {
-        super();
         this.X = X;
         this.Y = Y;
     }
 
-    public String toString()
-    {
-        return "(" + X + ", " + Y + ")";
-    }
+
 
     public A getX() {
         return this.X;

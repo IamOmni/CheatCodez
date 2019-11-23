@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.List;
 
 public class Sector {
-    private List<Alien> aliens;
+    private List<alien> aliens;
     private List<Firetruck> firetrucks;
     private List<Item> items;
     private List<Building> buildings;
@@ -13,11 +13,11 @@ public class Sector {
     public Sector(Viewport viewport, SpriteBatch sb) {
     }
 
-    public List<Alien> getAliens() {
+    public List<alien> getAliens() {
         return aliens;
     }
 
-    public void setAliens(List<Alien> aliens) {
+    public void setAliens(List<alien> aliens) {
         this.aliens = aliens;
     }
 
