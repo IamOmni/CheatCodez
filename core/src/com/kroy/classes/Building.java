@@ -1,4 +1,4 @@
 package com.kroy.classes;
 
-public class Building {
+public class Building extends Object {
 }

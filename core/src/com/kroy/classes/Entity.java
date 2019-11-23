@@ -4,11 +4,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Entity extends Object{
     protected int hitpoints, speedMove;
+    protected Vector3 movement_b;
     protected Vector3 movement;
     public Entity(){
     }
     @Override
     public void update(float dt){
+        movement = movement_b;
+        movement.scl(dt);
         position.add(movement);
     }
 

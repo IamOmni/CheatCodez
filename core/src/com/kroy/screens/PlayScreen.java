@@ -2,6 +2,7 @@ package com.kroy.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,8 @@ public class PlayScreen implements Screen {
     private kroyGame game;
     private OrthographicCamera cam;
     private Viewport gamePort;
-    private ArrayList<Object> objs = new ArrayList<Object>();
+
+    private Music bgMusic;
     private Texture background;
     private Hud hud;
 
@@ -32,16 +34,18 @@ public class PlayScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    private ArrayList<Object> objs = new ArrayList<Object>();
+
     public PlayScreen(kroyGame game){
         this.game   = game;
         background  = new Texture("bg-menu.png");
         cam         = new OrthographicCamera();
-        gamePort    = new FitViewport(game.WIDTH, game.HEIGHT, cam);
+        gamePort    = new FitViewport(1080, 720, cam);
         hud         = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
        // map = mapLoader.load("[filename].tmx");
-       // renderer = new OrthogonalTiledMapRenderer(map);
+        //renderer = new OrthogonalTiledMapRenderer(map);
 
         objs.add(new Firetruck(50, 50));
     }
@@ -50,17 +54,20 @@ public class PlayScreen implements Screen {
     public void show() {
 
     }
+    public void handleInput(){
 
+    }
     @Override
     public void render(float delta) {
+        handleInput();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(cam.combined);
+        game.batch.setProjectionMatrix(cam.projection);
         game.batch.begin();
         //draw all objects
         for(Object i : objs) {
               game.batch.draw(i.model, i.getX(), i.getY());
-            //i.update(delta);
+              i.update(delta);
         }
         game.batch.end();
         //draw HUD
@@ -72,10 +79,16 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        cam.update();
+        System.out.println("----");
+        System.out.println(width);
+        System.out.println(height);
+        System.out.println("----");
     }
 
     @Override
     public void pause() {
+        System.out.println("paused");
 
     }
 
