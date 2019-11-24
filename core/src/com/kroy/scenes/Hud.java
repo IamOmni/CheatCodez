@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.Sector;
 import com.kroy.game.kroyGame;
-
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import java.awt.*;
 
 public class Hud {
@@ -20,12 +20,12 @@ public class Hud {
     private float timeCount;
     private Integer score;
 
-    com.badlogic.gdx.scenes.scene2d.ui.Label countdownLabel;
-    com.badlogic.gdx.scenes.scene2d.ui.Label scoreLabel;
-    com.badlogic.gdx.scenes.scene2d.ui.Label timeLabel;
-    com.badlogic.gdx.scenes.scene2d.ui.Label levelLabel;
-    com.badlogic.gdx.scenes.scene2d.ui.Label worldLabel;
-    com.badlogic.gdx.scenes.scene2d.ui.Label ftLabel;
+    Label countdownLabel;
+    Label scoreLabel;
+    Label timeLabel;
+    Label levelLabel;
+    Label worldLabel;
+    Label ftLabel;
 
     public Hud(SpriteBatch sb){
         worldTimer = 300;
@@ -39,12 +39,12 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label(String.format("%03d", worldTimer), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        scoreLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label(String.format("%03d", score), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        timeLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label("TIME", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        levelLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label("1-1", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        worldLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label("WORLD", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        ftLabel = new com.badlogic.gdx.scenes.scene2d.ui.Label("FireTruck", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        countdownLabel = new Label(String.format("%03d", worldTimer), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        scoreLabel = new Label(String.format("%03d", score), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        timeLabel = new Label("TIME", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        levelLabel = new Label("1-1", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        worldLabel = new Label("WORLD", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        ftLabel = new Label("FireTruck", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
 
         table.add(ftLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);

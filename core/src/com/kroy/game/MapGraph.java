@@ -7,6 +7,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.kroy.classes.Connection;
 import com.kroy.classes.Coord;
 import com.kroy.pathfinding.Heuristic;
 import com.kroy.pathfinding.Street;
@@ -22,7 +23,6 @@ public class MapGraph implements IndexedGraph<Coord> {
     public void addPoint(Coord pnt){
         pnt.index = lastNodeIndex;
         lastNodeIndex++;
-
         coords.add(pnt);
     }
 
