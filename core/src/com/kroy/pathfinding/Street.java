@@ -1,6 +1,7 @@
 package com.kroy.pathfinding;
 
 import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.kroy.classes.Coord;
 
 public class Street implements Connection<Coord> {
@@ -29,5 +30,12 @@ public class Street implements Connection<Coord> {
     @Override
     public Coord getToNode() {
         return to;
+    }
+
+    public void render(ShapeRenderer shapeRenderer){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(0, 0, 0, 1);
+        shapeRenderer.rectLine((int)from.getX(), (int)from.getY(), (int)to.getX(), (int)to.getY(), 4);
+        shapeRenderer.end();
     }
 }
