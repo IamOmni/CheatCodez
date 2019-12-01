@@ -32,10 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
@@ -100,17 +97,17 @@ public class PlayScreen implements Screen, InputProcessor {
 
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
         //draw all objects
         for(Object i : objs) {
               game.batch.draw(i.model, i.getX(), i.getY());
               i.update(delta);
         }
         game.batch.end();
-
+        //
         for (Street street : mapGraph.streets) {
             street.render(shapeRenderer);
         }
-
         // Draw all cities blue
         for (Coord city : mapGraph.coords) {
             city.render(shapeRenderer, game.batch, font, false);
@@ -119,7 +116,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         //draw HUD
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+     //   hud.stage.draw();
 
 
     }

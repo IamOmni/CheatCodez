@@ -33,9 +33,11 @@ public class Street implements Connection<Coord> {
     }
 
     public void render(ShapeRenderer shapeRenderer){
+        System.out.println("Draw line from " + to.name + " to " + from.name);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.rectLine((int)from.getX(), (int)from.getY(), (int)to.getX(), (int)to.getY(), 4);
+        shapeRenderer.rectLine((int)from.getX(), (int)from.getY(), (int)to.getX(), (int)to.getY(), 40);
         shapeRenderer.end();
+        System.out.println("Drawn line from " + to.name + " to " + from.name);
     }
 }

@@ -1,5 +1,6 @@
 package com.kroy.classes;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -34,10 +35,9 @@ public class Coord extends Pair {
         }
         shapeRenderer.circle(x, y, 20);
         shapeRenderer.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.circle(x, y, 20);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.circle(x, y, 32);
+        shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.end();
 
         batch.begin();
