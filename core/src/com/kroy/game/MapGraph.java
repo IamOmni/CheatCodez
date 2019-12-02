@@ -7,15 +7,14 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.kroy.classes.Connection;
 import com.kroy.classes.Coord;
 import com.kroy.pathfinding.Heuristic;
 import com.kroy.pathfinding.Street;
 
 public class MapGraph implements IndexedGraph<Coord> {
     Heuristic heur = new Heuristic();
-    Array<Coord> coords = new Array<>();
-    Array<Street> streets = new Array<>();
+    public Array<Coord> coords = new Array<>();
+    public Array<Street> streets = new Array<>();
     ObjectMap<Coord, Array<Connection<Coord>>> streetsMap = new ObjectMap<>();
 
     private int lastNodeIndex = 0;
