@@ -17,7 +17,7 @@ public class Firetruck extends Entity {
         waterVol =  new Random().nextInt(20);
         model = new Texture("Firetruck.png");
         setMovement(new Vector3(10,0,0)); // Change to new Vector3(position)?
-        Gdx.input.setInputProcessor(this);
+        //Gdx.input.setInputProcessor(this);
 
     }
     public int getWaterVol() {

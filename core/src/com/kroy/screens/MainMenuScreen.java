@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.kroy.game.kroyGame;
 
-import javax.xml.soap.Text;
+//import javax.xml.soap.Text;
 
 public class MainMenuScreen implements Screen {
     final kroyGame game;
