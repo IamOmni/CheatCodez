@@ -16,14 +16,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.Coord;
 import com.kroy.classes.Firetruck;
 import com.kroy.classes.Object;
-import com.kroy.game.MapGraph;
+import com.kroy.pathfinding.MapGraph;
 import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Street;
 import com.kroy.scenes.Hud;
@@ -57,7 +55,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public PlayScreen(kroyGame game){
         this.game   = game;
-        background  = new Sprite(new Texture("bg-menu.png"));
+        background  = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
         float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera();

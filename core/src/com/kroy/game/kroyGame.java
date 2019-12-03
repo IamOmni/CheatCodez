@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.kroy.screens.MainMenuScreen;
 import com.kroy.screens.PlayScreen;
 import com.kroy.states.GameStateManager;
 
@@ -32,9 +33,7 @@ public class kroyGame extends Game {
 	public void create() {
 		System.out.println("running create()");
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
-
-		gsm = new GameStateManager();
+		setScreen(new MainMenuScreen(this));
         System.out.println("exiting create()");
 	}
 

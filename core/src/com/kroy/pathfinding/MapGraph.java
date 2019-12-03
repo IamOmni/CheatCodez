@@ -1,4 +1,4 @@
-package com.kroy.game;
+package com.kroy.pathfinding;
 
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
