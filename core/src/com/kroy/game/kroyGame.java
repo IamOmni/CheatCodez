@@ -11,10 +11,9 @@ import com.kroy.screens.PlayScreen;
 import com.kroy.states.GameStateManager;
 
 public class kroyGame extends Game {
-	public static final int HEIGHT = 500;
-	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 1080;
+	public static final int WIDTH = 1920;
 
-    protected GameStateManager gsm;
 	public SpriteBatch batch;
 
 	// Create an array to be filled with the bodies
@@ -25,7 +24,7 @@ public class kroyGame extends Game {
 
 	@Override
     public void resize(int width, int height){
-
+		screen.resize(width,height);
 
     }
 
@@ -41,8 +40,6 @@ public class kroyGame extends Game {
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
-		//gsm.update(0);
-		//gsm.render(batch);
 
 	}
 

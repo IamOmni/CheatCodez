@@ -37,14 +37,14 @@ public class Hud {
 
         Table table = new Table();
         table.top();
-        table.setFillParent(true);
+        table.setFillParent(false);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        scoreLabel = new Label(String.format("%03d", score), new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        timeLabel = new Label("TIME", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        levelLabel = new Label("1-1", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        worldLabel = new Label("WORLD", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
-        ftLabel = new Label("FireTruck", new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        countdownLabel  = new Label(String.format("%03d", worldTimer),  new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        scoreLabel      = new Label(String.format("%03d", score),       new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        timeLabel       = new Label("TIME",                        new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        levelLabel      = new Label("1-1",                         new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        worldLabel      = new Label("WORLD",                       new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
+        ftLabel         = new Label("FireTruck",                   new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(new BitmapFont(), com.badlogic.gdx.graphics.Color.WHITE));
 
         table.add(ftLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);

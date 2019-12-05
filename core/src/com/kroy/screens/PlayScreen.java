@@ -34,12 +34,15 @@ import java.util.*;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
-    private OrthographicCamera camera;
-    private Viewport gamePort;
+    private OrthographicCamera camera, HudCam;
+    private Viewport gamePort, hudPort;
     private Animation anim;
     private Music bgMusic;
     private Sprite background;
     private Hud hud;
+
+    // Create Map to store all the coords
+    Map<String, Coord> Coords = new HashMap<>();
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -51,29 +54,35 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private BitmapFont font;
     private ShapeRenderer shapeRenderer;
+    private Texture stats;
 
+    private int width, height;
 
     public PlayScreen(kroyGame game){
         this.game   = game;
         background  = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
+        width  = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
         float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
         camera = new OrthographicCamera();
+        HudCam = new OrthographicCamera(width, height);
 
-        gamePort    = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        gamePort.apply();
+        gamePort    = new FitViewport(width, height, camera);
+        hudPort     = new FitViewport(width, height, HudCam);
         camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
+        HudCam.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
 
+        stats = new Texture("sidebar.png");
 
         hud         = new Hud(game.batch);
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         mapGraph = new MapGraph();
         mapLoader = new TmxMapLoader();
-       // map = mapLoader.load("[filename].tmx");
-        //renderer = new OrthogonalTiledMapRenderer(map);
         try {
             loadGraph();
+            mapPath = mapGraph.findPath(Coords.get("A"), Coords.get("C"));
         } catch (IOException e) {
             System.out.println("Error reading file..." + e.toString());
         }
@@ -93,9 +102,11 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(1,0,1,1);
 
+        gamePort.apply();
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
+        game.batch.draw(background, 0, 0, gamePort.getScreenWidth(), gamePort.getScreenHeight());
         //draw all objects
         for(Object i : objs) {
               game.batch.draw(i.model, i.getX(), i.getY());
@@ -105,7 +116,11 @@ public class PlayScreen implements Screen, InputProcessor {
         //
         for (Street street : mapGraph.streets) {
             street.render(shapeRenderer);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.end();
         }
+
+
         // Draw all cities blue
         for (Coord city : mapGraph.coords) {
             city.render(shapeRenderer, game.batch, font, false);
@@ -113,7 +128,16 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
         //draw HUD
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        game.batch.setProjectionMatrix(HudCam.combined);
+        game.batch.begin();
+
+        game.batch.draw(stats,
+                Gdx.graphics.getWidth() - stats.getWidth(),
+                0,
+                stats.getWidth(),
+                height
+        );
+        game.batch.end();
      //   hud.stage.draw();
 
 
@@ -121,8 +145,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        this.height = height;
+        this.width  = width;
         gamePort.update(width, height);
-        camera.update();
+        hudPort .update(width, height);
+        camera  .update();
         System.out.println("----");
         System.out.println(width);
         System.out.println(height);
@@ -147,7 +174,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        font.dispose();
+        shapeRenderer.dispose();
+        bgMusic.dispose();
+        stats.dispose();
+        map.dispose();
     }
 
 
@@ -157,8 +188,6 @@ public class PlayScreen implements Screen, InputProcessor {
         File file = new File("../../core/assets/graph.txt");
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
-        // Create Map to store all the coords
-        Map<String, Coord> Coords = new HashMap<>();
 
         for (int i=0; i<lines.size();i++) {
             String name = lines.get(i).split(" ")[0];
@@ -167,7 +196,7 @@ public class PlayScreen implements Screen, InputProcessor {
             Integer x = Integer.parseInt(s.split(",")[0]);
             Integer y = Integer.parseInt(s.split(",")[1]);
             Coord c = new Coord(x, y, name, connections );
-           // Coords.put(name, c);
+            Coords.put(name, c);
             System.out.println("created node " + c.name);
             mapGraph.addPoint(c);
         }
@@ -180,6 +209,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 System.out.println(key + "=>" + conKey);
                 // Create a conneciton between the two nodes
                 mapGraph.connectPoints(Coords.get(key), Coords.get(conKey));
+
             }
         }
 
@@ -187,12 +217,22 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.ESCAPE){
+            dispose();
+            game.setScreen(new MainMenuScreen(game));
+        }
         if(keycode == Input.Keys.LEFT){
             camera.translate(-100f, 0f);
             System.out.println("LEFT");
         }
         if(keycode == Input.Keys.RIGHT){
             camera.translate(100f, 0f);
+        }
+        if(keycode == Input.Keys.UP){
+            camera.translate(0f, 100f);
+        }
+        if(keycode == Input.Keys.DOWN){
+            camera.translate(0f, -100f);
         }
         return false;
     }
