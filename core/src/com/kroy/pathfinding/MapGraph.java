@@ -7,9 +7,6 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.kroy.classes.Coord;
-import com.kroy.pathfinding.Heuristic;
-import com.kroy.pathfinding.Street;
 
 public class MapGraph implements IndexedGraph<Coord> {
     Heuristic heur = new Heuristic();
@@ -37,6 +34,7 @@ public class MapGraph implements IndexedGraph<Coord> {
     public GraphPath<Coord> findPath(Coord start, Coord end){
         GraphPath<Coord> path = new DefaultGraphPath<>();
         new IndexedAStarPathFinder<>(this).searchNodePath(start, end, heur, path);
+        System.out.println("Count for Path: " + path.getCount());
         return path;
     }
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +19,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kroy.classes.Coord;
+import com.kroy.pathfinding.Agent;
+import com.kroy.pathfinding.Coord;
 import com.kroy.classes.Firetruck;
 import com.kroy.classes.Object;
 import com.kroy.pathfinding.MapGraph;
@@ -58,6 +60,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private int width, height;
 
+    private Agent agent;
+
     public PlayScreen(kroyGame game){
         this.game   = game;
         background  = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
@@ -80,9 +84,16 @@ public class PlayScreen implements Screen, InputProcessor {
         font = new BitmapFont();
         mapGraph = new MapGraph();
         mapLoader = new TmxMapLoader();
+
+
         try {
             loadGraph();
-            mapPath = mapGraph.findPath(Coords.get("A"), Coords.get("C"));
+
+            agent = new Agent(mapGraph, Coords.get("A"));
+            agent.setGoal(Coords.get("E"));
+            mapPath = mapGraph.findPath(Coords.get("A"), Coords.get("E"));
+
+            System.out.println("Count for returned path: " + mapPath.getCount());
         } catch (IOException e) {
             System.out.println("Error reading file..." + e.toString());
         }
@@ -98,7 +109,7 @@ public class PlayScreen implements Screen, InputProcessor {
     public void render(float delta) {
         camera.update();
 
-
+        agent.step();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(1,0,1,1);
 
@@ -126,6 +137,12 @@ public class PlayScreen implements Screen, InputProcessor {
             city.render(shapeRenderer, game.batch, font, false);
         }
 
+        for (Coord city : agent.graphPath) {
+            city.render(shapeRenderer, game.batch, font, true);
+        }
+
+        agent.render(shapeRenderer,game.batch);
+        shapeRenderer.setColor(Color.WHITE);
 
         //draw HUD
         game.batch.setProjectionMatrix(HudCam.combined);
@@ -176,15 +193,16 @@ public class PlayScreen implements Screen, InputProcessor {
     public void dispose() {
         font.dispose();
         shapeRenderer.dispose();
-        bgMusic.dispose();
+     //   bgMusic.dispose();
         stats.dispose();
         map.dispose();
     }
 
 
     public void loadGraph() throws IOException {
+
+
         // Read fle and fetch all lines
-        String workingDir = System.getProperty("user.dir");
         File file = new File("../../core/assets/graph.txt");
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
@@ -197,7 +215,6 @@ public class PlayScreen implements Screen, InputProcessor {
             Integer y = Integer.parseInt(s.split(",")[1]);
             Coord c = new Coord(x, y, name, connections );
             Coords.put(name, c);
-            System.out.println("created node " + c.name);
             mapGraph.addPoint(c);
         }
 
@@ -206,7 +223,6 @@ public class PlayScreen implements Screen, InputProcessor {
         for (String key: Coords.keySet()) {
             // Iterate through all connections
             for (String conKey: Coords.get(key).connections) {
-                System.out.println(key + "=>" + conKey);
                 // Create a conneciton between the two nodes
                 mapGraph.connectPoints(Coords.get(key), Coords.get(conKey));
 
