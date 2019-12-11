@@ -17,8 +17,8 @@ public class Street implements Connection<Coord> {
 
     private float calculateCost(){
         float d = 0;
-        if ((int)from.x == (int)to.x) d = Math.abs((int)to.y - (int)from.y);
-        else if ((int)from.y == (int)to.y)  d = Math.abs((int)to.x - (int)from.x);
+        if (from.x == to.x) d = Math.abs(to.y - from.y);
+        else if (from.y == to.y)  d = Math.abs(to.x - from.x);
         return d;
     }
     @Override
@@ -33,7 +33,7 @@ public class Street implements Connection<Coord> {
 
     public void render(ShapeRenderer shapeRenderer){
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.rectLine((int)from.x, (int)from.y, (int)to.x, (int)to.y, 20);
+        shapeRenderer.rectLine(from.x, from.y, to.x, to.y, 20);
         shapeRenderer.end();
     }
 }

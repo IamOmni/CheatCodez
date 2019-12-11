@@ -17,15 +17,20 @@ public class Agent {
     float deltaX = 0;
     float deltaY = 0;
 
-    Coord previousCity;
+    Coord previous;
     Queue<Coord> pathQueue = new Queue<>();
     public GraphPath<Coord> graphPath;
 
+    /**
+     *
+     * @param mapGraph
+     * @param start start coord/position
+     */
     public Agent(MapGraph mapGraph, Coord start) {
         this.mapGraph = mapGraph;
         this.x = start.x;
         this.y = start.y;
-        this.previousCity = start;
+        this.previous = start;
     }
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
@@ -47,24 +52,24 @@ public class Agent {
     }
 
     /**
-     * Set the goal City, calculate a path, and start moving.
+     * Set the goal Coord, calculate a path, and start moving.
      */
     public void setGoal(Coord goal) {
-        graphPath = mapGraph.findPath(previousCity, goal);
+        graphPath = mapGraph.findPath(previous, goal);
         for (int i = 1; i < graphPath.getCount(); i++) {
             pathQueue.addLast(graphPath.get(i));
         }
-        setSpeedToNextCity();
+        setSpeedToNextCoord();
     }
 
     /**
-     * Check whether Agent has reached the next City in its path.
+     * Check whether Agent has reached the next Coord in its path.
      */
     private void checkCollision() {
         if (pathQueue.size > 0) {
-            Coord targetCity = pathQueue.first();
-            if (Vector2.dst(x, y, targetCity.x, targetCity.y) < 5) {
-                reachNextCity();
+            Coord target = pathQueue.first();
+            if (Vector2.dst(x, y, target.x, target.y) < 5) {
+                reachNextCoord();
             }
         }
     }
@@ -72,47 +77,49 @@ public class Agent {
     /**
      * Agent has collided with the next City in its path.
      */
-    private void reachNextCity() {
+    private void reachNextCoord() {
 
-        Coord nextCity = pathQueue.first();
+        Coord next = pathQueue.first();
 
         // Set the position to keep the Agent in the middle of the path
-        this.x = nextCity.x;
-        this.y = nextCity.y;
+        this.x = next.x;
+        this.y = next.y;
 
-        this.previousCity = nextCity;
+        this.previous = next;
         pathQueue.removeFirst();
 
         if (pathQueue.size == 0) {
             reachDestination();
         } else {
-            setSpeedToNextCity();
+            setSpeedToNextCoord();
         }
     }
 
     /**
-     * Set xSpeed and ySpeed to move towards next City on path.
+     * Set xSpeed and ySpeed to move towards next Coord on path.
      */
-    private void setSpeedToNextCity() {
-        Coord nextCity = pathQueue.first();
-        float angle = MathUtils.atan2(nextCity.y - previousCity.y, nextCity.x - previousCity.x);
+    private void setSpeedToNextCoord() {
+        Coord next = pathQueue.first();
+        /*
+                |                _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                |               |                             |
+            n.y |\              |               n.y - p.y     |   use cos(angle) * speed to get change in horizontal movement per frame
+                | \             |    tan(0) = ------------    |
+                |  \            |               n.x - p.x     |   use sin(angle) * speed to get change in vertical movement per frame
+                |   \           |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _|
+            p.y |_ _0\ _ _ _ _ _ _ _ _ _
+              n.x    p.x
+         */
+        float angle = MathUtils.atan2(next.y - previous.y, next.x - previous.x);
         deltaX = MathUtils.cos(angle) * speed;
         deltaY = MathUtils.sin(angle) * speed;
     }
 
     /**
-     * Agent has reached the goal City.
+     * Agent has reached the goal Coord.
      */
     private void reachDestination() {
         deltaX = 0;
         deltaY = 0;
-
-        // Find a new goal City
-        Coord newGoal;
-        do {
-            newGoal = mapGraph.coords.random();
-        } while (newGoal == previousCity);
-
-        setGoal(newGoal);
     }
 }

@@ -8,6 +8,9 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
+/**
+ * Indexed graph of the world map
+ */
 public class MapGraph implements IndexedGraph<Coord> {
     Heuristic heur = new Heuristic();
     public Array<Coord> coords = new Array<>();
@@ -16,12 +19,21 @@ public class MapGraph implements IndexedGraph<Coord> {
 
     private int lastNodeIndex = 0;
 
+    /**
+     * add point to graph
+     * @param pnt point to be added to graph
+     */
     public void addPoint(Coord pnt){
         pnt.index = lastNodeIndex;
         lastNodeIndex++;
         coords.add(pnt);
     }
 
+    /**
+     * form a 2 way connection between two points
+     * @param from
+     * @param to
+     */
     public void connectPoints(Coord from, Coord to){
         Street street = new Street(from, to);
         if(!streetsMap.containsKey(from)){
@@ -30,11 +42,17 @@ public class MapGraph implements IndexedGraph<Coord> {
         streetsMap.get(from).add(street);
         streets.add(street);
     }
+    //function returns an A* path from position start to position end
 
+    /**
+     * Find path between two points
+     * @param start start point
+     * @param end end point
+     * @return A* path between two points
+     */
     public GraphPath<Coord> findPath(Coord start, Coord end){
         GraphPath<Coord> path = new DefaultGraphPath<>();
         new IndexedAStarPathFinder<>(this).searchNodePath(start, end, heur, path);
-        System.out.println("Count for Path: " + path.getCount());
         return path;
     }
 

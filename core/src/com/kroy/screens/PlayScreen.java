@@ -51,11 +51,9 @@ public class PlayScreen implements Screen, InputProcessor {
     private OrthogonalTiledMapRenderer renderer;
 
     private MapGraph mapGraph;
-    private GraphPath<Coord> mapPath;
     private ArrayList<Object> objs = new ArrayList<Object>();
 
     private BitmapFont font;
-    private ShapeRenderer shapeRenderer;
     private Texture stats;
 
     private int width, height;
@@ -80,7 +78,6 @@ public class PlayScreen implements Screen, InputProcessor {
         stats = new Texture("sidebar.png");
 
         hud         = new Hud(game.batch);
-        shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         mapGraph = new MapGraph();
         mapLoader = new TmxMapLoader();
@@ -90,10 +87,9 @@ public class PlayScreen implements Screen, InputProcessor {
             loadGraph();
 
             agent = new Agent(mapGraph, Coords.get("A"));
-            agent.setGoal(Coords.get("E"));
-            mapPath = mapGraph.findPath(Coords.get("A"), Coords.get("E"));
+            agent.setGoal(Coords.get("M"));
 
-            System.out.println("Count for returned path: " + mapPath.getCount());
+            System.out.println("Count for returned path: " + agent.graphPath.getCount());
         } catch (IOException e) {
             System.out.println("Error reading file..." + e.toString());
         }
@@ -116,7 +112,7 @@ public class PlayScreen implements Screen, InputProcessor {
         gamePort.apply();
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        game.shapeRenderer.setProjectionMatrix(camera.combined);
         game.batch.draw(background, 0, 0, gamePort.getScreenWidth(), gamePort.getScreenHeight());
         //draw all objects
         for(Object i : objs) {
@@ -126,23 +122,23 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
         //
         for (Street street : mapGraph.streets) {
-            street.render(shapeRenderer);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.end();
+            street.render(game.shapeRenderer);
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            game.shapeRenderer.end();
         }
 
 
-        // Draw all cities blue
+        // Draw all points
         for (Coord city : mapGraph.coords) {
-            city.render(shapeRenderer, game.batch, font, false);
+            city.render(game.shapeRenderer, game.batch, font, false);
         }
-
+        // Draw all points in the agent's path coloured
         for (Coord city : agent.graphPath) {
-            city.render(shapeRenderer, game.batch, font, true);
+            city.render(game.shapeRenderer, game.batch, font, true);
         }
 
-        agent.render(shapeRenderer,game.batch);
-        shapeRenderer.setColor(Color.WHITE);
+        agent.render(game.shapeRenderer,game.batch);
+        game.shapeRenderer.setColor(Color.WHITE);
 
         //draw HUD
         game.batch.setProjectionMatrix(HudCam.combined);
@@ -164,6 +160,8 @@ public class PlayScreen implements Screen, InputProcessor {
     public void resize(int width, int height) {
         this.height = height;
         this.width  = width;
+
+
         gamePort.update(width, height);
         hudPort .update(width, height);
         camera  .update();
@@ -192,10 +190,9 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public void dispose() {
         font.dispose();
-        shapeRenderer.dispose();
      //   bgMusic.dispose();
         stats.dispose();
-        map.dispose();
+    //    map.dispose();
     }
 
 
@@ -236,10 +233,10 @@ public class PlayScreen implements Screen, InputProcessor {
         if(keycode == Input.Keys.ESCAPE){
             dispose();
             game.setScreen(new MainMenuScreen(game));
+
         }
         if(keycode == Input.Keys.LEFT){
             camera.translate(-100f, 0f);
-            System.out.println("LEFT");
         }
         if(keycode == Input.Keys.RIGHT){
             camera.translate(100f, 0f);

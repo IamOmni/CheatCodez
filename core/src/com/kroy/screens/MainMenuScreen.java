@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.kroy.classes.Button;
 import com.kroy.game.kroyGame;
 
 //import javax.xml.soap.Text;
@@ -18,21 +19,36 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
     OrthographicCamera camera;
     private Viewport gamePort;
-    private Sprite plBtn        = new Sprite(new Texture("Menu_Assets/PLAYBUTTON.png"));
+
+    private Button play, help, settings;
+
     private Sprite title        = new Sprite(new Texture("Menu_Assets/TITLE.png"));
-    private Sprite settingsBtn  = new Sprite(new Texture("Menu_Assets/SETTINGS.png"));
-    private Sprite helpBtn      = new Sprite(new Texture("Menu_Assets/HELP.png"));
     private Sprite background   = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
 
 
     public MainMenuScreen(kroyGame game) {
+
         this.game = game;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, kroyGame.WIDTH, kroyGame.HEIGHT);
 
         gamePort    = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         gamePort.apply();
         camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
+
+
+        /**
+         * Create buttons for menu use
+         */
+        play = new Button(0.43, 0.57, 0.35, 0.45, "Menu_Assets/PLAYBUTTON.png");
+
+        double hTw_ratio = Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
+        help = new Button(0.1 * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.2  * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.1, 0.2, "Menu_Assets/HELP.png");
+
+        settings = new Button(0.4, 0.6, 0.2, 0.3, "Menu_Assets/SETTINGS.png");
+
+        Gdx.input.setInputProcessor(this);
     }
 
 
@@ -41,30 +57,23 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
     }
 
-    public void handleInput(){
-        if(Gdx.input.isTouched()){
-            game.setScreen(new PlayScreen(game));
-            dispose();
-        }
-    }
-
     @Override
     public void render(float delta) {
-        handleInput();
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
             game.batch.draw(background, 0, 0, gamePort.getScreenWidth(), gamePort.getScreenHeight());
             game.batch.draw(title, gamePort.getScreenWidth()/2 - title.getWidth()/5, 2 * gamePort.getScreenHeight()/3,   title.getWidth() / 2, title.getHeight()/2);
-
-            game.batch.draw(plBtn, gamePort.getScreenWidth()/2 - plBtn.getWidth()/5, gamePort.getScreenHeight()/3,   2* plBtn.getWidth() / 5, 2* plBtn.getHeight()/5);
-            game.batch.draw(settingsBtn, gamePort.getScreenWidth()/2 - settingsBtn.getWidth()/5, gamePort.getScreenHeight()/6,   2* settingsBtn.getWidth() / 5, 2* settingsBtn.getHeight()/5);
-            game.batch.draw(helpBtn, gamePort.getScreenWidth()/14, gamePort.getScreenHeight()/20, helpBtn.getWidth()/2,helpBtn.getHeight()/2);
         game.batch.end();
 
+        play.render(game.batch);
+        settings.render(game.batch);
+        help.render(game.batch);
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        play.updateRatio(Gdx.graphics.getWidth()/kroyGame.WIDTH, Gdx.graphics.getHeight()/kroyGame.HEIGHT);
         camera.update();
     }
 
@@ -85,13 +94,31 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        plBtn.getTexture().dispose();
+
         title.getTexture().dispose();
-        settingsBtn.getTexture().dispose();
-        helpBtn.getTexture().dispose();
+        settings.getSprite().getTexture().dispose();
+        play.getSprite().getTexture().dispose();
+        help.getSprite().getTexture().dispose();
         background.getTexture().dispose();
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // coords for ScreenX and Y start from top left not top right so this flips the height around to match the render coords
+        screenY = Gdx.graphics.getHeight() - screenY;
+        if(play.hasBeenClicked(screenX, screenY))
+        {
+            game.setScreen(new PlayScreen(game));
+            dispose();
+        }
+        if(settings.hasBeenClicked(screenX, screenY)){
+            System.out.println("Settings Button hit");
+        }
+        if(help.hasBeenClicked(screenX, screenY)){
+            System.out.println("Help Button hit");
+        }
+        return false;
+    }
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.ESCAPE){
@@ -111,10 +138,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
         return false;
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {

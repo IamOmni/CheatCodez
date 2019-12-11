@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.kroy.screens.MainMenuScreen;
@@ -13,14 +14,8 @@ import com.kroy.states.GameStateManager;
 public class kroyGame extends Game {
 	public static final int HEIGHT = 1080;
 	public static final int WIDTH = 1920;
-
+	public ShapeRenderer shapeRenderer;
 	public SpriteBatch batch;
-
-	// Create an array to be filled with the bodies
-	// (better don't create a new one every time though)
-	private Array<Body> bodies = new Array<Body>();
-	//this creates a new world without any force in either x or y direction bc top down view
-
 
 	@Override
     public void resize(int width, int height){
@@ -32,6 +27,8 @@ public class kroyGame extends Game {
 	public void create() {
 		System.out.println("running create()");
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
+
 		setScreen(new MainMenuScreen(this));
         System.out.println("exiting create()");
 	}
@@ -47,7 +44,7 @@ public class kroyGame extends Game {
 	@Override
 	public void dispose() {
 		batch.dispose();
-
+		shapeRenderer.dispose();
 	}
 
 }
