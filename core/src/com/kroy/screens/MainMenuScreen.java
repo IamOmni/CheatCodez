@@ -29,11 +29,13 @@ public class MainMenuScreen implements Screen, InputProcessor {
     public MainMenuScreen(kroyGame game) {
 
         this.game = game;
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, kroyGame.WIDTH, kroyGame.HEIGHT);
+        float width, height;
+        width  = Gdx.graphics.getWidth();
+        height = Gdx.graphics.getHeight();
 
-        gamePort    = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        gamePort    = new FitViewport(width, height, camera);
         gamePort.apply();
         camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
 
@@ -70,6 +72,11 @@ public class MainMenuScreen implements Screen, InputProcessor {
         help.render(game.batch);
     }
 
+    /**
+     * function runs on resize of window
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
@@ -102,6 +109,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
         background.getTexture().dispose();
     }
 
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // coords for ScreenX and Y start from top left not top right so this flips the height around to match the render coords
@@ -111,7 +119,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
             game.setScreen(new PlayScreen(game));
             dispose();
         }
-        if(settings.hasBeenClicked(screenX, screenY)){
+        if(settings.hasBeenClicked(screenX, screenY)) {
             System.out.println("Settings Button hit");
         }
         if(help.hasBeenClicked(screenX, screenY)){
@@ -137,8 +145,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
     public boolean keyTyped(char character) {
         return false;
     }
-
-
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {

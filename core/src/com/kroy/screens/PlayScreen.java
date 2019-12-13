@@ -62,17 +62,20 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public PlayScreen(kroyGame game){
         this.game   = game;
-        background  = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
+        background  = new Sprite(new Texture("background.png"));
         width  = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
-        camera = new OrthographicCamera();
+        float ratioW = Gdx.graphics.getWidth()/game.WIDTH;
+        float ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
+
+        camera = new OrthographicCamera(1210, 827);
         HudCam = new OrthographicCamera(width, height);
 
-        gamePort    = new FitViewport(width, height, camera);
+        gamePort    = new FitViewport(1210, 400, camera);
         hudPort     = new FitViewport(width, height, HudCam);
-        camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
+        camera.position.set(game.WIDTH/2 , game.HEIGHT/2, 0);
         HudCam.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
 
         stats = new Texture("sidebar.png");
@@ -106,14 +109,39 @@ public class PlayScreen implements Screen, InputProcessor {
         camera.update();
 
         agent.step();
+        // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(1,0,1,1);
+        game.shapeRenderer.setColor(Color.WHITE);
+        Gdx.gl.glViewport(0,0,width, height);
+        //draw HUD
+        hudPort.apply();
+        game.batch.setProjectionMatrix(HudCam.combined);
+        game.batch.begin();
 
+        game.batch.draw(background, 0, 0, width, height);
+       /* game.batch.draw(stats,
+                Gdx.graphics.getWidth() - stats.getWidth(),
+                0,
+                stats.getWidth(),
+                height
+        );
+
+        */
+        game.batch.end();
+
+        // Thing that fits in the area where the map is displayed
         gamePort.apply();
+
+        Gdx.gl.glViewport(585, 1080 - (175 + 827), 1210, 827);
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
-        game.batch.draw(background, 0, 0, gamePort.getScreenWidth(), gamePort.getScreenHeight());
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.shapeRenderer.setColor(Color.GREEN);
+        game.shapeRenderer.rectLine(0,0, width, height, 10000);
+        game.shapeRenderer.setColor(Color.WHITE);
+        game.shapeRenderer.end();
         //draw all objects
         for(Object i : objs) {
               game.batch.draw(i.model, i.getX(), i.getY());
@@ -138,19 +166,7 @@ public class PlayScreen implements Screen, InputProcessor {
         }
 
         agent.render(game.shapeRenderer,game.batch);
-        game.shapeRenderer.setColor(Color.WHITE);
 
-        //draw HUD
-        game.batch.setProjectionMatrix(HudCam.combined);
-        game.batch.begin();
-
-        game.batch.draw(stats,
-                Gdx.graphics.getWidth() - stats.getWidth(),
-                0,
-                stats.getWidth(),
-                height
-        );
-        game.batch.end();
      //   hud.stage.draw();
 
 
