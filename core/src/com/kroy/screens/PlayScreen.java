@@ -73,7 +73,7 @@ public class PlayScreen implements Screen, InputProcessor {
         camera = new OrthographicCamera(1210, 827);
         HudCam = new OrthographicCamera(width, height);
 
-        gamePort    = new FitViewport(1210, 400, camera);
+        gamePort    = new FitViewport(1210, 827, camera);
         hudPort     = new FitViewport(width, height, HudCam);
         camera.position.set(game.WIDTH/2 , game.HEIGHT/2, 0);
         HudCam.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
@@ -139,7 +139,6 @@ public class PlayScreen implements Screen, InputProcessor {
         game.shapeRenderer.setProjectionMatrix(camera.combined);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         game.shapeRenderer.setColor(Color.GREEN);
-        game.shapeRenderer.rectLine(0,0, width, height, 10000);
         game.shapeRenderer.setColor(Color.WHITE);
         game.shapeRenderer.end();
         //draw all objects
