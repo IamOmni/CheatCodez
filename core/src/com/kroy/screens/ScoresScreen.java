@@ -12,7 +12,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.kroy.classes.Database;
 import com.kroy.game.kroyGame;
+
+import java.util.ArrayList;
 
 public class ScoresScreen implements Screen, InputProcessor {
     private kroyGame game;
@@ -22,6 +25,7 @@ public class ScoresScreen implements Screen, InputProcessor {
     private Sprite background;
 
     private int width, height;
+    private Database database;
     private int ratioW, ratioH;
 
     private BitmapFont font;
@@ -32,7 +36,7 @@ public class ScoresScreen implements Screen, InputProcessor {
         width  = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
-
+        database = new Database();
         ratioW = Gdx.graphics.getWidth()/game.WIDTH;
         ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
 
@@ -42,6 +46,13 @@ public class ScoresScreen implements Screen, InputProcessor {
         camera.position.set(game.WIDTH/2 , game.HEIGHT/2, 0);
         font = new BitmapFont();
         Gdx.input.setInputProcessor(this);
+
+        ArrayList<ArrayList<String>> scores = database.getLeaderboard("3");
+        for (ArrayList<String> arr_1: scores){
+            for (String x:arr_1){
+                System.out.println(x);
+            }
+        }
 
     }
 

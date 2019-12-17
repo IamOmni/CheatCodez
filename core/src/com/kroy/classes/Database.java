@@ -13,7 +13,6 @@ package com.kroy.classes;
         import java.net.http.HttpResponse.BodyHandlers;
         import java.util.ArrayList;
 
-
 public class Database {
     private String baseUrl;
     private HttpClient client;
