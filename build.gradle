@@ -13,6 +13,7 @@ buildscript {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.7'
+        classpath "com.badlogicgames.gdx:gdx-ai:1.8.0"
         
 
     }
@@ -54,6 +55,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:1.8.0"
         
     }
 }
@@ -94,7 +96,9 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86_64"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        
+        api "com.badlogicgames.gdx:gdx-ai:1.8.0"
+
+
     }
 }
 
@@ -112,7 +116,8 @@ project(":ios") {
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
         api "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-ios"
-        
+        api "com.badlogicgames.gdx:gdx-ai:1.8.0"
+
     }
 }
 
@@ -135,6 +140,8 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion:sources"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion:sources"
+        api "com.badlogicgames.gdx:gdx-ai:1.8.0"
+
         
     }
 }

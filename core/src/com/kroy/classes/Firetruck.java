@@ -4,20 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.kroy.game.kroyGame;
+import com.kroy.pathfinding.Coord;
+import com.kroy.pathfinding.MapGraph;
 
 
 import java.util.Random;
 public class Firetruck extends Entity {
     private int waterVol, waterDmg, waterRange;
     private boolean active;
-    public Firetruck(int x, int y){
-        position = new Vector3(x,y,0);
+
+    public Firetruck(MapGraph mapGraph, Coord start){
+        super(mapGraph, start);
         waterVol =  new Random().nextInt(20);
-        model = new Texture("Firetruck.png");
+        model = ( new Texture("Firetruck_sprite_static.png"));
         setMovement(new Vector3(10,0,0)); // Change to new Vector3(position)?
-        Gdx.input.setInputProcessor(this);
 
     }
     public int getWaterVol() {
@@ -60,12 +63,23 @@ public class Firetruck extends Entity {
     public void returnToBase(){};
 
     @Override
+    public void render(SpriteBatch sb){
+        float rot = (movement.y != 0? 90.0f :0.0f);
+        rot += (movement.y < 0? 180.0f : 0.0f);
+        System.out.println(movement.x + ", " + movement.y);
+        System.out.println(rot);
+        sb.draw(model,
+                position.x - model.getWidth(),position.y - model.getHeight(),
+                0,0,model.getWidth(),model.getHeight(),
+                4,4,
+                rot,
+                0,0,model.getWidth(),model.getHeight(),
+                false,false);
+    }
+
+    @Override
     public void update(float dt){
-        position.add(movement);
-        if(position.x < -kroyGame.WIDTH/2 || position.x > (kroyGame.WIDTH/2 -  model.getWidth())){
-            movement.scl(-1);
-            System.out.println("at boundary");
-        }
+
 
         if (this.active) {
             // This method would be moved to a render function
@@ -81,6 +95,9 @@ public class Firetruck extends Entity {
             }
 
 
+        }
+        else{
+            super.update(dt);
         }
     }
 

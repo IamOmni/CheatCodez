@@ -11,11 +11,13 @@ import java.util.ArrayList;
 public class PlayState extends State {
     private ArrayList<Object> objs = new ArrayList<Object>();
     private Texture background;
-    private Firetruck firetruck = new Firetruck(50, 50);
+    private Texture button;
+    //private Firetruck firetruck = new Firetruck(50, 50);
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        objs.add(new Firetruck(50, 50));
+        //objs.add(new Firetruck(50, 50));
         background = new Texture("bg-menu.png");
+        button = new Texture("button.png");
         cam.setToOrtho(false, kroyGame.WIDTH, kroyGame.HEIGHT);
 
     }

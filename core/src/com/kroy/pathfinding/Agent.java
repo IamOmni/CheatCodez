@@ -1,4 +1,4 @@
-package com.kroy.classes;
+package com.kroy.pathfinding;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,58 +7,27 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Queue;
-import com.kroy.pathfinding.Coord;
-import com.kroy.pathfinding.MapGraph;
+import com.kroy.classes.Object;
 
-public class Entity extends Object{
-    protected int hitpoints, speedMove;
-    protected Vector3 movement;
+public class Agent extends Object {
     MapGraph mapGraph;
 
     float speed = 5f;
+    Vector3 movement;
     Coord previous;
     Queue<Coord> pathQueue = new Queue<>();
     public GraphPath<Coord> graphPath;
 
-    public Entity(){
-
-    }
-
-    public Entity(MapGraph mapGraph, Coord start) {
+    /**
+     *
+     * @param mapGraph
+     * @param start start coord/position
+     */
+    public Agent(MapGraph mapGraph, Coord start) {
         this.mapGraph = mapGraph;
         position = new Vector3(start.x, start.y, 0.0f);
         this.previous = start;
     }
-
-    public int getHitpoints() {
-        return hitpoints;
-    }
-
-    public void setHitpoints(int hitpoints) {
-        this.hitpoints = hitpoints;
-    }
-
-    public int getSpeedMove() {
-        return speedMove;
-    }
-
-    public void setSpeedMove(int speedMove) {
-        this.speedMove = speedMove;
-    }
-
-    public Vector3 getMovement() {
-        return movement;
-    }
-
-    public void setMovement(Vector3 movement) {
-        this.movement = movement;
-    }
-
-    public void move(){};
-    public void takeDmg(){};
-
-
-
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -71,8 +40,8 @@ public class Entity extends Object{
         shapeRenderer.circle(position.x, position.y, 5);
         shapeRenderer.end();
     }
-    @Override
-    public void update(float dt) {
+
+    public void step() {
         position.add(movement);
 
         checkCollision();

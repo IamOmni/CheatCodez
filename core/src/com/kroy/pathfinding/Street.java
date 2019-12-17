@@ -1,7 +1,7 @@
 package com.kroy.pathfinding;
 
 import com.badlogic.gdx.ai.pfa.Connection;
-import com.kroy.classes.Coord;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Street implements Connection<Coord> {
     Coord from, to;
@@ -17,8 +17,8 @@ public class Street implements Connection<Coord> {
 
     private float calculateCost(){
         float d = 0;
-        if ((int)from.getX() == (int)to.getX()) d = Math.abs((int)to.getY() - (int)from.getY());
-        else if ((int)from.getY() == (int)to.getY())  d = Math.abs((int)to.getX() - (int)from.getX());
+        if (from.x == to.x) d = Math.abs(to.y - from.y);
+        else if (from.y == to.y)  d = Math.abs(to.x - from.x);
         return d;
     }
     @Override
@@ -29,5 +29,11 @@ public class Street implements Connection<Coord> {
     @Override
     public Coord getToNode() {
         return to;
+    }
+
+    public void render(ShapeRenderer shapeRenderer){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.rectLine(from.x, from.y, to.x, to.y, 20);
+        shapeRenderer.end();
     }
 }

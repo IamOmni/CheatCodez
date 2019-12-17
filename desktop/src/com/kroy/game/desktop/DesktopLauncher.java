@@ -9,6 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = kroyGame.WIDTH;
 		config.height = kroyGame.HEIGHT;
+		config.fullscreen = true;
 		config.title = "Kroy - TeamCheatCodez";
 		new LwjglApplication(new kroyGame(), config);
 	}
