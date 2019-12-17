@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.Sector;
 import com.kroy.game.kroyGame;
-import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import java.awt.*;
 
 public class Hud {
