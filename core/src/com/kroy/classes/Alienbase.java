@@ -9,7 +9,7 @@ public class Alienbase extends Building{
     public void convertToBase(Landmark loc){
         position = loc.position;
         hitpoints = new Random().nextInt(20) + 20;
-        model = new Texture("AlienBase.png");
+        setModel(new Texture("AlienBase.png"));
     }
 
     public int getHitpoints() {

@@ -5,18 +5,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Queue;
+import com.kroy.classes.Object;
 
-public class Agent {
+public class Agent extends Object {
     MapGraph mapGraph;
 
-    float x;
-    float y;
-
     float speed = 5f;
-    float deltaX = 0;
-    float deltaY = 0;
-
+    Vector3 movement;
     Coord previous;
     Queue<Coord> pathQueue = new Queue<>();
     public GraphPath<Coord> graphPath;
@@ -28,26 +25,25 @@ public class Agent {
      */
     public Agent(MapGraph mapGraph, Coord start) {
         this.mapGraph = mapGraph;
-        this.x = start.x;
-        this.y = start.y;
+        position = new Vector3(start.x, start.y, 0.0f);
         this.previous = start;
     }
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(1f, 0f, 0f, 1);
-        shapeRenderer.circle(x, y, 5);
+        shapeRenderer.circle(position.x, position.y, 5);
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.circle(x, y, 5);
+        shapeRenderer.circle(position.x, position.y, 5);
         shapeRenderer.end();
     }
 
     public void step() {
-        x += deltaX;
-        y += deltaY;
+        position.add(movement);
+
         checkCollision();
     }
 
@@ -68,7 +64,7 @@ public class Agent {
     private void checkCollision() {
         if (pathQueue.size > 0) {
             Coord target = pathQueue.first();
-            if (Vector2.dst(x, y, target.x, target.y) < 5) {
+            if (Vector2.dst(position.x, position.y, target.x, target.y) < 5) {
                 reachNextCoord();
             }
         }
@@ -82,8 +78,7 @@ public class Agent {
         Coord next = pathQueue.first();
 
         // Set the position to keep the Agent in the middle of the path
-        this.x = next.x;
-        this.y = next.y;
+        position.set(next.x,next.y,1);
 
         this.previous = next;
         pathQueue.removeFirst();
@@ -111,15 +106,13 @@ public class Agent {
               n.x    p.x
          */
         float angle = MathUtils.atan2(next.y - previous.y, next.x - previous.x);
-        deltaX = MathUtils.cos(angle) * speed;
-        deltaY = MathUtils.sin(angle) * speed;
+        movement = new Vector3(MathUtils.cos(angle) * speed,MathUtils.sin(angle) * speed, 0.0f);
     }
 
     /**
      * Agent has reached the goal Coord.
      */
     private void reachDestination() {
-        deltaX = 0;
-        deltaY = 0;
+        movement = new Vector3(0.0f,0.0f,0.0f);
     }
 }

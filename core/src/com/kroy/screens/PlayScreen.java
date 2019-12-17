@@ -52,12 +52,13 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private MapGraph mapGraph;
     private ArrayList<Object> objs = new ArrayList<Object>();
+    private ArrayList<Firetruck> firetrucks = new ArrayList<>();
 
     private BitmapFont font;
     private Texture stats;
 
     private int width, height;
-
+    private int ratioW, ratioH;
     private Agent agent;
 
     public PlayScreen(kroyGame game){
@@ -67,10 +68,10 @@ public class PlayScreen implements Screen, InputProcessor {
         height = Gdx.graphics.getHeight();
         float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
-        float ratioW = Gdx.graphics.getWidth()/game.WIDTH;
-        float ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
+        ratioW = Gdx.graphics.getWidth()/game.WIDTH;
+        ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
 
-        camera = new OrthographicCamera(1210, 827);
+        camera = new OrthographicCamera(1210 * ratioW, 827 * ratioH);
         HudCam = new OrthographicCamera(width, height);
 
         gamePort    = new FitViewport(1210, 827, camera);
@@ -89,6 +90,9 @@ public class PlayScreen implements Screen, InputProcessor {
         try {
             loadGraph();
 
+            firetrucks.add(new Firetruck(mapGraph, Coords.get("A")));
+            firetrucks.get(firetrucks.size()-1).setGoal(Coords.get("M"));
+            objs.add(firetrucks.get(firetrucks.size()-1));
             agent = new Agent(mapGraph, Coords.get("A"));
             agent.setGoal(Coords.get("M"));
 
@@ -97,7 +101,6 @@ public class PlayScreen implements Screen, InputProcessor {
             System.out.println("Error reading file..." + e.toString());
         }
         Gdx.input.setInputProcessor(this);
-        objs.add(new Firetruck(50, 50));
     }
 
     @Override
@@ -109,6 +112,7 @@ public class PlayScreen implements Screen, InputProcessor {
         camera.update();
 
         agent.step();
+
         // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(1,0,1,1);
@@ -120,38 +124,24 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.begin();
 
         game.batch.draw(background, 0, 0, width, height);
-       /* game.batch.draw(stats,
-                Gdx.graphics.getWidth() - stats.getWidth(),
-                0,
-                stats.getWidth(),
-                height
-        );
 
-        */
         game.batch.end();
+
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        game.shapeRenderer.end();
 
         // Thing that fits in the area where the map is displayed
         gamePort.apply();
 
-        Gdx.gl.glViewport(585, 1080 - (175 + 827), 1210, 827);
+        Gdx.gl.glViewport(585 * ratioW, (1080 - (175 + 827)) * ratioH, 1210 * ratioW, 827 * ratioH);
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        game.shapeRenderer.setColor(Color.GREEN);
-        game.shapeRenderer.setColor(Color.WHITE);
-        game.shapeRenderer.end();
-        //draw all objects
-        for(Object i : objs) {
-              game.batch.draw(i.model, i.getX(), i.getY());
-              i.update(delta);
-        }
         game.batch.end();
         //
         for (Street street : mapGraph.streets) {
             street.render(game.shapeRenderer);
-            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            game.shapeRenderer.end();
         }
 
 
@@ -163,6 +153,13 @@ public class PlayScreen implements Screen, InputProcessor {
         for (Coord city : agent.graphPath) {
             city.render(game.shapeRenderer, game.batch, font, true);
         }
+        game.batch.begin();
+        //draw all objects
+        for(Object i : objs) {
+            i.render(game.batch);
+            i.update(delta);
+        }
+        game.batch.end();
 
         agent.render(game.shapeRenderer,game.batch);
 
@@ -175,6 +172,8 @@ public class PlayScreen implements Screen, InputProcessor {
     public void resize(int width, int height) {
         this.height = height;
         this.width  = width;
+        ratioW = width/game.WIDTH;
+        ratioH = height/game.HEIGHT;
 
 
         gamePort.update(width, height);

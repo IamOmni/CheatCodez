@@ -120,6 +120,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
             dispose();
         }
         if(settings.hasBeenClicked(screenX, screenY)) {
+            game.setScreen(new ScoresScreen(game));
             System.out.println("Settings Button hit");
         }
         if(help.hasBeenClicked(screenX, screenY)){

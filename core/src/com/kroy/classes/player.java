@@ -1,4 +1,4 @@
-package com.kroy.game;
+package com.kroy.classes;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
