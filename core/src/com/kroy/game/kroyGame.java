@@ -11,6 +11,8 @@ import com.kroy.screens.MainMenuScreen;
 import com.kroy.screens.PlayScreen;
 import com.kroy.states.GameStateManager;
 
+import java.util.function.Function;
+
 public class kroyGame extends Game {
 	public static final int HEIGHT = 1080;
 	public static final int WIDTH = 1920;
@@ -28,9 +30,11 @@ public class kroyGame extends Game {
 		System.out.println("running create()");
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
+		var s = " Michale ";
+		String stripTrailingResult = s.stripTrailing();
+		System.out.println(stripTrailingResult);
 
 		setScreen(new MainMenuScreen(this));
-        System.out.println("exiting create()");
 	}
 
 	@Override
