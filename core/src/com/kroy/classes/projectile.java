@@ -1,13 +1,13 @@
 package com.kroy.classes;
 
-        import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx;
         import com.badlogic.gdx.graphics.Texture;
         import com.badlogic.gdx.graphics.g2d.Sprite;
         import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
         import javax.swing.*;
 
-public class Projectile extends Entity {
+class Projectile extends Entity {
 
     //
     float x, y, degree,  rotationSpeed, acceleration, decelleration, maxSpeed, dx, dy, radians, v;

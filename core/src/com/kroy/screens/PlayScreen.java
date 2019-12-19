@@ -14,7 +14,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -49,6 +52,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    private TiledMapRenderer tiledMapRenderer;
 
     private MapGraph mapGraph;
     private ArrayList<Object> objs = new ArrayList<Object>();
@@ -86,6 +90,10 @@ public class PlayScreen implements Screen, InputProcessor {
         mapGraph = new MapGraph();
         mapLoader = new TmxMapLoader();
 
+        map = new TmxMapLoader().load("./map-two-layer-new.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
+        tiledMapRenderer.setView((OrthographicCamera) camera);
+
 
         try {
             loadGraph();
@@ -110,7 +118,6 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         camera.update();
-
         agent.step();
 
         // display background layout
@@ -139,6 +146,18 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
         game.batch.end();
+
+
+        // Render level
+        tiledMapRenderer.setView(camera);
+
+        map.getLayers().get(0).setVisible(true);
+        map.getLayers().get(1).setVisible(true);
+        tiledMapRenderer.render();
+        System.out.println(map.getTileSets().toString());
+
+
+
         //
         for (Street street : mapGraph.streets) {
             street.render(game.shapeRenderer);
@@ -162,6 +181,7 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
 
         agent.render(game.shapeRenderer,game.batch);
+
 
      //   hud.stage.draw();
 

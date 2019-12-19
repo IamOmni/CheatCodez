@@ -30,9 +30,9 @@ public class kroyGame extends Game {
 		System.out.println("running create()");
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
-		var s = " Michale ";
-		String stripTrailingResult = s.stripTrailing();
-		System.out.println(stripTrailingResult);
+//		var s = " Michale ";
+//		String stripTrailingResult = s.stripTrailing();
+//		System.out.println(stripTrailingResult);
 
 		setScreen(new MainMenuScreen(this));
 	}
