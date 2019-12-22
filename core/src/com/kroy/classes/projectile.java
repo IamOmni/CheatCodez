@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 
         import javax.swing.*;
 
-class Projectile extends Entity {
+class projectile extends Entity {
 
     //
     float x, y, degree,  rotationSpeed, acceleration, decelleration, maxSpeed, dx, dy, radians, v;
@@ -27,7 +27,7 @@ class Projectile extends Entity {
      * @param x - int - X position of the projectile
      * @param y - int - Y positiong of the projectile
      */
-    public Projectile(float x, float y, float degree, float v) {
+    public projectile(float x, float y, float degree, float v) {
         this.x = x;
         this.y = y;
         //this.speed = 5;
