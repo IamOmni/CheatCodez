@@ -92,7 +92,7 @@ public class PlayScreen implements Screen, InputProcessor {
         mapLoader = new TmxMapLoader();
 
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
-        parameters.flipY = true;
+        parameters.flipY = false;
         map = mapLoader.load("map-two-layer-new.tmx",parameters);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView((OrthographicCamera) camera);
@@ -245,8 +245,10 @@ public class PlayScreen implements Screen, InputProcessor {
             String name = lines.get(i).split(" ")[0];
             String[] connections = lines.get(i).split(":")[1].replace(" ", "").split(",");
             String s = lines.get(i).split("\\(")[1].split("\\)")[0].replace(" ", "");
+
             Integer x = Integer.parseInt(s.split(",")[0]);
             Integer y = Math.abs(3240-Integer.parseInt(s.split(",")[1]));
+
             Coord c = new Coord(x, y, name, connections );
             Coords.put(name, c);
             mapGraph.addPoint(c);
