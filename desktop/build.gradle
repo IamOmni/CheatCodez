@@ -1,5 +1,5 @@
 apply plugin: "java"
-sourceCompatibility = 1.13
+sourceCompatibility = 11
 sourceSets.main.java.srcDirs = ["src/"]
 sourceSets.main.resources.srcDirs = ["../android/assets"]
 project.ext.mainClassName = "com.kroy.game.desktop.DesktopLauncher"
