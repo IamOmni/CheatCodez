@@ -1,6 +1,6 @@
 package com.kroy.classes;
 
-public class Laserblast extends Projectile {
+public class Laserblast extends projectile {
     private int length;
     private Entity target;
 

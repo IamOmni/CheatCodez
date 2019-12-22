@@ -1,6 +1,6 @@
 package com.kroy.classes;
 
-public class Waterblast extends Projectile {
+public class Waterblast extends projectile {
     /**
      * @param x      - int - X position of the projectile
      * @param y      - int - Y positiong of the projectile

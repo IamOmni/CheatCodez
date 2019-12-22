@@ -92,7 +92,7 @@ public class PlayScreen implements Screen, InputProcessor {
         mapLoader = new TmxMapLoader();
 
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
-        parameters.flipY = false;
+        parameters.flipY = true;
         map = mapLoader.load("map-two-layer-new.tmx",parameters);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView((OrthographicCamera) camera);
