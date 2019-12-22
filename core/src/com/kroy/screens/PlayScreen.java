@@ -81,6 +81,7 @@ public class PlayScreen implements Screen, InputProcessor {
         gamePort    = new FitViewport(1210, 827, camera);
         hudPort     = new FitViewport(width, height, HudCam);
         camera.position.set(game.WIDTH/2 , game.HEIGHT/2, 0);
+
         HudCam.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
 
         stats = new Texture("sidebar.png");
@@ -245,7 +246,7 @@ public class PlayScreen implements Screen, InputProcessor {
             String[] connections = lines.get(i).split(":")[1].replace(" ", "").split(",");
             String s = lines.get(i).split("\\(")[1].split("\\)")[0].replace(" ", "");
             Integer x = Integer.parseInt(s.split(",")[0]);
-            Integer y = Integer.parseInt(s.split(",")[1]);
+            Integer y = Math.abs(3240-Integer.parseInt(s.split(",")[1]));
             Coord c = new Coord(x, y, name, connections );
             Coords.put(name, c);
             mapGraph.addPoint(c);
