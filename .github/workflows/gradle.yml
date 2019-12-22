@@ -14,4 +14,4 @@ jobs:
       with:
         java-version: 13
     - name: Build with Gradle
-      run: ./gradlew desktop:build --gradle-version 6.0.1 --distribution-type all --gradle-distribution-url "https://services.gradle.org/distributions/gradle-6.0.1-all.zip" --gradle-distribution-sha256-sum 84d36ad9a69d37ba65723b9001fd7487096da1fd3c95013c76d497c56eff957a
+      run: ./gradlew desktop:build --gradle-version=6.0.1 --distribution-type=all --gradle-distribution-url=https://services.gradle.org/distributions/gradle-6.0.1-all.zip --gradle-distribution-sha256-sum=84d36ad9a69d37ba65723b9001fd7487096da1fd3c95013c76d497c56eff957a
