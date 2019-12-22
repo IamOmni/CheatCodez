@@ -14,4 +14,4 @@ jobs:
       with:
         java-version: 13
     - name: Build with Gradle
-      run: ./gradlew wrapper distributionUrl=https\://services.gradle.org/distributions/gradle-6.1-all.zip
+      run: ./gradlew desktop:build --gradle-version 6.0.1 --distribution-type all distributionUrl=https\://services.gradle.org/distributions/gradle-6.0.1-all.zip
