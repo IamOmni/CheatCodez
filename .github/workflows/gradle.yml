@@ -17,3 +17,5 @@ jobs:
       run: ./gradlew :desktop:test
     - name: Build with Gradle
       run: ./gradlew :desktop:build
+    - name: Create desktop dist
+      run: ./gradlew :desktop:dist
