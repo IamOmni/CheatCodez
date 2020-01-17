@@ -1,7 +1,7 @@
 package com.kroy.screens;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,7 +37,7 @@ public class PlayScreen implements Screen {
 
 
     private kroyGame game;
-
+    private static InputProcessor inputProcessor;
     public PlayScreen(kroyGame game){
         this.game = game;
         world = new World(new Vector2(0, 0), true);
@@ -55,7 +55,6 @@ public class PlayScreen implements Screen {
     }
     public void loadObjects(){
         MapObjects objects = map.getLayers().get("WALLS").getObjects();
-        System.out.println(objects.getCount());
         for (MapObject object: objects) {
             Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
             System.out.println(rectangle.getX());
@@ -63,8 +62,16 @@ public class PlayScreen implements Screen {
             ShapeFactory.createRectangle(
                     new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
                     new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                    BodyDef.BodyType.StaticBody, world, 1f, false);        }
+                    BodyDef.BodyType.StaticBody, world, 1f, false);
+        }
 
+    }
+
+
+    public void InputHandler(){
+        if(inputProcessor.keyDown('A')){
+
+        }
     }
 
     @Override
