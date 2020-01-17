@@ -52,23 +52,19 @@ public class PlayScreen implements Screen {
         this.game = game;
     }
 
-    public void getObjects(TiledMap tiledMap, World world, String layer){
-        MapObjects objects = tiledMap.getLayers().get(layer).getObjects();
+    public
+
+    public void getObjects(TiledMap tiledMap, World world){
+        MapObjects objects = tiledMap.getLayers().get("WALLS").getObjects();
         for (MapObject object: objects) {
             Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
 
             //create a dynamic within the world body (also can be KinematicBody or StaticBody
             BodyDef bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.type = BodyDef.BodyType.StaticBody;
             Body body = world.createBody(bodyDef);
 
-            //create a fixture for each body from the shape
-            float density = 1f;
-            Fixture fixture = body.createFixture(getShapeFromRectangle(rectangle),density);
-            fixture.setFriction(0.1F);
-
-            //setting the position of the body's origin. In this case with zero rotation
-            body.setTransform(getTransformedCenterForRectangle(rectangle),0);
+            ShapeFactory.createRectangle();
         }
     }
 
