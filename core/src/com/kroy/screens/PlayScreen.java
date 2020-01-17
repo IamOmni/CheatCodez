@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.*;
 
 import com.kroy.classes.Object;
+import com.kroy.modules.ShapeFactory;
 import com.kroy.pathfinding.Agent;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -34,6 +35,7 @@ import com.kroy.game.kroyGame;
 
 public class PlayScreen implements Screen {
     public static final float TILE_SIZE = 64;
+    private World world;
 
     private kroyGame game;
 
@@ -41,33 +43,18 @@ public class PlayScreen implements Screen {
         this.game = game;
     }
 
-    public
 
-    public void getObjects(TiledMap tiledMap, World world){
+
+    public void getObjects(TiledMap tiledMap){
         MapObjects objects = tiledMap.getLayers().get("WALLS").getObjects();
         for (MapObject object: objects) {
             Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
-
-            //create a dynamic within the world body (also can be KinematicBody or StaticBody
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            Body body = world.createBody(bodyDef);
-
-            ShapeFactory.createRectangle();
-        }
+            ShapeFactory.createRectangle(
+                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
+                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                    BodyDef.BodyType.StaticBody, world, 1f, false);        }
     }
 
-    public static Vector2 getTransformedCenterForRectangle(Rectangle rectangle){
-        Vector2 center = new Vector2();
-        rectangle.getCenter(center);
-        return center.scl(1/TILE_SIZE);
-    }
-
-    public static Shape getShapeFromRectangle(Rectangle rectangle){
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(rectangle.width*0.5F/ TILE_SIZE,rectangle.height*0.5F/ TILE_SIZE);
-        return polygonShape;
-    }
 
 
     @Override
