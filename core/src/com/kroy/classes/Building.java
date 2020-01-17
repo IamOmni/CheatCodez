@@ -12,4 +12,7 @@ import java.util.ArrayList;
 
 public class Building extends Object {
 
+    Building(Vector2 position) {
+        super(position);
+    }
 }

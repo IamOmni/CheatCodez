@@ -1,8 +1,5 @@
 package com.kroy.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.audio.Music;
@@ -34,14 +31,6 @@ import com.kroy.pathfinding.Agent;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.game.kroyGame;
-import com.kroy.pathfinding.Street;
-import com.kroy.scenes.Hud;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
 
 public class PlayScreen implements Screen {
     public static final float TILE_SIZE = 64;
