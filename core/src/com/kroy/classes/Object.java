@@ -10,6 +10,22 @@ import com.badlogic.gdx.physics.box2d.*;
 
 
 public class Object{
+    private Sprite sprite;
+    private Body body;
+    Object(){
+        sprite = new Sprite();
+    }
+    private void setTexture(Texture texture){
+        this.sprite.setTexture(texture);
+    }
+    private void setBody(Body body){
+        this.body = body;
+    }
+    private void setPosition(Vector2 position){
+        sprite.setPosition(position.x, position.y);
+    }
 
-
+    private Vector2 getPosition(){
+        return new Vector2(sprite.getX(), sprite.getY());
+    }
 }
