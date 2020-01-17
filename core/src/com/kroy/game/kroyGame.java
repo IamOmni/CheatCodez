@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.kroy.screens.MainMenuScreen;
+import com.kroy.screens.PlayScreen;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -93,7 +94,7 @@ public class kroyGame extends Game {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		loadAssets();
-		setScreen(new MainMenuScreen(this));
+		setScreen(new PlayScreen(this));
 	}
 
 	/**

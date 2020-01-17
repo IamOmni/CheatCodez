@@ -9,27 +9,42 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kroy.classes.*;
 
-import com.kroy.classes.Object;
+import com.kroy.modules.GraphLoader;
 import com.kroy.modules.ShapeFactory;
-import com.kroy.pathfinding.Agent;
+
+import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 
-import com.kroy.game.kroyGame;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayScreen implements Screen {
     public static final float TILE_SIZE = 64;
     private World world;
+    MapGraph mapGraph;
 
     private kroyGame game;
+    // Create Map to store all the coords
+    Map<String, Coord> Coords = new HashMap<>();
     private static InputProcessor inputProcessor;
+
+
     public PlayScreen(kroyGame game){
         this.game = game;
+
+        mapGraph = new MapGraph();
         world = new World(new Vector2(0,0), true);
+
+        try {
+            GraphLoader.loadGraph(Coords, mapGraph);
+            System.out.println("Graph loaded successfully");
+        }
+        catch (IOException e){
+            System.out.println("Error reading file..." + e.toString());
+        }
     }
 
 

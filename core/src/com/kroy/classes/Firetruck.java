@@ -22,10 +22,11 @@ import com.kroy.screens.PlayScreen;
 
 import java.util.ArrayList;
 import java.util.Random;
-public class Firetruck extends Entity {
+public class Firetruck extends Traversable {
 
 
-    Firetruck(Vector2 position) {
-        super(position);
+
+    Firetruck(MapGraph mapGraph, Coord startCoord) {
+        super(mapGraph, startCoord);
     }
 }

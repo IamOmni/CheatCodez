@@ -1,4 +1,4 @@
-package com.kroy.pathfinding;
+package com.kroy.classes;
 
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,8 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Queue;
 import com.kroy.classes.Object;
+import com.kroy.pathfinding.Coord;
+import com.kroy.pathfinding.MapGraph;
 
-public class Agent extends Object {
+public class Traversable extends Entity {
     MapGraph mapGraph;
 
     float speed = 5f;
@@ -23,7 +25,7 @@ public class Agent extends Object {
      * @param mapGraph
      * @param start start coord/position
      */
-    public Agent(MapGraph mapGraph, Coord start) {
+    public Traversable(MapGraph mapGraph, Coord start) {
         super(new Vector2(start.x, start.y));
 
         this.mapGraph = mapGraph;
