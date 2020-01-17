@@ -5,12 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -33,7 +31,6 @@ import com.kroy.classes.*;
 
 import com.kroy.classes.Object;
 import com.kroy.modules.ShapeFactory;
-import com.kroy.pathfinding.Agent;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.game.kroyGame;
@@ -48,91 +45,53 @@ import java.util.*;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
-    private OrthographicCamera camera, HudCam;
-    private Viewport gamePort, hudPort;
-    private Animation anim;
-    private Music bgMusic;
-    private Sprite background;
-    private Hud hud;
+    private OrthographicCamera camera, hudCamera;
+    private Viewport viewport, hudViewport;
     private int time;
     private Integer score;
-    private int xCounterCam, yCounterCam;
-    private ArrayList<ArrayList<ArrayList>> cameraCoords;
     // Create Map to store all the coords
     Map<String, Coord> Coords = new HashMap<>();
 
-    private TmxMapLoader mapLoader;
     private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
     private TiledMapRenderer tiledMapRenderer;
 
     private MapGraph mapGraph;
     private ArrayList<Object> objs = new ArrayList<Object>();
     private ArrayList<Firetruck> firetrucks = new ArrayList<>();
     private Firetruck activeFiretruck;
-    private BitmapFont font;
+    public static BitmapFont font;
 
     private int width, height;
     private int ratioW, ratioH;
-    private Agent agent;
 
     public static World world;
     private Box2DDebugRenderer mB2dr;
 
     public PlayScreen(kroyGame game){
         this.game   = game;
-        hud         = new Hud(game.batch);
-        font = new BitmapFont();
+
+
         mapGraph = new MapGraph();
-        mapLoader = new TmxMapLoader();
         score = 0;
         map = game.manager.get("map-two-layer-new.tmx", TiledMap.class);
-
-        background  = new Sprite(game.manager.get("background.png"	, Texture.class));
 
         width  = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
         ratioW = Gdx.graphics.getWidth()/game.WIDTH;
         ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
-
-        camera = new OrthographicCamera(0.63f * width, 0.77f * height);
-        HudCam = new OrthographicCamera(width, height);
-
-        gamePort    = new FitViewport(0.63f * width, 0.77f * height, camera);
-        hudPort     = new FitViewport(width, height, HudCam);
-
-        cameraCoords = new ArrayList<>();
+        camera = new OrthographicCamera(width, height);
+        hudCamera = new OrthographicCamera(width, height);
+        viewport = new FitViewport(width, height, camera);
+        hudViewport = new FitViewport(width, height, hudCamera);
 
 
-        /**
-         *  0 1 2
-         *  3 4 5
-         *  6 7 8
-         */
-        xCounterCam=0;
-        yCounterCam=0;
-        for (int i=-2;i<8;i++){
-            ArrayList<ArrayList> row = new ArrayList<>();
-            for (int j=-2;j<8;j++){
-
-                float x = (i+1)*785 - width/2;
-                float y = (j+1)*540 - height/2;
-                ArrayList p = new ArrayList<>();
-                p.add(0, x);
-                p.add(1, y);
-                row.add(p);
-            }
-            cameraCoords.add(row);
-        }
 
 
         System.out.println(width/3);
-        System.out.println(cameraCoords.get(0).get(0).get(0));
-        System.out.println(cameraCoords.get(0).get(1).get(1));
-        camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
+    //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
         camera.update();
-        HudCam.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
+        camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView((OrthographicCamera) camera);
@@ -144,8 +103,6 @@ public class PlayScreen implements Screen, InputProcessor {
         try {
             loadGraph();
             loadTiledMap();
-//            agent = new Agent(mapGraph, Coords.get("A"));
-//            agent.setGoal(Coords.get("M"));
 
             Landmark b = new Landmark(3330, 1600, 50, game.manager.get("shambles_invaded.png", Texture.class), 90f, 0.6f, world);
             Landmark cliffordTower = new Landmark(1810, 510, 50, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
@@ -208,7 +165,14 @@ public class PlayScreen implements Screen, InputProcessor {
         camera.position.set(activeFiretruck.body.getPosition(),0);
 
         game.shapeRenderer.setColor(Color.WHITE);
-        Gdx.gl.glViewport(0,0,width, height);
+        viewport.apply();
+
+        Gdx.gl.glViewport(
+                (int)(0),
+                (int)(0),
+                (int)(width),
+                (int)(height)
+        );
 
 
         int x   = (int)(0.07 * width);
@@ -218,8 +182,8 @@ public class PlayScreen implements Screen, InputProcessor {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 16;
+        font = generator.generateFont(parameter);
         game.batch.begin();
-        BitmapFont font = generator.generateFont(parameter);
         font.setColor(Color.WHITE);
         font.getData().scale(1);
         font.draw( game.batch,"SCORE",x , y);
@@ -231,15 +195,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
         game.shapeRenderer.end();
 
-        // Thing that fits in the area where the map is displayed
-        gamePort.apply();
-
-        Gdx.gl.glViewport(
-                (int)(0),
-                (int)(0),
-                (int)(width),
-                (int)(height)
-        );
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
@@ -287,11 +242,21 @@ public class PlayScreen implements Screen, InputProcessor {
             }
         }
         objs.addAll(tempStore);
+        game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
 
+
+        for(Object i : objs) {
+            i.displayHealth(game.batch);
+        }
         game.batch.end();
-
         //agent.render(game.shapeRenderer,game.batch);
         mB2dr.render(world,camera.combined);
+
+        game.batch.setProjectionMatrix(hudCamera.combined);
+        hudViewport.apply();
+        game.batch.begin();
+        game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+        game.batch.end();
 
         if (time%1000==0) {score+=10;};
 
@@ -305,10 +270,7 @@ public class PlayScreen implements Screen, InputProcessor {
         this.width  = width;
         ratioW = width/game.WIDTH;
         ratioH = height/game.HEIGHT;
-
-
-        gamePort.update(width, height);
-        hudPort .update(width, height);
+        viewport.update(width, height);
         camera  .update();
 
    //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
@@ -426,7 +388,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 camera.translate(0f, -10f);
             }
 
-            camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
+         //   camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
 
             if (activeFiretruck != null) {
                 if (keycode == (Input.Keys.W)) {

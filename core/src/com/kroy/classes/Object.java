@@ -1,12 +1,15 @@
 package com.kroy.classes;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.kroy.screens.PlayScreen;
 
 
 public class Object{
@@ -15,7 +18,7 @@ public class Object{
 
     public Sprite sprite;
     protected Vector3 position;
-    public float texRotation;
+    public int hitpoints = 0;
     public Body body;
     private float offsetX, offsetY;
 
@@ -66,7 +69,7 @@ public class Object{
 
     /**
      * Set the sprite.getTexture() for the Object
-     * @param sprite.getTexture() - Texture for the Object
+     * @param - Texture for the Object
      */
     public void setModel(Texture model) {
         this.sprite.setTexture(model);
@@ -90,6 +93,18 @@ public class Object{
         sprite.rotate(rotation);
     }
 
+    public void displayHealth(SpriteBatch sb){
+        if(hitpoints > 0) {
+            System.out.println("hitpoints: " + hitpoints);
+            PlayScreen.font.setColor(Color.RED);
+            PlayScreen.font.getData().scale(0.25f);
+
+            String text = String.format("%d HP", hitpoints);
+            final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
+            PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * offsetY + PlayScreen.font.getLineHeight());
+        }
+    }
+
     /**
      * Render function for LibGDX
      * @param sb - SpriteBatch
@@ -99,6 +114,7 @@ public class Object{
         sprite.setOrigin(body.getPosition().x, body.getPosition().y);
         sprite.setCenter(body.getPosition().x, body.getPosition().y);
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
+
 
         sb.draw(sprite.getTexture(),
                 sprite.getX() - offsetX,sprite.getY() - offsetY,

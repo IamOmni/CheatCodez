@@ -16,7 +16,7 @@ import com.kroy.screens.PlayScreen;
 import com.kroy.states.PlayState;
 
 public class Entity extends Object{
-    protected int hitpoints, hitpointCap, speedMove;
+    protected int hitpointCap, speedMove;
     MapGraph mapGraph;
 
     float speed = 5f;
