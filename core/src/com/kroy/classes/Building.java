@@ -39,6 +39,7 @@ public class Building extends Object {
         this.texture = texture;
         setModel(texture);
         height = texture.getHeight();
+        hitpoints = 100;
         width = texture.getWidth();
         this.scale = scale;
         this.rotation = rotation;
