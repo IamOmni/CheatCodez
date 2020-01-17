@@ -72,7 +72,6 @@ public class PlayScreen implements Screen, InputProcessor {
     private Firetruck activeFiretruck;
     private BitmapFont font;
 
-
     private int width, height;
     private int ratioW, ratioH;
     private Agent agent;
@@ -104,6 +103,7 @@ public class PlayScreen implements Screen, InputProcessor {
         hudPort     = new FitViewport(width, height, HudCam);
 
         cameraCoords = new ArrayList<>();
+
 
         /**
          *  0 1 2
@@ -144,15 +144,15 @@ public class PlayScreen implements Screen, InputProcessor {
         try {
             loadGraph();
             loadTiledMap();
-            agent = new Agent(mapGraph, Coords.get("A"));
-            agent.setGoal(Coords.get("M"));
+//            agent = new Agent(mapGraph, Coords.get("A"));
+//            agent.setGoal(Coords.get("M"));
 
-            Landmark b = new Landmark(3330, 1600, 50, game.manager.get("shambles_invaded.png", Texture.class), 90f, 0.6f);
-            Landmark cliffordTower = new Landmark(1810, 510, 50, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f);
-            Landmark yorkStation = new Landmark(500, 2750, 50, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f);
-            Landmark yorkMinster = new Landmark(3005, 2750, 50, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f);
-            Base watertower1 = new Base(1919, 1792, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f);
-            Base watertower2 = new Base(450, 510, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f);
+            Landmark b = new Landmark(3330, 1600, 50, game.manager.get("shambles_invaded.png", Texture.class), 90f, 0.6f, world);
+            Landmark cliffordTower = new Landmark(1810, 510, 50, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
+            Landmark yorkStation = new Landmark(500, 2750, 50, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
+            Landmark yorkMinster = new Landmark(3005, 2750, 50, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
+            Base watertower1 = new Base(1919, 1792, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
+            Base watertower2 = new Base(450, 510, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
             Alien aTest = new Alien(yorkMinster, "below", game.manager);
             objs.add(aTest);
             Firetruck f = new Firetruck(mapGraph, Coords.get("A"), 1, game.manager);
@@ -174,7 +174,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
     public void loadTiledMap(){
-        map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
+
         loadObjects();
     }
     public void loadObjects(){
@@ -184,8 +184,8 @@ public class PlayScreen implements Screen, InputProcessor {
             System.out.println(rectangle.getX());
             System.out.println(rectangle.getY());
             ShapeFactory.createRectangle(
-                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                    new Vector2(rectangle.getX() * 4 + rectangle.getWidth() * 2, rectangle.getY() * 4 + rectangle.getHeight() * 2), // position
+                    new Vector2(rectangle.getWidth() *2, rectangle.getHeight() *2), // size
                     BodyDef.BodyType.StaticBody, world, 1f, false);
         }
 
@@ -197,6 +197,7 @@ public class PlayScreen implements Screen, InputProcessor {
     }
     @Override
     public void render(float delta) {
+        handleInput();
         time +=Math.ceil(Gdx.graphics.getDeltaTime());
         camera.update();
         // display background layout
@@ -293,7 +294,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         game.batch.end();
 
-        agent.render(game.shapeRenderer,game.batch);
+        //agent.render(game.shapeRenderer,game.batch);
         mB2dr.render(world,camera.combined);
 
         if (time%1000==0) {score+=10;};
@@ -376,6 +377,30 @@ public class PlayScreen implements Screen, InputProcessor {
 
     }
 
+public void handleInput(){
+    if(Gdx.input.isKeyPressed(Input.Keys.W)){
+        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
+    }
+    else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
+    }
+    else {
+        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
+    }
+
+    if(Gdx.input.isKeyPressed(Input.Keys.A)){
+        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
+    }
+    else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
+    }
+    else {
+        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
+    }
+
+
+}
+
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.ESCAPE){
@@ -400,7 +425,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         if(activeFiretruck != null){
             if (keycode == (Input.Keys.W)) {
-                activeFiretruck.setUp(true);
+
             }
              if (keycode == (Input.Keys.D)) {
                 System.out.println("D key is pressed");

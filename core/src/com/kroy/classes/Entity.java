@@ -17,7 +17,6 @@ import com.kroy.states.PlayState;
 
 public class Entity extends Object{
     protected int hitpoints, hitpointCap, speedMove;
-    protected Vector3 movement;
     MapGraph mapGraph;
 
     float speed = 5f;
@@ -26,22 +25,23 @@ public class Entity extends Object{
     public GraphPath<Coord> graphPath;
 
 
-    public Entity(Vector3 position, Texture texture) {
+    public Entity(Vector3 position, Texture texture, float scale) {
         super(
                 position, PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth(), texture.getHeight()
+                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
                 )
         );
 
     }
 
-    public Entity(MapGraph mapGraph, Coord start, Texture texture) {
+    public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale) {
+
         super(
                 new Vector3(start.x, start.y, 0.0f),
                 PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth(), texture.getHeight()
+                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
                 )
         );
         if(texture != null) {
@@ -71,18 +71,13 @@ public class Entity extends Object{
         this.speedMove = speedMove;
     }
 
-    public Vector3 getMovement() {
-        return movement;
-    }
 
-    public void setMovement(Vector3 movement) {
-        this.movement = movement;
-    }
 
     public void move(){};
     public void takeDmg(){};
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
+        super.render(batch);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(1f, 0f, 0f, 1);
         shapeRenderer.circle(position.x, position.y, 5);
@@ -95,8 +90,7 @@ public class Entity extends Object{
     }
     @Override
     public void update(float dt) {
-        position.add(movement);
-
+        position.add(position);
         checkCollision();
     }
 
@@ -159,13 +153,13 @@ public class Entity extends Object{
               n.x    p.x
          */
         float angle = MathUtils.atan2(next.y - previous.y, next.x - previous.x);
-        movement = new Vector3(MathUtils.cos(angle) * speed,MathUtils.sin(angle) * speed, 0.0f);
+        position = new Vector3(MathUtils.cos(angle) * speed,MathUtils.sin(angle) * speed, 0.0f);
     }
 
     /**
      * Agent has reached the goal Coord.
      */
     private void reachDestination() {
-        movement = new Vector3(0.0f,0.0f,0.0f);
+        position = new Vector3(0.0f,0.0f,0.0f);
     }
 }

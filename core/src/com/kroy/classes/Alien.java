@@ -14,7 +14,7 @@ import com.kroy.screens.PlayScreen;
 
 import java.util.ArrayList;
 
-public class Alien extends Object {
+public class Alien extends Entity {
     private int speed, damage;
 
     float x, y, degree,  rotationSpeed, dx, dy, radians, v, dt, radius;
@@ -42,10 +42,10 @@ public class Alien extends Object {
 
 
     public Alien(Landmark parent, String direction, AssetManager manager) {
-        super();
-        super.setModel(manager.get("alien.png", Texture.class));
+        super(new Vector3(parent.getX(), parent.getY()-64,0),  manager.get("alien.png", Texture.class), 1f);
+        //super.setModel(manager.get("alien.png", Texture.class));
         shapeRenderer = new ShapeRenderer();
-
+        setModel(manager.get("alien.png", Texture.class));
         xSpeed=0.7;
         ySpeed=0.7;
         radius=150;
@@ -73,16 +73,7 @@ public class Alien extends Object {
         super.position.x = parent.getX()+(float)test*400;
         super.position.y = parent.getY()+(float)test*400;
 
-        if (direction.equals("above")){
-            super.position.y+=50;
-        } else if (direction.equals("left")){
-            super.position.x-=50;
-        } else if (direction.equals("right")){
-            super.position.x+=50;
-        } else {
-            super.position.y-=50;
-            super.position.x-=50;
-        }
+
     }
 
     public int getX(){return (int) super.position.x;};
@@ -179,7 +170,7 @@ public class Alien extends Object {
 
     public void render(SpriteBatch sb, ArrayList<Firetruck> firetrucks){
         update(firetrucks);
-        super.render(sb, degree, 1);
+        super.render(sb);
     }
 
     public int getSpeed() { return speed; }

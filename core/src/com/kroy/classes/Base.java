@@ -2,6 +2,7 @@ package com.kroy.classes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 
@@ -35,20 +36,20 @@ public class Base extends Building {
      * @param y      - int y coordinate
      * @param health - health
      */
-    public Base(int x, int y, int health, Texture texture, float rotation, float scale) {
-        super(x, y, health, texture, rotation, scale);
+    public Base(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
+        super(x, y, health, texture, rotation, scale, world);
         refillDelay= 5f;
         refillAmount=1;
     }
 
-    public Base(int x, int y, int health, Texture texture, float rotation) {
-        super(x, y, health, texture, rotation, 1);
+    public Base(int x, int y, int health, Texture texture, float rotation, World world) {
+        super(x, y, health, texture, rotation, 1, world);
         refillDelay= 5f;
         refillAmount=1;
     }
 
-    public Base(int x, int y, int health, Texture texture) {
-        super(x, y, health, texture, 0, 1);
+    public Base(int x, int y, int health, Texture texture, World world) {
+        super(x, y, health, texture, 0, 1, world);
         refillDelay= 5f;
         refillAmount=1;
     }

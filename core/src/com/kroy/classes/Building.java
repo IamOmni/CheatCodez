@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class Building extends Object {
-    private float scale;
     // Own variables
     private int health;
     private boolean hit;
@@ -29,29 +30,12 @@ public class Building extends Object {
      * @param y  - int y coordinate
      * @param health - health
      */
-    public Building(int x, int y, int health, Texture texture, float rotation){
-        this.texture = texture;
-        setModel(texture);
-        height = 64f;
-        width = 64f;
-        this.rotation = rotation;
-        scale=1;
-        position.set(new Vector3(x,y,0));
-        this.health = health;
-    }
 
-    public Building(int x, int y, int health, Texture texture) {
-        this.texture = texture;
-        setModel(texture);
-        height = 64f;
-        width = 64f;
-        this.rotation = rotation;
-        position.set(new Vector3(x,y,0));
-        scale=1;
-        this.health = health;
-    }
 
-    public Building(int x, int y, int health, Texture texture, float rotation, float scale) {
+
+    public Building(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
+        super(new Vector3(x,y,0), world, BodyDef.BodyType.StaticBody, new Vector2(texture.getWidth()*scale,texture.getHeight()*scale));
+
         this.texture = texture;
         setModel(texture);
         height = texture.getHeight();
@@ -123,7 +107,7 @@ public class Building extends Object {
     }
 
     public void render(SpriteBatch sp){
-        super.render(sp, rotation, scale);
+        super.render(sp);
         hit = false;
     }
 

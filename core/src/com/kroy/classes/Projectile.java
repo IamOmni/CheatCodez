@@ -27,7 +27,7 @@ public class Projectile extends Entity {
      * @param y - int - Y positiong of the projectile
      */
     public Projectile(float v, float x, float y, float degree) {
-        super(new Vector3(x, y, 0), kroyGame.manager.get("bullet.png", Texture.class));
+        super(new Vector3(x, y, 0), kroyGame.manager.get("bullet.png", Texture.class), 1f);
 
         this.deceleration = 0.9f;
         this.xSpeed=10;

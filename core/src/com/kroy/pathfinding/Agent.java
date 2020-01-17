@@ -7,9 +7,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Queue;
+import com.kroy.classes.Entity;
 import com.kroy.classes.Object;
+import com.kroy.game.kroyGame;
 
-public class Agent extends Object {
+public class Agent extends Entity {
     MapGraph mapGraph;
 
     float speed = 5f;
@@ -24,6 +26,7 @@ public class Agent extends Object {
      * @param start start coord/position
      */
     public Agent(MapGraph mapGraph, Coord start) {
+        super(new Vector3(start.x, start.y, 0.0f), kroyGame.manager.get("alienbullet.png"),1f);
         this.mapGraph = mapGraph;
         position = new Vector3(start.x, start.y, 0.0f);
         this.previous = start;

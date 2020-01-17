@@ -3,13 +3,13 @@
  <editorsettings>
   <export target="map-two-layer-new.tmx" format="tmx"/>
  </editorsettings>
- <tileset firstgid="1" name="road.tsx" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+ <tileset firstgid="2" name="road.tsx" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="road.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="2" name="grass.tsx" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+ <tileset firstgid="1" name="grass.tsx" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="grass.png" width="64" height="64"/>
  </tileset>
- <layer id="1" name="GRASS" width="73" height="50">
+ <layer id="5" name="GRASS" width="73" height="50">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -63,7 +63,7 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <layer id="2" name="ROADS" width="73" height="50">
+ <layer id="4" name="ROADS" width="73" height="50">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,

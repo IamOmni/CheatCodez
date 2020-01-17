@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kroy.game.kroyGame;
@@ -33,6 +34,16 @@ public class Firetruck extends Entity {
     int height, width, health, ammo;
     private ArrayList<Projectile> bullets;
     private Texture model;
+    public static final int DRIVE_DIRECTION_NONE = 0;
+    public static final int DRIVE_DIRECTION_FORWARD = 1;
+    public static final int DRIVE_DIRECTION_BACKWARD = 2;
+
+    public static final int TURN_DIRECTION_NONE = 0;
+    public static final int TURN_DIRECTION_LEFT = 1;
+    public static final int TURN_DIRECTION_RIGHT = 2;
+
+    public int mDriveDirection = DRIVE_DIRECTION_NONE;
+    public int mTurnDirection = TURN_DIRECTION_NONE;
 
     /**
      * Constructor for Firetruck object
@@ -40,20 +51,17 @@ public class Firetruck extends Entity {
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class));
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.2f);
         waterCap =  new Random().nextInt(20);
         waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20);
         hitpoints = hitpointCap;
-
+        this.scale = 0.2f;
         status = new StatusButton(ufid, manager);
         model = manager.get("Firetruck.png", Texture.class);
-        setMovement(new Vector3(60,60,0)); // Change to new Vector3(position)?
-        position.x = 60;
-        position.y = 60;
 
         status = new StatusButton(ufid, manager);
-        setMovement(new Vector3(10,0,0)); // Change to new Vector3(position)?
+        //s(new Vector3(10,0,0)); // Change to new Vector3(position)?
 
 
 
@@ -74,6 +82,7 @@ public class Firetruck extends Entity {
         degree = 0;
         xSpeed = 0;
         ySpeed = 0;
+
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
@@ -161,84 +170,33 @@ public class Firetruck extends Entity {
      * @param dt - Delta time
      */
     public void update(float dt){
+        Vector2 baseVector = new Vector2();
 
-        if(left) {
-            rotation += 1f;
-            rotate(rotation);
+        if(mTurnDirection == TURN_DIRECTION_RIGHT){
+            body.setAngularVelocity(-2.0f);
         }
-        if(right)
-        {
-            rotation -= 1f;
-            rotate(-rotation);
+        else if(mTurnDirection == TURN_DIRECTION_LEFT){
+            body.setAngularVelocity(2.0f);
         }
-        if(up)
-        {
-            position.y += (Math.cos(Math.toRadians(rotation)) * 5);
-            position.x -= (Math.sin(Math.toRadians(rotation)) * 5);
+        else{
+            body.setAngularVelocity(0.0f);
         }
-        if(down)
-        {
-            position.y -= (Math.cos(Math.toRadians(rotation)) * 5);
-            position.x += (Math.sin(Math.toRadians(rotation)) * 5);
+
+        if(mDriveDirection == DRIVE_DIRECTION_FORWARD) {
+            baseVector.set(0, 120f);
+        } else if (mDriveDirection== DRIVE_DIRECTION_BACKWARD){
+            baseVector.set(0,-120f);
         }
+
+        if (!baseVector.isZero()){System.out.print("UPDATING");
+            body.applyForceToCenter(baseVector, true);
+            body.applyForce(baseVector, new Vector2(100,0), true);
+            body.applyAngularImpulse(100f, true);
+            body.setLinearVelocity(body.getWorldVector(baseVector));
+        }
+
     }
-    public void oldUpdate(float dt){
-      //  System.out.println("Firetruck update function called!");
-        dt = .01f;
-        if (degree > 360 ) degree = 0;
-        if (degree < 0) degree= 360;
 
-
-        if (left) {  degree += rotationSpeed * dt; }
-        if (right) { degree -= rotationSpeed * dt; }
-
-        if (up) {
-            xSpeed+=acceleration * dt;
-            ySpeed+=acceleration * dt;
-        }
-
-        if (down){
-            ySpeed-=decelleration*dt*10;
-            xSpeed-=decelleration*dt*10;
-        }
-
-        if (up==false && down==false){
-            if ((ySpeed-decelleration*dt*3)>0) ySpeed-=decelleration*dt*3;
-            if ((xSpeed-decelleration*dt*3)>0) xSpeed-=decelleration*dt*3;
-        }
-
-
-        xSpeed = Math.abs(xSpeed);
-        ySpeed = Math.abs(ySpeed);
-
-        radians =  degree*((float)Math.PI/180);
-        dx = (float) Math.cos(radians)*(float)xSpeed*dt;
-        dy = (float) Math.sin(radians)*(float)ySpeed*dt;
-        float v = (float) Math.sqrt(dx*dx + dy*dy);
-
-
-       // System.out.println(String.format("X:%f | Y:%f | DX:%f | DY:%f | V:%f", x, y, dx, dy, v));
-        if (v>0.003){
-            dx-=(dx/v) * decelleration*dt;
-            dy-=(dy/v) * decelleration*dt;
-            x+=dx;
-            y+=dy;
-        } else {
-            x=x;
-            y=y;
-        }
-
-        if (v>maxSpeed){
-            dx = (dx/v)*maxSpeed;
-            dy = (dy/v)*maxSpeed;
-            x+=dx;
-            y+=dy;
-        }
-
-        resetDirections();
-
-        position.set(x, y,0);
-    }
 
     /**
      * Method to reset directions of the player
@@ -274,37 +232,10 @@ public class Firetruck extends Entity {
     /**
      * Handle input function for setting direction
      */
-    public void handleInput(){
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            System.out.println("W key is pressed");
-            setUp(true);
-            setLeft(false);
-            setRight(false);
-            setDown(false);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            System.out.println("D key is pressed");
-            setUp(false);
-            setLeft(false);
-            setRight(true);
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            System.out.println("A key is pressed");
-            setUp(false);
-            setLeft(true);
-            setRight(false);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-            System.out.println("S key is pressed");
-            setUp(false);
-            setLeft(false);
-            setRight(false);
-            setDown(true);
-        }
-        else {
-            setUp(false); setLeft(false); setRight(false); setDown(false);
-        }
-    }
+
+
+
+
 
     /**
      * Function to shoot a Projectile
@@ -352,8 +283,7 @@ public class Firetruck extends Entity {
 
     public void render(SpriteBatch batch){
         update(1f);
-        super.render(batch, this.degree, 0.5f);
-
+        super.render(batch);
 
 //    public void render(SpriteBatch sb){
 //        super.render(sb, rotation, 1);
