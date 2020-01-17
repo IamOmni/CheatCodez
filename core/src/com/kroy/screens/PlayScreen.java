@@ -205,17 +205,11 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0,0,0,1);
         camera.position.set(activeFiretruck.body.getPosition(), 0);
         world.step(delta, 6, 2);
-
+        camera.position.set(activeFiretruck.body.getPosition(),0);
 
         game.shapeRenderer.setColor(Color.WHITE);
         Gdx.gl.glViewport(0,0,width, height);
-        //draw HUD
-        hudPort.apply();
-        game.batch.setProjectionMatrix(HudCam.combined);
-        game.shapeRenderer.setProjectionMatrix(HudCam.combined);
-        game.batch.begin();
 
-        game.batch.draw(background, 0, 0, hudPort.getScreenWidth(), hudPort.getScreenHeight());
 
         int x   = (int)(0.07 * width);
         int y      = (int)(0.07 * height) +50;
@@ -224,6 +218,7 @@ public class PlayScreen implements Screen, InputProcessor {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 16;
+        game.batch.begin();
         BitmapFont font = generator.generateFont(parameter);
         font.setColor(Color.WHITE);
         font.getData().scale(1);
@@ -232,9 +227,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
         game.batch.end();
 
-        for(Firetruck ft: firetrucks){
-            ft.status.render(game.batch, game.shapeRenderer);
-        }
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         game.shapeRenderer.end();
@@ -243,10 +235,10 @@ public class PlayScreen implements Screen, InputProcessor {
         gamePort.apply();
 
         Gdx.gl.glViewport(
-                (int)(0.306 * width),
-                (int)((0.07) * height),
-                (int)(0.63 * width),
-                (int)(0.77 * height)
+                (int)(0),
+                (int)(0),
+                (int)(width),
+                (int)(height)
         );
         game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
@@ -401,42 +393,44 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.ESCAPE){
+        if (keycode == Input.Keys.ESCAPE) {
             dispose();
             game.setScreen(new MainMenuScreen(game));
 
         }
-        if(keycode == Input.Keys.LEFT){
-            xCounterCam-=1;
+        if (keycode == Input.Keys.LEFT) {
+            camera.translate(-10f, 0f);
         }
-        if(keycode == Input.Keys.RIGHT){
-            xCounterCam+=1;
+        if (keycode == Input.Keys.RIGHT) {
+            camera.translate(10f, 0f);
         }
-        if(keycode == Input.Keys.UP){
-            yCounterCam+=1;
+        if (keycode == Input.Keys.UP) {
+            camera.translate(0, 10f);
         }
-        if(keycode == Input.Keys.DOWN){
-            yCounterCam-=1;
-        }
-
-        camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
-
-        if(activeFiretruck != null){
-            if (keycode == (Input.Keys.W)) {
-
+        if (keycode == Input.Keys.DOWN) {
+            {
+                camera.translate(0f, -10f);
             }
-             if (keycode == (Input.Keys.D)) {
-                System.out.println("D key is pressed");
-                activeFiretruck.setRight(true);
-            }
-             if (keycode == (Input.Keys.A)) {
-                System.out.println("A key is pressed");
 
-                activeFiretruck.setLeft(true);
-            }
-             if(keycode == (Input.Keys.S)) {
-                System.out.println("S key is pressed");
-                activeFiretruck.setDown(true);
+            camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
+
+            if (activeFiretruck != null) {
+                if (keycode == (Input.Keys.W)) {
+
+                }
+                if (keycode == (Input.Keys.D)) {
+                    System.out.println("D key is pressed");
+                    activeFiretruck.setRight(true);
+                }
+                if (keycode == (Input.Keys.A)) {
+                    System.out.println("A key is pressed");
+
+                    activeFiretruck.setLeft(true);
+                }
+                if (keycode == (Input.Keys.S)) {
+                    System.out.println("S key is pressed");
+                    activeFiretruck.setDown(true);
+                }
             }
         }
         return false;
