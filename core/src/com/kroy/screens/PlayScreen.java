@@ -160,7 +160,7 @@ public class PlayScreen implements Screen, InputProcessor {
         // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0,0,0,1);
-
+        camera.position.set(activeFiretruck.body.getPosition(), 0);
         world.step(delta, 6, 2);
         camera.position.set(activeFiretruck.body.getPosition(),0);
 
@@ -331,29 +331,27 @@ public class PlayScreen implements Screen, InputProcessor {
 
     }
 
-public void handleInput(){
-    if(Gdx.input.isKeyPressed(Input.Keys.W)){
-        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
-    }
-    else if(Gdx.input.isKeyPressed(Input.Keys.S)){
-        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
-    }
-    else {
-        activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
-    }
+    public void handleInput(){
+        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
+        }
+        else {
+            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
+        }
 
-    if(Gdx.input.isKeyPressed(Input.Keys.A)){
-        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
+        }
+        else {
+            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
+        }
     }
-    else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
-    }
-    else {
-        activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
-    }
-
-
-}
 
     @Override
     public boolean keyDown(int keycode) {
