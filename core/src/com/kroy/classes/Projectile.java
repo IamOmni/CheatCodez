@@ -9,8 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Projectile extends Entity {
     private Math MathsUtils;
-    float  degree,  rotationSpeed, acceleration, deceleration, maxSpeed, dx, dy, radians, v;
-    double xSpeed, ySpeed;
+    float  dx;
     public float width, height;
 
     // LibGDX Attributes
@@ -22,11 +21,13 @@ public class Projectile extends Entity {
      * @param x - int - X position of the projectile
      * @param y - int - Y positiong of the projectile
      */
-    public Projectile(float x, float y, Texture texture) {
+    public Projectile(float x, float y, Texture texture, float angle) {
         //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
         super(new Vector3(x, y, 0), texture, 3f);
         scale = 3f;
+        body.setAngularVelocity(angle);
+
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
 

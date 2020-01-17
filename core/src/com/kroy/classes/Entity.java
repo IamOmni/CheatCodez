@@ -91,7 +91,7 @@ public class Entity extends Object{
     }
     @Override
     public void update(float dt) {
-        position.add(position);
+        //position.add(position);
         checkCollision();
     }
 

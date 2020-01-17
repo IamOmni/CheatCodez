@@ -91,7 +91,9 @@ public class PlayScreen implements Screen, InputProcessor {
         System.out.println(width/3);
     //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
         camera.update();
+        hudCamera.update();
         camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
+        hudCamera.position.set(game.WIDTH/2, game.HEIGHT/2, 0);
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView((OrthographicCamera) camera);
@@ -104,15 +106,15 @@ public class PlayScreen implements Screen, InputProcessor {
             loadGraph();
             loadTiledMap();
 
-            Landmark b = new Landmark(3330, 1600, 50, game.manager.get("shambles_invaded.png", Texture.class), 90f, 0.6f, world);
+            Landmark b = new Landmark(3500, 1610, 50, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
             Landmark cliffordTower = new Landmark(1810, 510, 50, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
             Landmark yorkStation = new Landmark(500, 2750, 50, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
             Landmark yorkMinster = new Landmark(3005, 2750, 50, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
             Base watertower1 = new Base(1919, 1792, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
             Base watertower2 = new Base(450, 510, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
-            Alien aTest = new Alien(yorkMinster, "below", game.manager);
-            objs.add(aTest);
-            Firetruck f = new Firetruck(mapGraph, Coords.get("A"), 1, game.manager);
+         //   Alien aTest = new Alien(yorkMinster, "below", game.manager);
+          //  objs.add(aTest);
+            Firetruck f = new Firetruck(mapGraph, Coords.get("P"), 1, game.manager);
             firetrucks.add(f);
             activeFiretruck = firetrucks.get(0);
             objs.add(f);
@@ -152,9 +154,20 @@ public class PlayScreen implements Screen, InputProcessor {
     public void show() {
 
     }
+
+    public void newRender(float dt){
+
+    }
+
     @Override
     public void render(float delta) {
         handleInput();
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 16;
+        font = generator.generateFont(parameter);
+
         time +=Math.ceil(Gdx.graphics.getDeltaTime());
         camera.update();
         // display background layout
@@ -163,7 +176,6 @@ public class PlayScreen implements Screen, InputProcessor {
         camera.position.set(activeFiretruck.body.getPosition(), 0);
         world.step(delta, 6, 2);
         camera.position.set(activeFiretruck.body.getPosition(),0);
-
         game.shapeRenderer.setColor(Color.WHITE);
         viewport.apply();
 
@@ -175,21 +187,9 @@ public class PlayScreen implements Screen, InputProcessor {
         );
 
 
-        int x   = (int)(0.07 * width);
-        int y      = (int)(0.07 * height) +50;
 
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 16;
-        font = generator.generateFont(parameter);
-        game.batch.begin();
-        font.setColor(Color.WHITE);
-        font.getData().scale(1);
-        font.draw( game.batch,"SCORE",x , y);
-        font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
 
-        game.batch.end();
 
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -233,7 +233,6 @@ public class PlayScreen implements Screen, InputProcessor {
             } else if (i instanceof Firetruck) {
                 for (Projectile p: ((Firetruck) i).getBullets()) {
                     p.render(game.batch);
-                    System.out.println(String.format("Projectile @ %d",p.getX()));
                 }
                 i.render(game.batch);
             } else {
@@ -242,7 +241,7 @@ public class PlayScreen implements Screen, InputProcessor {
             }
         }
         objs.addAll(tempStore);
-        game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+      //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
 
 
         for(Object i : objs) {
@@ -255,7 +254,14 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(hudCamera.combined);
         hudViewport.apply();
         game.batch.begin();
-        game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+       // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+        font.setColor(Color.WHITE);
+        font.getData().scale(1);
+        int x   = (int)(0.07 * width);
+        int y      = (int)(0.07 * height) +50;
+        font.draw( game.batch,"SCORE",x , y);
+        font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
+
         game.batch.end();
 
         if (time%1000==0) {score+=10;};
@@ -271,6 +277,8 @@ public class PlayScreen implements Screen, InputProcessor {
         ratioW = width/game.WIDTH;
         ratioH = height/game.HEIGHT;
         viewport.update(width, height);
+        hudViewport.update(width,height);
+        hudCamera.update();
         camera  .update();
 
    //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
@@ -358,7 +366,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             if (activeFiretruck.getFiredelay()<0){
-                Projectile p = new Projectile(activeFiretruck.getX(), activeFiretruck.getY(), game.manager.get("bullet.png"));
+                Projectile p = new Projectile(activeFiretruck.body.getPosition().x, activeFiretruck.body.getPosition().y, game.manager.get("bullet.png"), activeFiretruck.body.getAngle());
                 objs.add(p);
                 activeFiretruck.setFiredelay(50);
             }

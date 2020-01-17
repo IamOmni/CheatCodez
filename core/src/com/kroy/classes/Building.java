@@ -13,15 +13,9 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class Building extends Object {
-    // Own variables
-    private int health;
+
     private boolean hit;
-    private ArrayList<Alien> aliens;
-    private float height, width, rotation;
-    // LibGDX Attributes
-    private Sprite sprite;
-    private Texture texture;
-    private Math MathsUtils;
+    private float height, width;
 
 
     /**
@@ -36,15 +30,12 @@ public class Building extends Object {
     public Building(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
         super(new Vector3(x,y,0), world, BodyDef.BodyType.StaticBody, new Vector2(texture.getWidth()*scale,texture.getHeight()*scale));
 
-        this.texture = texture;
         setModel(texture);
         height = texture.getHeight();
         hitpoints = 100;
         width = texture.getWidth();
         this.scale = scale;
-        this.rotation = rotation;
-        position.set(new Vector3(x,y,0));
-        this.health = health;
+        setRotation(rotation);
     }
 
 
@@ -62,21 +53,6 @@ public class Building extends Object {
     public int getY(){return (int) position.y;};
 
 
-    /**
-     * Collision function for Building and Projectiles
-     * @param o - Projectile that is being tested
-     * @return boolean for whether there is a collision or not
-     */
-    public boolean hasCollided(Projectile o){
-        float x = position.x;
-        float y = position.y;
-        if (x < o.getX() + o.width && y < o.getY()  + o.height && x + width > o.getX()  && y + height > o.getY()) {
-            o.getSprite().setColor(1, 0, 0, 0f);
-            System.out.format("%d : %d | %d : %d | %d : %d \n ", (int) o.getX(), (int) o.getY(), x, y, x+64, y+64);
-            return true;
-        }
-        return false;
-    }
 
 
     /**
@@ -84,10 +60,10 @@ public class Building extends Object {
      * @param bullets - Projectiles from the Firetrucks
      */
     public void update(ArrayList<Projectile> bullets){
-        for (Projectile bullet: bullets){
-            hit = hasCollided(bullet);
-            if (hit) health-=10;
-        }
+//        for (Projectile bullet: bullets){
+//            hit = hasCollided(bullet);
+//            if (hit) health-=10;
+//        }
     }
 
     /**
@@ -104,7 +80,7 @@ public class Building extends Object {
      * @param dmg_taken
      */
     private void take_dmg(int dmg_taken){
-        health-=dmg_taken;
+        hitpoints-=dmg_taken;
     }
 
     public void render(SpriteBatch sp){

@@ -15,9 +15,8 @@ import com.kroy.screens.PlayScreen;
 public class Object{
    // public Texture sprite.getTexture();
     protected float scale;
-
+    public Vector3 position;
     public Sprite sprite;
-    protected Vector3 position;
     public int hitpoints = 0;
     public Body body;
     private float offsetX, offsetY;
@@ -35,7 +34,6 @@ public class Object{
         final PolygonShape shape = new PolygonShape();
         final FixtureDef fixtureDef = new FixtureDef();
 
-        this.position = position;
         offsetX = size.x/2;
         offsetY = size.y/2;
         bodyDef.position.set(position.x+offsetX, position.y+offsetY);
@@ -75,22 +73,9 @@ public class Object{
         this.sprite.setTexture(model);
     }
 
-    /**
-     * Getter for X attribute
-     * @return float position.x;
-     */
-    public int getX(){ return (int) position.x; }
-
-    /**
-     * Getter for Y attribute
-     * @return float positiion.y;
-     */
-    public int getY(){
-        return (int) position.y;
-    }
-
-    public void rotate(float rotation){
-        sprite.rotate(rotation);
+    public void setRotation(float degree){
+        body.setAngularVelocity(degree);
+        sprite.setRotation(degree);
     }
 
     public void displayHealth(SpriteBatch sb){

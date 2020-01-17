@@ -43,7 +43,7 @@ public class PlayState extends State {
         sb.draw(background, 0, 0, kroyGame.WIDTH, kroyGame.HEIGHT);
         //draw all objects
         for(Object i : objs) {
-            sb.draw(i.sprite.getTexture(), i.getX(), i.getY(), 200, 100);
+            sb.draw(i.sprite.getTexture(), i.sprite.getX(), i.sprite.getY(), 200, 100);
         }
         sb.end();
     }

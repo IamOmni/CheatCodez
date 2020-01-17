@@ -51,12 +51,12 @@ public class Firetruck extends Entity {
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.2f);
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f);
         waterCap =  new Random().nextInt(20);
         waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20);
         hitpoints = hitpointCap;
-        this.scale = 0.2f;
+        this.scale = 0.15f;
         status = new StatusButton(ufid, manager);
         model = manager.get("Firetruck.png", Texture.class);
 
