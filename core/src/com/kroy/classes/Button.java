@@ -71,20 +71,12 @@ public class Button {
     }
 
     public void render(SpriteBatch sb){
-        this.render(sb, true);
-    }
-
-    public void render(SpriteBatch sb, boolean autoScale){
         float x1 = (float) this.x1;
         float x2 = (float) this.x2;
         float y1 = (float) this.y1;
         float y2 = (float) this.y2;
         sb.begin();
-        if(autoScale)
-            sb.draw(sprite.getTexture(), x1 * Gdx.graphics.getWidth(), y1 * Gdx.graphics.getHeight(), (x2 - x1) * Gdx.graphics.getWidth(), (y2 - y1) * Gdx.graphics.getHeight());
-        else
-            sb.draw(sprite.getTexture(), x1, y1, x2-x1, y2-y1);
-       // sb.draw(sprite.getTexture(), x1 * (wRatio), y1 * hRatio, (x2 - x1) * wRatio, (y2 - y1) * hRatio);
+        sb.draw(sprite.getTexture(), x1, y1, x2-x1, y2-y1);
         sb.end();
     }
 

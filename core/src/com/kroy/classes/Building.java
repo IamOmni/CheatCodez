@@ -32,7 +32,7 @@ public class Building extends Object {
 
         setModel(texture);
         height = texture.getHeight();
-        hitpoints = 100;
+        hitpoints = health;
         width = texture.getWidth();
         this.scale = scale;
         setRotation(rotation);
