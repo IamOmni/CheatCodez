@@ -26,6 +26,7 @@ public class HighScoreBar {
         System.out.println("score: " + score);
     }
 
+
     public void render(ShapeRenderer shapeRenderer, SpriteBatch sb, int width, int height, int num){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
