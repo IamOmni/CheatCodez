@@ -192,7 +192,7 @@ public class Firetruck extends Entity {
             body.applyForceToCenter(baseVector, true);
             body.applyForce(baseVector, new Vector2(100,0), true);
             body.applyAngularImpulse(100f, true);
-            body.setLinearVelocity(body.getWorldVector(baseVector));
+            body.setLinearVelocity(body.getWorldVector(baseVector).scl(4));
         }
 
     }
@@ -284,10 +284,9 @@ public class Firetruck extends Entity {
     public void render(SpriteBatch batch){
         update(1f);
         super.render(batch);
-
 //    public void render(SpriteBatch sb){
 //        super.render(sb, rotation, 1);
-  }
+    }
 
 
 
