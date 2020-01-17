@@ -13,7 +13,7 @@ public class Agent extends Object {
     MapGraph mapGraph;
 
     float speed = 5f;
-    Vector3 movement;
+    Vector2 movement;
     Coord previous;
     Queue<Coord> pathQueue = new Queue<>();
     public GraphPath<Coord> graphPath;
@@ -24,25 +24,27 @@ public class Agent extends Object {
      * @param start start coord/position
      */
     public Agent(MapGraph mapGraph, Coord start) {
+        super(new Vector2(start.x, start.y));
+
         this.mapGraph = mapGraph;
-        position = new Vector3(start.x, start.y, 0.0f);
+        setPosition(new Vector2(start.x, start.y));
         this.previous = start;
     }
 
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(1f, 0f, 0f, 1);
-        shapeRenderer.circle(position.x, position.y, 5);
+        shapeRenderer.circle(getPosition().x, getPosition().y, 5);
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.circle(position.x, position.y, 5);
+        shapeRenderer.circle(getPosition().x, getPosition().y, 5);
         shapeRenderer.end();
     }
 
     public void step() {
-        position.add(movement);
+        getPosition().set(getPosition().add(movement));
 
         checkCollision();
     }
@@ -64,7 +66,7 @@ public class Agent extends Object {
     private void checkCollision() {
         if (pathQueue.size > 0) {
             Coord target = pathQueue.first();
-            if (Vector2.dst(position.x, position.y, target.x, target.y) < 5) {
+            if (Vector2.dst(getPosition().x, getPosition().y, target.x, target.y) < 5) {
                 reachNextCoord();
             }
         }
@@ -78,7 +80,7 @@ public class Agent extends Object {
         Coord next = pathQueue.first();
 
         // Set the position to keep the Agent in the middle of the path
-        position.set(next.x,next.y,1);
+        setPosition(next.x,next.y);
 
         this.previous = next;
         pathQueue.removeFirst();
@@ -106,13 +108,13 @@ public class Agent extends Object {
               n.x    p.x
          */
         float angle = MathUtils.atan2(next.y - previous.y, next.x - previous.x);
-        movement = new Vector3(MathUtils.cos(angle) * speed,MathUtils.sin(angle) * speed, 0.0f);
+        movement = new Vector2(MathUtils.cos(angle) * speed,MathUtils.sin(angle) * speed);
     }
 
     /**
      * Agent has reached the goal Coord.
      */
     private void reachDestination() {
-        movement = new Vector3(0.0f,0.0f,0.0f);
+        movement = new Vector2(0.0f,0.0f);
     }
 }
