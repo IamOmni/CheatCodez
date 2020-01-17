@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class kroyGame extends Game {
-	public static final int HEIGHT = 1080;
-	public static final int WIDTH = 1920;
+	public static final int HEIGHT = 3240;
+	public static final int WIDTH = 4710;
 	public static final int PPM = 4;
 	public ShapeRenderer shapeRenderer;
 	public static AssetManager manager;
