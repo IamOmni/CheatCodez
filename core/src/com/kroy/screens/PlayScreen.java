@@ -105,15 +105,16 @@ public class PlayScreen implements Screen, InputProcessor {
         try {
             loadGraph();
             loadTiledMap();
+            Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
+            Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
+            Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
+            Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
+            Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
+            Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
+            //int x, int y, int health, Texture texture, float rotation, float scale, World world
+            Building genericBuilding = new Building(30, 30, 0, game.manager.get("generic_building.png", Texture.class), 0f, 0.5f, world);
+            objs.add(genericBuilding);
 
-            Landmark b = new Landmark(3500, 1610, 50, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
-            Landmark cliffordTower = new Landmark(1810, 510, 50, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
-            Landmark yorkStation = new Landmark(500, 2750, 50, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
-            Landmark yorkMinster = new Landmark(3005, 2750, 50, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
-            Base watertower1 = new Base(1919, 1792, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
-            Base watertower2 = new Base(450, 510, 50, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
-         //   Alien aTest = new Alien(yorkMinster, "below", game.manager);
-          //  objs.add(aTest);
             Firetruck f = new Firetruck(mapGraph, Coords.get("P"), 1, game.manager);
             firetrucks.add(f);
             activeFiretruck = firetrucks.get(0);

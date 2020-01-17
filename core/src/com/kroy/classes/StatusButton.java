@@ -108,8 +108,8 @@ public class StatusButton {
         sr.rect(waterIndicator.x, waterIndicator.y, waterRat * waterIndicator.width, waterIndicator.height);
         sb.setColor(Color.WHITE);
         sr.end();
-        attack.render(sb, false);
-        defend.render(sb, false);
+        attack.render(sb);
+        defend.render(sb);
 
 //        System.out.println("Heart Indicator:");
 //        System.out.println(healthIndicator.x + ", " + healthIndicator.y + ", " + healthIndicator.width + ", " + healthIndicator.height);
