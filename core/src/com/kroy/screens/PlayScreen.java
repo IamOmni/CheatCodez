@@ -14,12 +14,11 @@ public class PlayScreen implements Screen {
     public static final float TILE_SIZE = 64;
 
     private kroyGame game;
-
+    private World world;
     public PlayScreen(kroyGame game){
         this.game = game;
+        world = new World(new Vector2(0,0), true);
     }
-
-    public
 
     public void getObjects(TiledMap tiledMap, World world){
         MapObjects objects = tiledMap.getLayers().get("WALLS").getObjects();
@@ -31,7 +30,7 @@ public class PlayScreen implements Screen {
             bodyDef.type = BodyDef.BodyType.StaticBody;
             Body body = world.createBody(bodyDef);
 
-            ShapeFactory.createRectangle();
+           // ShapeFactory.createRectangle();
         }
     }
 
