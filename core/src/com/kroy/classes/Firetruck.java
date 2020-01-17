@@ -63,8 +63,6 @@ public class Firetruck extends Entity {
         status = new StatusButton(ufid, manager);
         //s(new Vector3(10,0,0)); // Change to new Vector3(position)?
 
-
-
         // FROM PLAYER
         // Init vars
         down=false;
@@ -188,12 +186,11 @@ public class Firetruck extends Entity {
             baseVector.set(0,-120f);
         }
 
-        if (!baseVector.isZero()){System.out.print("UPDATING");
-            body.applyForceToCenter(baseVector, true);
-            body.applyForce(baseVector, new Vector2(100,0), true);
-            body.applyAngularImpulse(100f, true);
-            body.setLinearVelocity(body.getWorldVector(baseVector).scl(4));
+        if (!baseVector.isZero()){
+            body.applyForceToCenter(body.getWorldVector(baseVector).scl(8000000), true);
         }
+
+        firedelay-=dt;
 
     }
 
@@ -229,51 +226,12 @@ public class Firetruck extends Entity {
      */
     public void setUp(boolean a){ up=a; };
 
-    /**
-     * Handle input function for setting direction
-     */
-
-
-
-
 
     /**
      * Function to shoot a Projectile
      */
     public void fire_water(){
-        if (bullets.size()>20){
-            if (bullets.get(0).getDx()<5){
-                ArrayList<Projectile> temp = new ArrayList<Projectile>();
-                bullets.get(0).dispose();
-                for (int i=0; i<bullets.size()-1;i++){
-                    temp.add(bullets.get(i+1));
-                }
-                bullets=temp;
-            }
-        }
-        if (firedelay<0 && ammo>0){
-            if (bullets.size()<5){
-                Projectile p = new Projectile(x, this.x, this.y, degree);
-                bullets.add(p);
-                ammo-=1;
-            }
-            firedelay=0.3f;
-        }
-    }
 
-    /**
-     * Collision detection for the
-     * @param o
-     * @return
-     */
-    public boolean hasCollided(Projectile o){
-        if (x < o.getX() + o.width && y < o.getY()  + o.height && x + width > o.getX()  && y + height > o.getY()) {
-            o.getSprite().setColor(1, 0, 0, 0f);
-            //System.out.format("%d : %d | %d : %d | %d : %d \n ", (int) o.x, (int) o.y, x, y, x+64, y+64);
-            System.out.format("%d \n", health);
-            return true;
-        }
-        return false;
     }
 
     public int getX() { return (int) this.x; }
@@ -281,11 +239,18 @@ public class Firetruck extends Entity {
     public int getHeight() {return (int) this.height;};
 
 
+    public float getFiredelay() {
+        return firedelay;
+    }
+
+    public void setFiredelay(float firedelay) {
+        this.firedelay = firedelay;
+    }
+
     public void render(SpriteBatch batch){
+
         update(1f);
         super.render(batch);
-//    public void render(SpriteBatch sb){
-//        super.render(sb, rotation, 1);
     }
 
 

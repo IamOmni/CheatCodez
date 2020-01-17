@@ -32,6 +32,7 @@ public class Entity extends Object{
                 new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
                 )
         );
+        setModel(texture);
 
     }
 

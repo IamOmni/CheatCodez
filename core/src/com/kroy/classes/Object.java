@@ -27,6 +27,7 @@ public class Object{
 
     public Object(Vector3 position, World world, BodyDef.BodyType type, Vector2 size){
         sprite = new Sprite();
+
         final BodyDef bodyDef = new BodyDef();
         final PolygonShape shape = new PolygonShape();
         final FixtureDef fixtureDef = new FixtureDef();
@@ -94,9 +95,8 @@ public class Object{
      * @param sb - SpriteBatch
      */
     public void render(SpriteBatch sb){
-        if (this.getModel().toString().contains("Firetruck")) System.out.println(String.format("%f | %f | %s",  body.getPosition().x, body.getPosition().y, this.getModel().toString()));
  //       sprite.setPosition(body.getPosition().x-offsetX, body.getPosition().y-offsetY);
-       sprite.setOrigin(body.getPosition().x, body.getPosition().y);
+        sprite.setOrigin(body.getPosition().x, body.getPosition().y);
         sprite.setCenter(body.getPosition().x, body.getPosition().y);
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
 

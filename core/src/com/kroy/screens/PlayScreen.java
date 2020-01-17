@@ -269,14 +269,18 @@ public class PlayScreen implements Screen, InputProcessor {
         ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
             if (i instanceof Landmark){
-                if (time% ((Landmark) i).getSpawnTime()==0) {
-                    System.out.println("SPAWN");
-                    Alien a = new Alien((Landmark) i, "above", game.manager);
-                    tempStore.add(a);
+//                if (time% ((Landmark) i).getSpawnTime()==0) {
+//                    System.out.println("SPAWN");
+//                    Alien a = new Alien((Landmark) i, "above", game.manager);
+//                    tempStore.add(a);
+//                }
+                i.render(game.batch);
+            } else if (i instanceof Firetruck) {
+                for (Projectile p: ((Firetruck) i).getBullets()) {
+                    p.render(game.batch);
+                    System.out.println(String.format("Projectile @ %d",p.getX()));
                 }
                 i.render(game.batch);
-            } else if (i instanceof Alien) {
-                ((Alien) i).render(game.batch, firetrucks);
             } else {
                 i.render(game.batch);
                 i.update(delta);
@@ -389,6 +393,16 @@ public class PlayScreen implements Screen, InputProcessor {
         else {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
         }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            if (activeFiretruck.getFiredelay()<0){
+                Projectile p = new Projectile(activeFiretruck.getX(), activeFiretruck.getY(), game.manager.get("bullet.png"));
+                objs.add(p);
+                activeFiretruck.setFiredelay(50);
+            }
+
+        }
+
     }
 
     @Override

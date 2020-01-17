@@ -85,17 +85,6 @@ public class kroyGame extends Game {
 		}
 
 
-//		manager.load("Firetruck_sprite_static-1.png"	, Texture.class);
-//		manager.load("background.png"					, Texture.class);
-//		manager.load("button.png"						, Texture.class);
-//		manager.load("alien.png"						, Texture.class);
-//
-//		manager.load("Menu_Assets/TITLE.png"			, Texture.class);
-//		manager.load("Menu_Assets/HELP.png"			, Texture.class);
-//		manager.load("Menu_Assets/PLAYBUTTON.png"		, Texture.class);
-//		manager.load("Menu_Assets/SETTINGS.png"		, Texture.class);
-//		manager.load("Menu_Assets/BACKGROUND.png"		, Texture.class);
-
 		manager.finishLoading();
 		manager.update();
 		System.out.println("loaded assets: " + manager.getLoadedAssets());

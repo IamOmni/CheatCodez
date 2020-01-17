@@ -155,8 +155,8 @@ public class Alien extends Entity {
         }
         if (firedelay<0) {
             System.out.format("%f |\n", firedelay);
-            Projectile p = new Projectile(x, x, y, degree);
-            projectiles.add(p);
+//            Projectile p = new Projectile(x, x, y, degree);
+//            projectiles.add(p);
             firedelay=2f;
         }
     }
