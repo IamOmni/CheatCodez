@@ -28,7 +28,7 @@ public class Building extends Object {
 
 
     public Building(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
-        super(new Vector3(x,y,0), world, BodyDef.BodyType.StaticBody, new Vector2(texture.getWidth()*scale,texture.getHeight()*scale));
+        super(new Vector3(x,y,0), world, BodyDef.BodyType.StaticBody, new Vector2(texture.getWidth()*scale,texture.getHeight()*scale), CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 1);
 
         setModel(texture);
         height = texture.getHeight();

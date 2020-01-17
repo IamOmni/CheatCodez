@@ -112,10 +112,26 @@ public class PlayScreen implements Screen, InputProcessor {
             Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
             Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
             //int x, int y, int health, Texture texture, float rotation, float scale, World world
-            Building genericBuilding = new Building(30, 30, 0, game.manager.get("generic_building.png", Texture.class), 0f, 0.5f, world);
+            Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
             objs.add(genericBuilding);
 
-            Firetruck f = new Firetruck(mapGraph, Coords.get("P"), 1, game.manager);
+            for (int i = 0; i<5; i++) {
+                genericBuilding = new Building(450, 766+(256*i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                objs.add(genericBuilding);
+            }
+
+            for (int i = 0; i<5; i++) {
+                genericBuilding = new Building(832, 766+(256*i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                objs.add(genericBuilding);
+            }
+
+            for (int i = 0; i<4; i++) {
+                genericBuilding = new Building(448+(256*i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, world);
+                objs.add(genericBuilding);
+            }
+
+
+            Firetruck f = new Firetruck(mapGraph, Coords.get("A"), 1, game.manager);
             firetrucks.add(f);
             activeFiretruck = firetrucks.get(0);
             objs.add(f);
@@ -164,7 +180,7 @@ public class PlayScreen implements Screen, InputProcessor {
     public void render(float delta) {
         handleInput();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Bold.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 16;
         font = generator.generateFont(parameter);

@@ -42,7 +42,7 @@ public class Alien extends Entity {
 
 
     public Alien(Landmark parent, String direction, AssetManager manager) {
-        super(new Vector3(parent.getX(), parent.getY()-64,0),  manager.get("alien.png", Texture.class), 1f);
+        super(new Vector3(parent.getX(), parent.getY()-64,0),  manager.get("alien.png", Texture.class), 1f, CollisionBits.FIRETRUCK, CollisionBits.FIRETRUCK, (short) 1);
         //super.setModel(manager.get("alien.png", Texture.class));
         shapeRenderer = new ShapeRenderer();
         setModel(manager.get("alien.png", Texture.class));

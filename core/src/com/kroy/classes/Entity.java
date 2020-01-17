@@ -25,26 +25,27 @@ public class Entity extends Object{
     public GraphPath<Coord> graphPath;
 
 
-    public Entity(Vector3 position, Texture texture, float scale) {
+    public Entity(Vector3 position, Texture texture, float scale, short cb, short mb, short gindex) {
         super(
                 position, PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
-                )
+                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale),
+                cb, mb, gindex
         );
         setModel(texture);
 
     }
 
-    public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale) {
+    public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale, short cb, short mb, short gindex) {
 
         super(
                 new Vector3(start.x, start.y, 0.0f),
                 PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
-                )
+                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale),
+                cb, mb, gindex
         );
+
         if(texture != null) {
             System.out.println("Texture not null");
             setModel(texture);

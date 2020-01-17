@@ -19,7 +19,8 @@ public class Object{
     public Sprite sprite;
     public int hitpoints = 0;
     public Body body;
-    private float offsetX, offsetY;
+    private float offsetX, offsetY;;
+
 
 
     /**
@@ -27,7 +28,7 @@ public class Object{
      */
 
 
-    public Object(Vector3 position, World world, BodyDef.BodyType type, Vector2 size){
+    public Object(Vector3 position, World world, BodyDef.BodyType type, Vector2 size, short cb, short mb, short gindex){
         sprite = new Sprite();
 
         final BodyDef bodyDef = new BodyDef();
@@ -41,7 +42,9 @@ public class Object{
         shape.setAsBox(offsetX, offsetY);
         fixtureDef.shape = shape;
         fixtureDef.density = 0.4f;
-
+        fixtureDef.filter.categoryBits = cb;
+        fixtureDef.filter.maskBits = mb;
+        fixtureDef.filter.groupIndex = gindex;
         body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
 

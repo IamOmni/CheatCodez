@@ -24,9 +24,9 @@ public class Projectile extends Entity {
     public Projectile(float x, float y, Texture texture, float angle) {
         //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
-        super(new Vector3(x, y, 0), texture, 3f);
+        super(new Vector3(x, y, 0), texture, 3f, CollisionBits.PROJECTILE, (short) (CollisionBits.FIRETRUCK | CollisionBits.BUILDING), (short) 1);
         scale = 3f;
-        body.setAngularVelocity(angle);
+        //body.setAngularVelocity(angle);
 
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
