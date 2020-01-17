@@ -24,6 +24,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -252,6 +253,7 @@ public class PlayScreen implements Screen, InputProcessor {
         mB2dr.render(world,camera.combined);
 
         game.batch.setProjectionMatrix(hudCamera.combined);
+        game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
         hudViewport.apply();
         game.batch.begin();
        // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
@@ -261,7 +263,12 @@ public class PlayScreen implements Screen, InputProcessor {
         int y      = (int)(0.07 * height) +50;
         font.draw( game.batch,"SCORE",x , y);
         font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
+        Button r  = new Button();
 
+        game.shapeRenderer.setColor(Color.WHITE);
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.shapeRenderer.rect(50, height - 100, 100, height - 50);
+        game.shapeRenderer.end();
         game.batch.end();
 
         if (time%1000==0) {score+=10;};
