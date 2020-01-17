@@ -64,7 +64,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private int width, height;
     private int ratioW, ratioH;
-
+    private Button toggleActive;
     public static World world;
     private Box2DDebugRenderer mB2dr;
 
@@ -103,6 +103,7 @@ public class PlayScreen implements Screen, InputProcessor {
         world = new World(new Vector2(0.0f, 0.0f),true);
 
 
+        toggleActive  = new Button(50, 200, height-200, height-50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
             loadGraph();
             loadTiledMap();
@@ -118,7 +119,10 @@ public class PlayScreen implements Screen, InputProcessor {
 
             Firetruck f = new Firetruck(mapGraph, Coords.get("P"), 1, game.manager);
             firetrucks.add(f);
+            objs.add(f);
             activeFiretruck = firetrucks.get(0);
+            f = new Firetruck(mapGraph, Coords.get("A"), 2, game.manager);
+            firetrucks.add(f);
             objs.add(f);
             objs.add(cliffordTower);
             objs.add(yorkStation);
@@ -175,8 +179,8 @@ public class PlayScreen implements Screen, InputProcessor {
         // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0,0,0,1);
-        camera.position.set(activeFiretruck.body.getPosition(), 0);
         world.step(delta, 6, 2);
+
         camera.position.set(activeFiretruck.body.getPosition(),0);
         game.shapeRenderer.setColor(Color.WHITE);
         viewport.apply();
@@ -256,6 +260,7 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(hudCamera.combined);
         game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
         hudViewport.apply();
+        toggleActive.render(game.batch);
         game.batch.begin();
        // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
         font.setColor(Color.WHITE);
@@ -264,11 +269,10 @@ public class PlayScreen implements Screen, InputProcessor {
         int y      = (int)(0.07 * height) +50;
         font.draw( game.batch,"SCORE",x , y);
         font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
-        Button r  = new Button();
 
         game.shapeRenderer.setColor(Color.WHITE);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        game.shapeRenderer.rect(50, height - 100, 100, height - 50);
+       // game.shapeRenderer.rect(50, height - 100, 100, height - 50);
         game.shapeRenderer.end();
         game.batch.end();
 
@@ -458,13 +462,22 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        for (Firetruck ft: firetrucks){
-            System.out.println("Checking firetruck");
-            if(ft.status.getAttack().hasBeenClicked(screenX,screenY, true)){
-                System.out.println("FIRETRUCK SET TO " + ft.isActive());
-                ft.setActive(!ft.isActive());
-                activeFiretruck.setActive(false);
-                activeFiretruck = ft;
+        if(toggleActive.hasBeenClicked(screenX, screenY, true)){
+            System.out.println("BUTTON PRESSED");
+            for (int i = 0; i < firetrucks.size(); i++){
+                if(activeFiretruck.ufid == firetrucks.get(i).ufid){
+                    System.out.println("ID: " + activeFiretruck.ufid);
+                    activeFiretruck.setActive(false);
+                    if(i < firetrucks.size() - 1){
+                        activeFiretruck = firetrucks.get(i + 1);
+
+                    }
+                    else{
+                        activeFiretruck = firetrucks.get(0);
+                    }
+                    activeFiretruck.setActive(true);
+                    return false;
+                }
             }
         }
         return false;

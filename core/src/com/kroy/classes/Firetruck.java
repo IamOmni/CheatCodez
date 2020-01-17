@@ -41,7 +41,7 @@ public class Firetruck extends Entity {
     public static final int TURN_DIRECTION_NONE = 0;
     public static final int TURN_DIRECTION_LEFT = 1;
     public static final int TURN_DIRECTION_RIGHT = 2;
-
+    public int ufid;
     public int mDriveDirection = DRIVE_DIRECTION_NONE;
     public int mTurnDirection = TURN_DIRECTION_NONE;
 
@@ -52,6 +52,7 @@ public class Firetruck extends Entity {
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
         super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f);
+        this.ufid = ufid;
         waterCap =  new Random().nextInt(20);
         waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20);
