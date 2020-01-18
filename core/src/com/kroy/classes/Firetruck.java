@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -142,6 +144,10 @@ public class Firetruck extends Entity {
         return bullets;
     }
 
+    public int getAmmo(){
+        return ammo;
+    }
+
     /**
      * Helper funciton for collision detection
      * @return int - v
@@ -253,6 +259,22 @@ public class Firetruck extends Entity {
         super.render(batch);
     }
 
+    public Projectile createProjectile(){
+        ammo -= 1;
+        return new Projectile(body.getPosition().x, body.getPosition().y, kroyGame.manager.get("bullet.png"), body.getAngle());
+    }
 
+    @Override
+    public void displayHealth(SpriteBatch sb){
+        if(hitpoints > 0) {
+            PlayScreen.font.setColor(Color.RED);
+            PlayScreen.font.getData().scale(0.25f);
+
+            String text = String.format("%d HP / %d WP", hitpoints, ammo);
+            final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
+            PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());
+        }
+
+    }
 
 }
