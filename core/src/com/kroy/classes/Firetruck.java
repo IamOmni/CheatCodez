@@ -33,7 +33,7 @@ public class Firetruck extends Entity {
     float x,y, degree,  rotationSpeed, rotation, acceleration, decelleration, maxSpeed, dx, dy, radians, firedelay, v;
     double xSpeed, ySpeed;
     private boolean left, right, up, down;
-    int height, width, health, ammo;
+    int height, width, ammo;
     private ArrayList<Projectile> bullets;
     private Texture model;
     public static final int DRIVE_DIRECTION_NONE = 0;
@@ -75,7 +75,6 @@ public class Firetruck extends Entity {
         height=50;
         width=100;
         rotation = 0.0f;
-        health=500;
         degree = 0;
         xSpeed = 0;
         ySpeed = 0;
@@ -159,11 +158,6 @@ public class Firetruck extends Entity {
      */
     public float getDegree() { return degree; }
 
-    /**
-     * Get current health of the player
-     * @return int - health
-     */
-    public int getHealth(){ return health; }
 
 
     /**
@@ -264,14 +258,14 @@ public class Firetruck extends Entity {
 
     @Override
     public void displayHealth(SpriteBatch sb){
-        if(hitpoints > 0) {
+
             PlayScreen.font.setColor(Color.RED);
             PlayScreen.font.getData().scale(0.25f);
 
             String text = String.format("%d HP / %d WP", hitpoints, ammo);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());
-        }
+
 
     }
 

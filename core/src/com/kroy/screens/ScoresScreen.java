@@ -46,7 +46,6 @@ public class ScoresScreen implements Screen, InputProcessor {
         background  = new Sprite(new Texture("Menu_Assets/BACKGROUND.png"));
         width  = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-        float aspectRatio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
 
         for (int i = 0; i < leaderboard.size(); i++) {
             bars.add(new HighScoreBar(leaderboard.get(i)));
