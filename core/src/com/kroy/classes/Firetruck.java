@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.kroy.game.Constants;
 import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -51,7 +52,7 @@ public class Firetruck extends Entity {
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL | CollisionBits.PROJECTILE), (short) 1);
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL), (short) 0);
         this.ufid = ufid;
         waterCap =  new Random().nextInt(20);
         waterVol = waterCap;
@@ -188,7 +189,7 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            body.applyForceToCenter(body.getWorldVector(baseVector).scl(8000000), true);
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(Constants.PPM*40)), true);
         }
 
         firedelay-=dt;

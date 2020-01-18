@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Queue;
+import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.screens.PlayScreen;
@@ -29,7 +30,7 @@ public class Entity extends Object{
         super(
                 position, PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale),
+                new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
                 cb, mb, gindex
         );
         setModel(texture);
@@ -42,7 +43,7 @@ public class Entity extends Object{
                 new Vector3(start.x, start.y, 0.0f),
                 PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale),
+                new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
                 cb, mb, gindex
         );
 
