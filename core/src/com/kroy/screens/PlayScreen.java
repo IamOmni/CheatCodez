@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,34 +11,36 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kroy.classes.*;
-
 import com.kroy.classes.Object;
+import com.kroy.classes.*;
 import com.kroy.game.Constants;
+import com.kroy.game.kroyGame;
 import com.kroy.modules.MapLoader;
-import com.kroy.modules.ShapeFactory;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
-import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Street;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.Math.atan2;
+
+import static java.lang.Math.atan2;
+import static java.lang.Math.tan;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
@@ -144,8 +145,8 @@ public class PlayScreen implements Screen, InputProcessor {
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
-                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
-                firetrucks.add(f);
+//                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
+//                firetrucks.add(f);
                 objs.add(f);
             }
 
@@ -238,17 +239,23 @@ public class PlayScreen implements Screen, InputProcessor {
                 if (((Landmark) i).getMisiledelay()<0) {
 
                     for (Firetruck firetruck: firetrucks){
-                        Vector2 position1 = firetruck.body.getPosition();
-                        Vector2 position2 = i.body.getPosition();
-                        float v = position1.dst(position2)/ Constants.PPM;
-                        Vector2 angle = position1.sub(position2).nor();
-                        System.out.println(angle);
-                        if (v < 25) {
-                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toDegrees(angle.scl(1/Constants.PPM).angle()));
-                            tempStore.add(p);
+
+                        Vector2 position1v = firetruck.body.getPosition();
+                        Vector2 position2v = i.body.getPosition();
+                        float v = position2v.dst(position1v)/ Constants.PPM;
+
+                        float xDif = position1v.x-(Math.abs(position2v.x));
+                        float yDif = position1v.y-(Math.abs(position2v.y));
+                        float angle = (float) atan2(yDif, xDif);
+
+                        if (i.getModel().getTextureData().toString().contains("station")){
+                            System.out.println(angle);
                         }
 
-
+                        if (v < 25) {
+                            FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
+                            tempStore.add(p);
+                        }
                     }
                     ((Landmark)i).setMisiledelay(40f);
                 }
@@ -287,6 +294,27 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
 
         removeDeadObjects();
+
+        Array<Contact> contacts = world.getContactList();
+
+        for(Contact contact : contacts) {
+
+            Object a = (Object) contact.getFixtureA().getBody().getUserData();
+            Object b = (Object) contact.getFixtureB().getBody().getUserData();
+            if (a instanceof Landmark && !(b instanceof FortressMissile)) {
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=10;
+            }
+
+            if (b instanceof FortressMissile && a instanceof Firetruck) {
+
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
+
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.1f;
+            }
+        }
+
+
 
         if (time%1000==0) {score+=10;};
 
@@ -373,11 +401,11 @@ public class PlayScreen implements Screen, InputProcessor {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            if (activeFiretruck.getFiredelay()<0 && (activeFiretruck.getAmmo() > 0)){
+            if (activeFiretruck.getFiredelay()<0f && (activeFiretruck.getAmmo() > 0)){
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
-                activeFiretruck.setFiredelay(5);
+                activeFiretruck.setFiredelay(50f);
             }
 
         }

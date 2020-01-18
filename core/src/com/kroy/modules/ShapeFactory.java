@@ -29,7 +29,7 @@ public class ShapeFactory {
         fdef.density = density;
         fdef.isSensor = sensor;
         fdef.filter.categoryBits = CollisionBits.WALL;
-        fdef.filter.maskBits = CollisionBits.WALL;
+        fdef.filter.maskBits = CollisionBits.WALL ;
         fdef.filter.groupIndex = 1;
         body.createFixture(fdef);
         shape.dispose();

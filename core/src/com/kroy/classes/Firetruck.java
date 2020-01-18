@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
     private int waterVol, waterCap, waterDmg, waterRange;
-    public StatusButton status;
     private boolean active;
 
     // Our attributes
@@ -47,24 +46,23 @@ public class Firetruck extends Entity {
     public int ufid;
     public int mDriveDirection = DRIVE_DIRECTION_NONE;
     public int mTurnDirection = TURN_DIRECTION_NONE;
-
+    public int ammoCap;
     /**
      * Constructor for Firetruck object
      * @param mapGraph - MapGraph object for traversal
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL), (short) 1);
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
         waterCap =  new Random().nextInt(20) + 5;
         waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20) + 5;
         hitpoints = hitpointCap;
         this.scale = 0.15f;
-        status = new StatusButton(ufid, manager);
         model = manager.get("Firetruck.png", Texture.class);
 
-        status = new StatusButton(ufid, manager);
+        body.setUserData(this);
 
         down=false;
         up=false;
@@ -85,8 +83,8 @@ public class Firetruck extends Entity {
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
-        ammo=50;
-
+        ammoCap=50;
+        ammo=ammoCap;
     }
 
     public int getWaterVol() {

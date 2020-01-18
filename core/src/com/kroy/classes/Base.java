@@ -74,10 +74,7 @@ public class Base extends Building {
         this.destroyed=true;
     };
 
-    /**
-     * Update methodd for the Building, initiates the bullet collision
-     * @param bullets - Projectiles from the Firetrucks
-     */
+
     public void update(ArrayList<Firetruck> firetrucks){
       //  super.update(bullets);
         float dt = Gdx.graphics.getDeltaTime();
@@ -90,10 +87,10 @@ public class Base extends Building {
                 float v = position1.dst(position2)/ Constants.PPM;
 
                 //System.out.println(String.format("V = %f", v));
-                if (v < 10f) {
+                if (v < 10f && firetruck.ammo < firetruck.ammoCap) {
                     System.out.println("REFILLING");
-                    firetruck.ammo += 5;
-                    refillDelay=10f;
+                    firetruck.ammo += 1;
+                    refillDelay=2f;
                 }
             }
         }

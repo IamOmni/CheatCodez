@@ -26,20 +26,33 @@ public class Projectile extends Entity {
     public Projectile(float x, float y, Texture texture, float angle) {
         //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
-        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 1);
+        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) -1);
         scale = 1f;
         this.angle = angle;
         //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
-        body.isBullet();
         body.isFixedRotation();
         this.angle = angle;
-
-        Vector2 force = new Vector2(0, 5000);
-
         hitpoints = 100;
+        body.setUserData(this);
 
     }
+
+    public Projectile(float x, float y, Texture texture, float angle, short cb, short mb) {
+        //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
+
+        super(new Vector3(x, y, 0), texture, 1f, cb, (short) mb, (short) 1);
+        scale = 1f;
+        this.angle = angle;
+        //body.setAngularVelocity(angle);
+        body.setTransform(body.getWorldCenter(), angle);
+        body.isFixedRotation();
+        this.angle = angle;
+        hitpoints = 100;
+        body.setUserData(this);
+
+    }
+
 
     public Sprite getSprite() {
         return sprite;
@@ -69,6 +82,9 @@ public class Projectile extends Entity {
         body.setTransform(
                 body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
         );
+        body.setTransform(body.getPosition(),angle);
+
+        //body.setLinearVelocity(body.getWorldVector(new Vector2(0, 2000000000).scl(dt * Constants.PPM)));
         hitpoints--;
         super.update(dt);
     }

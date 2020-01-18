@@ -2,6 +2,7 @@ package com.kroy.classes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -30,6 +31,7 @@ public class Landmark extends Building{
         misiledelay=4f;
         spawnTime=500;
         shoot=false;
+        body.setUserData(this);
     }
 
     public float getMisiledelay(){return misiledelay;};
@@ -48,5 +50,6 @@ public class Landmark extends Building{
     public int getSpawnTime() { return this.spawnTime; };
 
     public void setMisiledelay(float v) { this.misiledelay=v; }
+
 
 }
