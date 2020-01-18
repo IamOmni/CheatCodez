@@ -108,8 +108,8 @@ public class Object{
         sprite.setOrigin(sprite.getRegionWidth()/2, sprite.getRegionHeight()/2);
 
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
-        sprite.setX(body.getPosition().x - sprite.getRegionWidth()/2);
-        sprite.setY(body.getPosition().y- sprite.getRegionHeight()/2);
+//        sprite.setX(body.getPosition().x - sprite.getRegionWidth()/2);
+//        sprite.setY(body.getPosition().y- sprite.getRegionHeight()/2);
         sb.draw(sprite.getTexture(),
                 body.getPosition().x - sprite.getRegionWidth()/2,body.getPosition().y- sprite.getRegionHeight()/2,
                 sprite.getRegionWidth()/2, sprite.getRegionHeight()/2,sprite.getTexture().getWidth(),sprite.getTexture().getHeight(),

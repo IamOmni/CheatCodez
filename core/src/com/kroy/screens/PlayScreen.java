@@ -138,7 +138,7 @@ public class PlayScreen implements Screen, InputProcessor {
             firetrucks.add(f);
             objs.add(f);
             activeFiretruck = firetrucks.get(0);
-            f = new Firetruck(mapGraph, Coords.get("A"), 2, game.manager);
+            f = new Firetruck(mapGraph, Coords.get("B"), 2, game.manager);
             firetrucks.add(f);
             objs.add(f);
             objs.add(cliffordTower);
@@ -246,22 +246,10 @@ public class PlayScreen implements Screen, InputProcessor {
         //draw all objects
         ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
-            if (i instanceof Landmark){
-//                if (time% ((Landmark) i).getSpawnTime()==0) {
-//                    System.out.println("SPAWN");
-//                    Alien a = new Alien((Landmark) i, "above", game.manager);
-//                    tempStore.add(a);
-//                }
-                i.render(game.batch);
-            } else if (i instanceof Firetruck) {
-                for (Projectile p: ((Firetruck) i).getBullets()) {
-                    p.render(game.batch);
-                }
-                i.render(game.batch);
-            } else {
-                i.render(game.batch);
-                i.update(delta);
-            }
+            if (i instanceof Building)
+                System.out.println(((Building) i).body.getPosition().x);
+            i.render(game.batch);
+            i.update(delta);
         }
         objs.addAll(tempStore);
         //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);

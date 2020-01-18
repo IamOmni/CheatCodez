@@ -66,7 +66,6 @@ public class Projectile extends Entity {
     @Override
     public void update(float dt){
 
-        System.out.println(String.format("%d", hitpoints));
         body.setTransform(
                 body.getPosition().add(body.getWorldVector(new Vector2(0, 20)).scl(dt*Constants.PPM)), angle
         );

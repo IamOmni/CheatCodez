@@ -29,13 +29,19 @@ public class Building extends Object {
 
 
     public Building(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
-        super(new Vector3(x* Constants.PPM,
-                y*Constants.PPM,0), world, BodyDef.BodyType.StaticBody, new Vector2(texture.getWidth()*scale*Constants.PPM,texture.getHeight()*scale*Constants.PPM), CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 1);
+        super(new Vector3(x,
+                y,0), world,
+                BodyDef.BodyType.StaticBody, new Vector2(
+                        texture.getWidth()*scale*Constants.PPM,
+                        texture.getHeight()*scale*Constants.PPM),
+                CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 1);
 
         setModel(texture);
         height = texture.getHeight();
         hitpoints = health;
         width = texture.getWidth();
+        sprite.setPosition(body.getPosition().x/Constants.PPM*scale,body.getPosition().y/Constants.PPM*scale);
+
         this.scale = scale;
         setRotation(rotation);
     }
@@ -46,13 +52,13 @@ public class Building extends Object {
      * Get X coordinate of the Building
      * @return float x
      */
-    public int getX(){return (int) position.x;};
+    public int getX(){return (int) body.getPosition().x;};
 
     /**
      * Get Y coordinate of the Building
      * @return float y
      */
-    public int getY(){return (int) position.y;};
+    public int getY(){return (int) body.getPosition().y;};
 
 
 
