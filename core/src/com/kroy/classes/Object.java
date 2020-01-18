@@ -87,7 +87,7 @@ public class Object{
 
     public void displayHealth(SpriteBatch sb){
 
-        if(hitpoints > 0) {
+        if(true) {
             PlayScreen.font.setColor(Color.RED);
           //  PlayScreen.font.getData().scale(0.25f);
 

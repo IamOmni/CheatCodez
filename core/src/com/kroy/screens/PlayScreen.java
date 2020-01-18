@@ -271,8 +271,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
         for(Object i : objs) {
-            if (!(i instanceof Projectile))
-                i.displayHealth(game.batch);
+            i.displayHealth(game.batch);
         }
         game.batch.end();
         mB2dr.render(world,camera.combined);
@@ -310,7 +309,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
                 ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
 
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.1f;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=Constants.FORTRESS_DAMAGE;
             }
         }
 
@@ -329,6 +328,9 @@ public class PlayScreen implements Screen, InputProcessor {
                 notDeleted.add(obj);
             }
             else{
+                if(obj instanceof Firetruck){
+                    System.out.println("DELETE ME");
+                }
                 obj.body.setUserData(null);
                 world.destroyBody(obj.body);
             }
