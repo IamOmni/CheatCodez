@@ -76,7 +76,6 @@ public class Base extends Building {
 
     /**
      * Update methodd for the Building, initiates the bullet collision
-     * @param bullets - Projectiles from the Firetrucks
      */
     public void update(ArrayList<Firetruck> firetrucks){
       //  super.update(bullets);

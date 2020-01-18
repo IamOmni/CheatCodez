@@ -41,6 +41,9 @@ import com.kroy.pathfinding.Street;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.Math.atan2;
+import static java.lang.Math.tan;
+
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
     private OrthographicCamera camera, hudCamera;
@@ -144,8 +147,8 @@ public class PlayScreen implements Screen, InputProcessor {
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
-                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
-                firetrucks.add(f);
+//                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
+//                firetrucks.add(f);
                 objs.add(f);
             }
 
@@ -238,17 +241,25 @@ public class PlayScreen implements Screen, InputProcessor {
                 if (((Landmark) i).getMisiledelay()<0) {
 
                     for (Firetruck firetruck: firetrucks){
-                        Vector2 position1 = firetruck.body.getPosition();
-                        Vector2 position2 = i.body.getPosition();
-                        float v = position1.dst(position2)/ Constants.PPM;
-                        Vector2 angle = position1.sub(position2).nor();
-                        System.out.println(angle);
+
+                        Vector2 position1v = firetruck.body.getPosition();
+                        Vector2 position2v = i.body.getPosition();
+                        float v = position2v.dst(position1v)/ Constants.PPM;
+                        float angle = (float) (atan2(position2v.y, position2v.x) - atan2(position1v.y, position1v.x));
+
+                        float xDif = position1v.x-(Math.abs(position2v.x));
+                        float yDif = position1v.y-(Math.abs(position2v.y));
+                        angle = (float) atan2(yDif, xDif);
+
+//                        if (i.getModel().getTextureData().toString().contains("station")) {
+//                            System.out.println(angle);
+//                            System.out.println(Math.toDegrees(angle)-90f);
+//                        }
+
                         if (v < 25) {
-                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toDegrees(angle.scl(1/Constants.PPM).angle()));
+                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
                             tempStore.add(p);
                         }
-
-
                     }
                     ((Landmark)i).setMisiledelay(40f);
                 }
