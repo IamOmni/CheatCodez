@@ -40,21 +40,10 @@ public class Base extends Building {
      */
     public Base(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
         super(x, y, health, texture, rotation, scale, world);
-        refillDelay= 5f;
+        refillDelay= 10f;
         refillAmount=1;
     }
 
-    public Base(int x, int y, int health, Texture texture, float rotation, World world) {
-        super(x, y, health, texture, rotation, 1, world);
-        refillDelay= 5f;
-        refillAmount=1;
-    }
-
-    public Base(int x, int y, int health, Texture texture, World world) {
-        super(x, y, health, texture, 0, 1, world);
-        refillDelay= 5f;
-        refillAmount=1;
-    }
 
 
     /**
@@ -104,6 +93,7 @@ public class Base extends Building {
                 if (v < 10f) {
                     System.out.println("REFILLING");
                     firetruck.ammo += 5;
+                    refillDelay=10f;
                 }
             }
         }
