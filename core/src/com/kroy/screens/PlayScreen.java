@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.*;
 
 import com.kroy.classes.Object;
+import com.kroy.game.Constants;
 import com.kroy.modules.ShapeFactory;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -81,9 +82,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
         ratioW = Gdx.graphics.getWidth()/game.WIDTH;
         ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
-        camera = new OrthographicCamera(width, height);
+        camera = new OrthographicCamera(width/ Constants.PPM, height/ Constants.PPM);
         hudCamera = new OrthographicCamera(width, height);
-        viewport = new FitViewport(width, height, camera);
+        viewport = new FitViewport(width/ Constants.PPM, height/ Constants.PPM, camera);
         hudViewport = new FitViewport(width, height, hudCamera);
 
 
@@ -165,8 +166,8 @@ public class PlayScreen implements Screen, InputProcessor {
             System.out.println(rectangle.getX());
             System.out.println(rectangle.getY());
             ShapeFactory.createRectangle(
-                    new Vector2(rectangle.getX() * 4 + rectangle.getWidth() * 2, rectangle.getY() * 4 + rectangle.getHeight() * 2), // position
-                    new Vector2(rectangle.getWidth() *2, rectangle.getHeight() *2), // size
+                    new Vector2(rectangle.getX()*Constants.PPM+ rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getY()*Constants.PPM + rectangle.getHeight()*Constants.PPM*0.5f), // position
+                    new Vector2(rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getHeight()*Constants.PPM*0.5f), // size
                     BodyDef.BodyType.StaticBody, world, 1f, false);
         }
 
@@ -418,6 +419,12 @@ public class PlayScreen implements Screen, InputProcessor {
         }
         if (keycode == Input.Keys.UP) {
             camera.translate(0, 10f);
+        }
+        if (keycode == Input.Keys.Q) {
+            camera.zoom = camera.zoom -10f;
+        }
+        if (keycode == Input.Keys.E) {
+            camera.zoom = camera.zoom + 10f;
         }
         if (keycode == Input.Keys.DOWN) {
             {
