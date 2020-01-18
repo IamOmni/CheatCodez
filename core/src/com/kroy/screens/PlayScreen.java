@@ -323,6 +323,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public void removeDeadObjects(){
         ArrayList<Object> notDeleted = new ArrayList<>();
+        ArrayList<Firetruck> remainingFTs = new ArrayList<>();
+        for (Firetruck ft: firetrucks){
+            if(ft.hitpoints > 0)
+                remainingFTs.add(ft);
+        }
         for (Object obj: objs){
             if(obj.hitpoints >= 0){
                 notDeleted.add(obj);
@@ -330,12 +335,21 @@ public class PlayScreen implements Screen, InputProcessor {
             else{
                 if(obj instanceof Firetruck){
                     System.out.println("DELETE ME");
+                    if(activeFiretruck == obj){
+
+                        switchFiretruck();
+                    }
+
                 }
                 obj.body.setUserData(null);
                 world.destroyBody(obj.body);
             }
         }
         objs = notDeleted;
+        firetrucks = remainingFTs;
+        if(remainingFTs.size() <= 0){
+            game.setScreen(new MainMenuScreen(game));
+        }
     }
 
     @Override
@@ -489,25 +503,29 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
+    void switchFiretruck(){
+        for (int i = 0; i < firetrucks.size(); i++){
+            if(activeFiretruck.ufid == firetrucks.get(i).ufid){
+                System.out.println("ID: " + activeFiretruck.ufid);
+                activeFiretruck.setActive(false);
+                if(i < firetrucks.size() - 1){
+                    activeFiretruck = firetrucks.get(i + 1);
+
+                }
+                else{
+                    activeFiretruck = firetrucks.get(0);
+                }
+                activeFiretruck.setActive(true);
+            }
+        }
+    }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(toggleActive.hasBeenClicked(screenX, screenY, true)){
             System.out.println("BUTTON PRESSED");
-            for (int i = 0; i < firetrucks.size(); i++){
-                if(activeFiretruck.ufid == firetrucks.get(i).ufid){
-                    System.out.println("ID: " + activeFiretruck.ufid);
-                    activeFiretruck.setActive(false);
-                    if(i < firetrucks.size() - 1){
-                        activeFiretruck = firetrucks.get(i + 1);
-
-                    }
-                    else{
-                        activeFiretruck = firetrucks.get(0);
-                    }
-                    activeFiretruck.setActive(true);
-                    return false;
-                }
-            }
+            switchFiretruck();
+            return false;
         }
         return false;
     }
@@ -535,6 +553,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+        camera.zoom = camera.zoom + amount;
         return false;
     }
 }
