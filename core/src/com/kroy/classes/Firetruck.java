@@ -254,6 +254,9 @@ public class Firetruck extends Entity {
         super.render(batch);
     }
 
-
+    @Override
+    public void displayHealth(SpriteBatch sb){
+        
+    }
 
 }
