@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.kroy.game.Constants;
 import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -24,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
     private int waterVol, waterCap, waterDmg, waterRange;
-    public StatusButton status;
     private boolean active;
 
     // Our attributes
@@ -41,30 +43,27 @@ public class Firetruck extends Entity {
     public static final int TURN_DIRECTION_NONE = 0;
     public static final int TURN_DIRECTION_LEFT = 1;
     public static final int TURN_DIRECTION_RIGHT = 2;
-
+    public int ufid;
     public int mDriveDirection = DRIVE_DIRECTION_NONE;
     public int mTurnDirection = TURN_DIRECTION_NONE;
-
+    public int ammoCap;
     /**
      * Constructor for Firetruck object
      * @param mapGraph - MapGraph object for traversal
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.2f);
-        waterCap =  new Random().nextInt(20);
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
+        this.ufid = ufid;
+        waterCap =  new Random().nextInt(20) + 5;
         waterVol = waterCap;
-        hitpointCap =  new Random().nextInt(20);
+        hitpointCap =  new Random().nextInt(20) + 5;
         hitpoints = hitpointCap;
-        this.scale = 0.2f;
-        status = new StatusButton(ufid, manager);
+        this.scale = 0.15f;
         model = manager.get("Firetruck.png", Texture.class);
 
-        status = new StatusButton(ufid, manager);
-        //s(new Vector3(10,0,0)); // Change to new Vector3(position)?
+        body.setUserData(this);
 
-        // FROM PLAYER
-        // Init vars
         down=false;
         up=false;
         right=false;
@@ -84,8 +83,8 @@ public class Firetruck extends Entity {
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
-        ammo=50;
-
+        ammoCap=50;
+        ammo=ammoCap;
     }
 
     public int getWaterVol() {
@@ -143,6 +142,10 @@ public class Firetruck extends Entity {
         return bullets;
     }
 
+    public int getAmmo(){
+        return ammo;
+    }
+
     /**
      * Helper funciton for collision detection
      * @return int - v
@@ -187,7 +190,8 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            body.applyForceToCenter(body.getWorldVector(baseVector).scl(8000000), true);
+
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
         }
 
         firedelay-=dt;
@@ -253,6 +257,22 @@ public class Firetruck extends Entity {
         super.render(batch);
     }
 
+    public Projectile createProjectile(){
+        ammo -= 1;
+        return new Projectile(body.getPosition().x, body.getPosition().y, kroyGame.manager.get("bullet.png"), body.getAngle());
+    }
 
+    @Override
+    public void displayHealth(SpriteBatch sb){
+        if(hitpoints > 0) {
+            PlayScreen.font.setColor(Color.RED);
+            PlayScreen.font.getData().scale(0.25f);
+
+            String text = String.format("%d HP / %d WP", hitpoints, ammo);
+            final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
+            PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());
+        }
+
+    }
 
 }

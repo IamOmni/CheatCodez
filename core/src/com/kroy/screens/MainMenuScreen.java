@@ -48,12 +48,12 @@ public class MainMenuScreen implements Screen, InputProcessor {
         /**
          * Create buttons for menu use
          */
-        play = new Button(0.4, 0.6, 0.5, 0.56, game.manager.get("Menu_Assets/PLAYBUTTON.png", Texture.class));
+        play = new Button(0.4*width, 0.6*width, 0.5*height, 0.56*height, game.manager.get("Menu_Assets/PLAYBUTTON.png", Texture.class));
 
         double hTw_ratio = Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
-        help = new Button(0.1 * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.2  * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.1, 0.2, game.manager.get("Menu_Assets/HELP.png", Texture.class));
+        help = new Button(0.1 *width  * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.2  *width * Gdx.graphics.getHeight()/Gdx.graphics.getWidth(), 0.1*height, 0.2*height, game.manager.get("Menu_Assets/HELP.png", Texture.class));
 
-        settings = new Button(0.4, 0.6, 0.4, 0.46, game.manager.get("Menu_Assets/SETTINGS.png", Texture.class));
+        settings = new Button(0.4*width, 0.6*width, 0.4*height, 0.46*height, game.manager.get("Menu_Assets/SETTINGS.png", Texture.class));
 
         Gdx.input.setInputProcessor(this);
     }
@@ -114,16 +114,16 @@ public class MainMenuScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // coords for ScreenX and Y start from top left not top right so this flips the height around to match the render coords
 
-        if(play.hasBeenClicked(screenX, screenY))
+        if(play.hasBeenClicked(screenX, screenY, true))
         {
             game.setScreen(new PlayScreen(game));
             dispose();
         }
-        if(settings.hasBeenClicked(screenX, screenY)) {
+        if(settings.hasBeenClicked(screenX, screenY, true)) {
             game.setScreen(new ScoresScreen(game));
             //System.out.println("Settings Button hit");
         }
-        if(help.hasBeenClicked(screenX, screenY)){
+        if(help.hasBeenClicked(screenX, screenY, true)){
             //System.out.println("Help Button hit");
         }
 

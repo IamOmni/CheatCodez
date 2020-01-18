@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kroy.classes.CollisionBits;
+import com.kroy.game.Constants;
 
 public class ShapeFactory {
     private static int PPM;
@@ -15,17 +17,20 @@ public class ShapeFactory {
         PPM=4;
         // define body
         final BodyDef bdef = new BodyDef();
-        bdef.position.set(position.x / PPM, position.y / PPM);
+        bdef.position.set(position.x / Constants.PPM, position.y / Constants.PPM);
         bdef.type = type;
         final Body body = world.createBody(bdef);
 
         // define fixture
         final PolygonShape shape = new PolygonShape();
-        shape.setAsBox(size.x / PPM, size.y / PPM);
+        shape.setAsBox(size.x / Constants.PPM, size.y / Constants.PPM);
         final FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.density = density;
         fdef.isSensor = sensor;
+        fdef.filter.categoryBits = CollisionBits.WALL;
+        fdef.filter.maskBits = CollisionBits.WALL ;
+        fdef.filter.groupIndex = 1;
         body.createFixture(fdef);
         shape.dispose();
 

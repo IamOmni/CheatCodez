@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Queue;
+import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.screens.PlayScreen;
@@ -25,26 +26,27 @@ public class Entity extends Object{
     public GraphPath<Coord> graphPath;
 
 
-    public Entity(Vector3 position, Texture texture, float scale) {
+    public Entity(Vector3 position, Texture texture, float scale, short cb, short mb, short gindex) {
         super(
                 position, PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
-                )
+                new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
+                cb, mb, gindex
         );
         setModel(texture);
 
     }
 
-    public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale) {
+    public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale, short cb, short mb, short gindex) {
 
         super(
                 new Vector3(start.x, start.y, 0.0f),
                 PlayScreen.world,
                 BodyDef.BodyType.DynamicBody,
-                new Vector2(texture.getWidth()*scale, texture.getHeight()*scale
-                )
+                new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
+                cb, mb, gindex
         );
+
         if(texture != null) {
             System.out.println("Texture not null");
             setModel(texture);
@@ -91,7 +93,7 @@ public class Entity extends Object{
     }
     @Override
     public void update(float dt) {
-        position.add(position);
+        //position.add(position);
         checkCollision();
     }
 

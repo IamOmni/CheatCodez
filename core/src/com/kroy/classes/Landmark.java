@@ -1,13 +1,23 @@
 package com.kroy.classes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.emitters.RegularEmitter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kroy.game.Constants;
+import com.kroy.game.kroyGame;
+
+import java.util.ArrayList;
 
 public class Landmark extends Building{
+    public boolean shoot;
     private String name;
     private int level;
     private int spawnTime;
-
+    protected ArrayList<Projectile> misiles;
+    protected float misiledelay;
     /**
      * Constructor class for Building
      *
@@ -17,16 +27,15 @@ public class Landmark extends Building{
      */
     public Landmark(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
         super(x, y, health, texture, rotation, scale, world);
+        misiles = new ArrayList<>();
+        misiledelay=4f;
         spawnTime=500;
+        shoot=false;
+        body.setUserData(this);
     }
 
-    public Landmark(int x, int y, int health, Texture texture, float rotation, World world) {
-        super(x, y, health, texture, rotation, 1,world);
-    }
+    public float getMisiledelay(){return misiledelay;};
 
-    public Landmark(int x, int y, int health, Texture texture, World world) {
-        super(x, y, health, texture, 0, 1,world);
-    }
 
     public String getName() {
         return name;
@@ -39,4 +48,8 @@ public class Landmark extends Building{
     public void upgrade(){};
 
     public int getSpawnTime() { return this.spawnTime; };
+
+    public void setMisiledelay(float v) { this.misiledelay=v; }
+
+
 }
