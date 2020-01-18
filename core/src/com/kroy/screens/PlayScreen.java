@@ -307,8 +307,7 @@ public class PlayScreen implements Screen, InputProcessor {
             }
 
             if (b instanceof FortressMissile && a instanceof Firetruck) {
-                System.out.println(contact.getFixtureA().getBody().getUserData());
-                System.out.println(contact.getFixtureB().getBody().getUserData());
+
                 ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
 
                 ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.1f;
