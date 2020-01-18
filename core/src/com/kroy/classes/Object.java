@@ -28,6 +28,9 @@ public class Object{
      * Constructor for Object class
      */
 
+    public Vector2 getOffsets(){
+        return new Vector2(offsetX, offsetY);
+    }
 
     public Object(Vector3 position, World world, BodyDef.BodyType type, Vector2 size, short cb, short mb, short gindex){
         sprite = new Sprite();
