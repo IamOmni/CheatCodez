@@ -46,7 +46,7 @@ public class Firetruck extends Entity {
     public int ufid;
     public int mDriveDirection = DRIVE_DIRECTION_NONE;
     public int mTurnDirection = TURN_DIRECTION_NONE;
-
+    public int ammoCap;
     /**
      * Constructor for Firetruck object
      * @param mapGraph - MapGraph object for traversal
@@ -82,8 +82,8 @@ public class Firetruck extends Entity {
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
-        ammo=50;
-
+        ammoCap=50;
+        ammo=ammoCap;
     }
 
     public int getWaterVol() {
