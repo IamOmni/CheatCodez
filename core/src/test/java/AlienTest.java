@@ -30,9 +30,8 @@ public class AlienTest {
         manager.finishLoading();
         manager.update();
 
-        //Texture alienbase = new Texture("AlienBase.png");
-        //Game game = new Game();
-        //base = new Landmark(5, 5, 50, game.manager.get(alienbase), 0, 1, game.world);
+//        Texture alienbase = new Texture("AlienBase.png");
+//        base = new Landmark(5, 5, 50, game.manager.get(alienbase), 0, 1, game.world);
 
     }
 

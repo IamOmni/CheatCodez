@@ -6,7 +6,7 @@
 //import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 //
-//import com.kroy.tests.TestRunner;
+////import com.kroy.tests.TestRunner;
 //
 //public class kroyGameTest extends Game {
 //    public static final int HEIGHT = 1080;
@@ -19,18 +19,18 @@
 //    /**
 //     *
 //     */
-//    @Override
-//    public void create() {
-//        System.out.println("running create() for Test");
-//        TestRunner t = new TestRunner();
-//        boolean res = t.runTests();
-//        System.out.println(res);
-//        if (res==true) {
-//            System.exit(1);
-//        } else {
-//            System.exit(0);
-//        }
-//    }
+////    @Override
+////    public void create() {
+////        System.out.println("running create() for Test");
+////        TestRunner t = new TestRunner();
+////        boolean res = t.runTests();
+////        System.out.println(res);
+////        if (res==true) {
+////            System.exit(1);
+////        } else {
+////            System.exit(0);
+////        }
+////    }
 //
 //    /**
 //     *
