@@ -87,7 +87,7 @@ public class PlayScreen implements Screen, InputProcessor {
         viewport = new FitViewport(width/ Constants.PPM, height/ Constants.PPM, camera);
         hudViewport = new FitViewport(width, height, hudCamera);
 
-
+        camera.zoom = 40;
 
 
         System.out.println(width/3);
