@@ -138,7 +138,7 @@ public class PlayScreen implements Screen, InputProcessor {
             firetrucks.add(f);
             objs.add(f);
             activeFiretruck = firetrucks.get(0);
-            f = new Firetruck(mapGraph, Coords.get("A"), 2, game.manager);
+            f = new Firetruck(mapGraph, Coords.get("B"), 2, game.manager);
             firetrucks.add(f);
             objs.add(f);
             objs.add(cliffordTower);
@@ -258,6 +258,7 @@ public class PlayScreen implements Screen, InputProcessor {
                     p.render(game.batch);
                 }
                 i.render(game.batch);
+
             } else {
                 i.render(game.batch);
                 i.update(delta);
@@ -395,6 +396,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             if (activeFiretruck.getFiredelay()<0){
+                System.out.println(activeFiretruck.body.getPosition().x);
                 Projectile p = new Projectile(activeFiretruck.body.getPosition().x, activeFiretruck.body.getPosition().y, game.manager.get("bullet.png"), activeFiretruck.body.getAngle());
                 objs.add(p);
                 activeFiretruck.setFiredelay(50);

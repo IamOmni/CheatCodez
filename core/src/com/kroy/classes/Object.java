@@ -38,7 +38,8 @@ public class Object{
 
         offsetX = (size.x/ Constants.PPM) /2;
         offsetY = (size.y/ Constants.PPM) /2;
-        bodyDef.position.set(position.x/ Constants.PPM+offsetX, position.y/ Constants.PPM+offsetY);
+
+        bodyDef.position.set(position.x*Constants.PPM/ Constants.PPM+offsetX, position.y*Constants.PPM/ Constants.PPM+offsetY);
         bodyDef.type = type;
         shape.setAsBox(offsetX, offsetY);
         fixtureDef.shape = shape;
@@ -66,7 +67,6 @@ public class Object{
      * @param dt
      */
     public void update(float dt){
-
     }
 
     /**
@@ -98,16 +98,16 @@ public class Object{
      * @param sb - SpriteBatch
      */
     public void render(SpriteBatch sb){
-        if(sprite.getTexture().toString().contains("Fire")) System.out.println(String.format("%d, %d", sprite.getRegionWidth(),sprite.getRegionHeight()));
+        if (sprite.getTexture().toString().contains("Fire"))
+            System.out.println(body.getPosition().x/ Constants.PPM+offsetX);
         sprite.setRegionHeight(sprite.getTexture().getHeight());
         sprite.setRegionWidth(sprite.getTexture().getWidth());
         sprite.setPosition((body.getPosition().x-offsetX), (body.getPosition().y-offsetY));
-////        sprite.setOrigin(body.getPosition().x , body.getPosition().y );
-////        sprite.setCenter(body.getPosition().x, body.getPosition().y);
         sprite.setOrigin(sprite.getRegionWidth()/2, sprite.getRegionHeight()/2);
 
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
-
+        sprite.setX(body.getPosition().x - sprite.getRegionWidth()/2);
+        sprite.setY(body.getPosition().y- sprite.getRegionHeight()/2);
         sb.draw(sprite.getTexture(),
                 body.getPosition().x - sprite.getRegionWidth()/2,body.getPosition().y- sprite.getRegionHeight()/2,
                 sprite.getRegionWidth()/2, sprite.getRegionHeight()/2,sprite.getTexture().getWidth(),sprite.getTexture().getHeight(),

@@ -25,7 +25,7 @@ public class Projectile extends Entity {
     public Projectile(float x, float y, Texture texture, float angle) {
         //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
-        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 0);
+        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 1);
         scale = 1f;
         //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
@@ -33,7 +33,6 @@ public class Projectile extends Entity {
         body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
-
 
     }
 
