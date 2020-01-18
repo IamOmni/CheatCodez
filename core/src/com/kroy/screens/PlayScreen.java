@@ -246,10 +246,9 @@ public class PlayScreen implements Screen, InputProcessor {
         //draw all objects
         ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
-            if (i instanceof Building)
-                System.out.println(((Building) i).body.getPosition().x);
             i.render(game.batch);
             i.update(delta);
+
         }
         objs.addAll(tempStore);
         //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);

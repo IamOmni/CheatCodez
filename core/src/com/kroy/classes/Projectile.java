@@ -13,7 +13,7 @@ import com.kroy.game.Constants;
 public class Projectile extends Entity {
     private Math MathsUtils;
     float  dx;
-    public float width, height, angle, lifetimer;
+    public float width, height, angle;
 
     // LibGDX Attributes
  //   private Texture texture;
@@ -28,7 +28,7 @@ public class Projectile extends Entity {
 
         super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 1);
         scale = 1f;
-        lifetimer = 80;
+        this.angle = angle;
         //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
         body.isBullet();
@@ -41,6 +41,7 @@ public class Projectile extends Entity {
         //body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
+        hitpoints = 100;
 
     }
 
@@ -74,6 +75,13 @@ public class Projectile extends Entity {
     }
     public void render(SpriteBatch batch){
         super.render(batch);
+    }
+
+    public void update(float dt){
+        body.setTransform(
+                body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
+        );
+        hitpoints--;
     }
 
 }

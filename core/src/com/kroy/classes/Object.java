@@ -86,13 +86,15 @@ public class Object{
     }
 
     public void displayHealth(SpriteBatch sb){
+
         if(hitpoints > 0) {
             PlayScreen.font.setColor(Color.RED);
-            PlayScreen.font.getData().scale(0.25f);
+          //  PlayScreen.font.getData().scale(0.25f);
 
             String text = String.format("%d HP", hitpoints);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * offsetY + PlayScreen.font.getLineHeight());
+            System.out.println("Scale: " + PlayScreen.font.getScaleX() + ", " + PlayScreen.font.getScaleY());
         }
     }
 
@@ -101,7 +103,6 @@ public class Object{
      * @param sb - SpriteBatch
      */
     public void render(SpriteBatch sb){
-
         sprite.setRegionHeight(sprite.getTexture().getHeight());
         sprite.setRegionWidth(sprite.getTexture().getWidth());
         sprite.setPosition((body.getPosition().x-offsetX), (body.getPosition().y-offsetY));
