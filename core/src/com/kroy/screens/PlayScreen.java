@@ -20,9 +20,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.*;
@@ -154,9 +156,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
     }
 
-
-
-
     @Override
     public void show() {
 
@@ -254,10 +253,26 @@ public class PlayScreen implements Screen, InputProcessor {
         font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
         game.batch.end();
 
+        removeDeadObjects();
+
         if (time%1000==0) {score+=10;};
 
         if (time>3000) time=0;
 
+    }
+
+    public void removeDeadObjects(){
+        ArrayList<Object> notDeleted = new ArrayList<>();
+        for (Object obj: objs){
+            if(obj.hitpoints >= 0){
+                notDeleted.add(obj);
+            }
+            else{
+                obj.body.setUserData(null);
+                world.destroyBody(obj.body);
+            }
+        }
+        objs = notDeleted;
     }
 
     @Override
