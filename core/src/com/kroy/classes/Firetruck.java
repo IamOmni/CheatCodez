@@ -54,21 +54,18 @@ public class Firetruck extends Entity {
      * @param start - Starting coord for the traversal
      */
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
-        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL), (short) 0);
+        super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL), (short) 1);
         this.ufid = ufid;
-        waterCap =  new Random().nextInt(20);
+        waterCap =  new Random().nextInt(20) + 5;
         waterVol = waterCap;
-        hitpointCap =  new Random().nextInt(20);
+        hitpointCap =  new Random().nextInt(20) + 5;
         hitpoints = hitpointCap;
         this.scale = 0.15f;
         status = new StatusButton(ufid, manager);
         model = manager.get("Firetruck.png", Texture.class);
 
         status = new StatusButton(ufid, manager);
-        //s(new Vector3(10,0,0)); // Change to new Vector3(position)?
 
-        // FROM PLAYER
-        // Init vars
         down=false;
         up=false;
         right=false;
@@ -195,7 +192,8 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            body.applyForceToCenter(body.getWorldVector(baseVector.scl(Constants.PPM*40)), true);
+
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000000)), true);
         }
 
         firedelay-=dt;

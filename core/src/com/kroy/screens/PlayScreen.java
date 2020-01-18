@@ -91,7 +91,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
         System.out.println(width/3);
-    //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
+        //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
         camera.update();
         hudCamera.update();
         camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
@@ -251,7 +251,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 i.update(delta);
         }
         objs.addAll(tempStore);
-      //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+        //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
 
 
         for(Object i : objs) {
@@ -266,7 +266,7 @@ public class PlayScreen implements Screen, InputProcessor {
         hudViewport.apply();
         toggleActive.render(game.batch);
         game.batch.begin();
-       // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+        // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
         font.setColor(Color.WHITE);
         font.getData().scale(1);
         int x   = (int)(0.07 * width);
@@ -276,7 +276,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         game.shapeRenderer.setColor(Color.WHITE);
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-       // game.shapeRenderer.rect(50, height - 100, 100, height - 50);
+        // game.shapeRenderer.rect(50, height - 100, 100, height - 50);
         game.shapeRenderer.end();
         game.batch.end();
 
@@ -297,7 +297,7 @@ public class PlayScreen implements Screen, InputProcessor {
         hudCamera.update();
         camera  .update();
 
-   //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
+        //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
         System.out.println("----");
         System.out.println(width);
         System.out.println(height);
@@ -419,7 +419,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 camera.translate(0f, -10f);
             }
 
-         //   camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
+            //   camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
 
             if (activeFiretruck != null) {
                 if (keycode == (Input.Keys.W)) {
@@ -450,15 +450,15 @@ public class PlayScreen implements Screen, InputProcessor {
                 System.out.println("W key is pressed");
                 activeFiretruck.setUp(false);
             }
-             if (keycode == (Input.Keys.D)) {
+            if (keycode == (Input.Keys.D)) {
                 System.out.println("D key is pressed");
                 activeFiretruck.setRight(false);
             }
-             if (keycode == (Input.Keys.A)) {
+            if (keycode == (Input.Keys.A)) {
                 System.out.println("A key is pressed");
                 activeFiretruck.setLeft(false);
             }
-             if(keycode == (Input.Keys.S)) {
+            if(keycode == (Input.Keys.S)) {
                 System.out.println("S key is pressed");
                 activeFiretruck.setDown(false);
             }
