@@ -6,6 +6,9 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven {
+            url  "https://dl.bintray.com/mockito/maven"
+        }
         jcenter()
         google()
     }
@@ -14,7 +17,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.7'
         classpath "com.badlogicgames.gdx:gdx-ai:1.8.0"
-        
+
 
     }
 }
@@ -39,7 +42,11 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+	    maven {
+            url "https://dl.bintray.com/mockito/maven"
+        }
     }
+
 }
 
 
@@ -59,7 +66,16 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         implementation "junit:junit:4.12"
         implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
-        testImplementation 'junit:junit:4.12'
+        testImplementation "junit:junit:4.12"
+        testImplementation "org.mockito:mockito-core:2.2.29"
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testImplementation  "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        testImplementation  "com.badlogicgames.gdx:backends:$gdxVersion:natives-desktop"
+        testImplementation  "com.badlogicgames.gdx:$gdxVersion:natives-desktop"
+
     }
 }
 
@@ -100,7 +116,8 @@ project(":android") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx-ai:1.8.0"
-
+        testImplementation "junit:junit:4.11"
+        testImplementation "org.mockito:mockito-core:1.9.5"
 
     }
 }
@@ -145,7 +162,8 @@ project(":html") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion:sources"
         api "com.badlogicgames.gdx:gdx-ai:1.8.0"
 
-        
+        testImplementation project(":core")
+
     }
 }
 
@@ -161,11 +179,51 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        implementation "junit:junit:4.12"
+
         implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
-        testImplementation 'junit:junit:4.12'
 
 
+
+    }
+}
+
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["src/"]
+
+    dependencies {
+
+        /**
+         * If you do have some classes to test in os specific code you may want to uncomment
+         * some of these lines.
+         *
+         * BUT: I recommend to create seperate test sub projects for each platform. Trust me :)
+         *
+         */
+
+//        compile project(":android")
+//        compile project(":html")
+//        compile project(":desktop")
+
+
+//        if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+//        	compile project(":ios")
+//        }
+
+        compile project(":core")
+
+        compile "junit:junit:4.12"
+        compile "org.mockito:mockito-all:1.10.0"
+
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        testCompile 'junit:junit:4.12'
+        testCompile "org.mockito:mockito-all:1.10.0"
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }
 

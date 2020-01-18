@@ -7,6 +7,7 @@ sourceSets.main.java.srcDirs = ["src/"]
 sourceSets.main.resources.srcDirs = ["../android/assets"]
 project.ext.mainClassName = "com.kroy.game.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets")
+
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
@@ -15,20 +16,6 @@ task run(dependsOn: classes, type: JavaExec) {
     ignoreExitValue = true
 
 }
-
-task runTest(dependsOn: classes, type: JavaExec) {
-    project.ext.mainClassName = "com.kroy.game.desktop.DesktopTestLauncher"
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-
-
-
-}
-
-
 
 task debug(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -51,8 +38,6 @@ task dist(type: Jar) {
     with jar
 }
 dist.dependsOn classes
-dependencies {
-}
 
 test {
     reports {

@@ -145,8 +145,8 @@ public class PlayScreen implements Screen, InputProcessor {
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
-//                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
-//                firetrucks.add(f);
+                f = new Firetruck(mapGraph, coords.get("G"), 2, game.manager);
+                firetrucks.add(f);
                 objs.add(f);
             }
 
@@ -252,7 +252,7 @@ public class PlayScreen implements Screen, InputProcessor {
                             System.out.println(angle);
                         }
 
-                        if (v < 25) {
+                        if (v < 15) {
                             FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
                             tempStore.add(p);
                         }
@@ -310,7 +310,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
                 ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
 
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.1f;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.001f;
             }
         }
 
