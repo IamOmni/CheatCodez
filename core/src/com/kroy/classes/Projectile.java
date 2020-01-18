@@ -64,16 +64,7 @@ public class Projectile extends Entity {
         return dx;
     }
 
-    @Override
-    public void update(float dt){
 
-        System.out.println(String.format("%d", hitpoints));
-        body.setTransform(
-                body.getPosition().add(body.getWorldVector(new Vector2(0, 20)).scl(dt*Constants.PPM)), angle
-        );
-        super.update(dt);
-        lifetimer-=1;
-    }
     public void render(SpriteBatch batch){
         super.render(batch);
     }
@@ -83,6 +74,7 @@ public class Projectile extends Entity {
                 body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
         );
         hitpoints--;
+        super.update(dt);
     }
 
 }
