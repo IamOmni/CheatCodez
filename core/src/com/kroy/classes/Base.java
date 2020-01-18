@@ -74,7 +74,7 @@ public class Base extends Building {
         this.destroyed=true;
     };
 
-    
+
     public void update(ArrayList<Firetruck> firetrucks){
       //  super.update(bullets);
         float dt = Gdx.graphics.getDeltaTime();

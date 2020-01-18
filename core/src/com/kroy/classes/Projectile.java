@@ -35,8 +35,8 @@ public class Projectile extends Entity {
         body.isFixedRotation();
         this.angle = angle;
 
-        Vector2 force = new Vector2(0, 5000);
-
+        Vector2 force = new Vector2(0, 500000);
+        body.applyForceToCenter(force, true);
         hitpoints = 100;
 
     }

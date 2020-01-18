@@ -239,11 +239,15 @@ public class PlayScreen implements Screen, InputProcessor {
                         Vector2 position1v = firetruck.body.getPosition();
                         Vector2 position2v = i.body.getPosition();
                         float v = position2v.dst(position1v)/ Constants.PPM;
-                        float angle = (float) (atan2(position2v.y, position2v.x) - atan2(position1v.y, position1v.x));
 
                         float xDif = position1v.x-(Math.abs(position2v.x));
                         float yDif = position1v.y-(Math.abs(position2v.y));
-                        angle = (float) atan2(yDif, xDif);
+                        float angle = (float) atan2(yDif, xDif);
+
+                        if (i.getModel().getTextureData().toString().contains("station")){
+                            System.out.println(angle);
+                        }
+
                         if (v < 25) {
                             Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
                             tempStore.add(p);
@@ -372,11 +376,11 @@ public class PlayScreen implements Screen, InputProcessor {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            if (activeFiretruck.getFiredelay()<0 && (activeFiretruck.getAmmo() > 0)){
+            if (activeFiretruck.getFiredelay()<0f && (activeFiretruck.getAmmo() > 0)){
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
-                activeFiretruck.setFiredelay(5);
+                activeFiretruck.setFiredelay(50f);
             }
 
         }
