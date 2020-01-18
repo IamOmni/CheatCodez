@@ -2,7 +2,9 @@ package com.kroy.classes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kroy.game.Constants;
 
 import java.util.ArrayList;
 
@@ -38,21 +40,10 @@ public class Base extends Building {
      */
     public Base(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
         super(x, y, health, texture, rotation, scale, world);
-        refillDelay= 5f;
+        refillDelay= 10f;
         refillAmount=1;
     }
 
-    public Base(int x, int y, int health, Texture texture, float rotation, World world) {
-        super(x, y, health, texture, rotation, 1, world);
-        refillDelay= 5f;
-        refillAmount=1;
-    }
-
-    public Base(int x, int y, int health, Texture texture, World world) {
-        super(x, y, health, texture, 0, 1, world);
-        refillDelay= 5f;
-        refillAmount=1;
-    }
 
 
     /**
@@ -87,24 +78,23 @@ public class Base extends Building {
      * Update methodd for the Building, initiates the bullet collision
      * @param bullets - Projectiles from the Firetrucks
      */
-    public void update(ArrayList<Projectile> bullets, ArrayList<Firetruck> firetrucks){
+    public void update(ArrayList<Firetruck> firetrucks){
       //  super.update(bullets);
         float dt = Gdx.graphics.getDeltaTime();
 
         refillDelay-=dt;
         if (refillDelay<0){
             for (Firetruck firetruck: firetrucks){
-                float truckX = firetruck.getX();
-                float truckY = firetruck.getY();
-                float absDifX = MathsUtils.abs(truckX-super.getX());
-                float absDifY = MathsUtils.abs(truckY-super.getY());
-                float v = (float) Math.sqrt(absDifX * absDifX + absDifY * absDifY);
+                Vector2 position1 = firetruck.body.getPosition();
+                Vector2 position2 = body.getPosition();
+                float v = position1.dst(position2)/ Constants.PPM;
 
-                if (v < 50) {
-                    System.out.println("REFILLLLL");
-                    refillDelay=5f;
+                //System.out.println(String.format("V = %f", v));
+                if (v < 10f) {
+                    System.out.println("REFILLING");
+                    firetruck.ammo += 5;
+                    refillDelay=10f;
                 }
-
             }
         }
 

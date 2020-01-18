@@ -36,11 +36,7 @@ public class Projectile extends Entity {
         this.angle = angle;
 
         Vector2 force = new Vector2(0, 5000);
-        //body.setLinearVelocity(force.scl(2222222));
 
-        //body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
-        System.out.println(texture.getHeight());
-        System.out.println("PROJECTILE CREATED");
         hitpoints = 100;
 
     }

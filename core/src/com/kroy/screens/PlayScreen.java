@@ -218,13 +218,46 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.begin();
 
         //draw all objects
+        ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
+            if (i instanceof Base) {
+                ((Base) i).update(firetrucks);
+            }
 
-                i.render(game.batch);
-                i.update(delta);
+            if (i instanceof Landmark){
+
+                ((Landmark)i).setMisiledelay(((Landmark) i).getMisiledelay()-1f);
+                if (((Landmark) i).getMisiledelay()<0) {
+
+                    for (Firetruck firetruck: firetrucks){
+                        Vector2 position1 = firetruck.body.getPosition();
+                        Vector2 position2 = i.body.getPosition();
+                        float v = position1.dst(position2)/ Constants.PPM;
+                        Vector2 angle = position1.sub(position2).nor();
+                        System.out.println(angle);
+                        if (v < 25) {
+                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toDegrees(angle.scl(1/Constants.PPM).angle()));
+                            tempStore.add(p);
+                        }
+
+
+                    }
+                    ((Landmark)i).setMisiledelay(40f);
+                }
+
+            }
+
+            i.render(game.batch);
+            i.update(delta);
+
         }
+
+        objs.addAll(tempStore);
+
+
         for(Object i : objs) {
-            i.displayHealth(game.batch);
+            if (!(i instanceof Projectile))
+                i.displayHealth(game.batch);
         }
         game.batch.end();
         mB2dr.render(world,camera.combined);
