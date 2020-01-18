@@ -15,8 +15,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.Object;
@@ -249,7 +253,7 @@ public class PlayScreen implements Screen, InputProcessor {
                         }
 
                         if (v < 25) {
-                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
+                            FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
                             tempStore.add(p);
                         }
                     }
@@ -290,6 +294,28 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
 
         removeDeadObjects();
+
+        Array<Contact> contacts = world.getContactList();
+
+        for(Contact contact : contacts) {
+
+            Object a = (Object) contact.getFixtureA().getBody().getUserData();
+            Object b = (Object) contact.getFixtureB().getBody().getUserData();
+            if (a instanceof Landmark && !(b instanceof FortressMissile)) {
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=10;
+            }
+
+            if (b instanceof FortressMissile && a instanceof Firetruck) {
+                System.out.println(contact.getFixtureA().getBody().getUserData());
+                System.out.println(contact.getFixtureB().getBody().getUserData());
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
+
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=0.1f;
+            }
+        }
+
+
 
         if (time%1000==0) {score+=10;};
 

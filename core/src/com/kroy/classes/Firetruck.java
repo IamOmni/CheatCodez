@@ -62,6 +62,7 @@ public class Firetruck extends Entity {
         this.scale = 0.15f;
         model = manager.get("Firetruck.png", Texture.class);
 
+        body.setUserData(this);
 
         down=false;
         up=false;
