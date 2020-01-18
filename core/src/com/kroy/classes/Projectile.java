@@ -4,21 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.kroy.game.Constants;
 
 
 public class Projectile extends Entity {
     private Math MathsUtils;
     float  dx;
-    public float width, height;
+    public float width, height, angle, lifetimer;
 
     // LibGDX Attributes
  //   private Texture texture;
 
     /**
      *
-     * @param v
      * @param x - int - X position of the projectile
      * @param y - int - Y positiong of the projectile
      */
@@ -27,10 +28,17 @@ public class Projectile extends Entity {
 
         super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 1);
         scale = 1f;
+        lifetimer = 80;
         //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
-        Vector2 force = new Vector2(0, 500000000);
-        body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
+        body.isBullet();
+        body.isFixedRotation();
+        this.angle = angle;
+
+        Vector2 force = new Vector2(0, 5000);
+        //body.setLinearVelocity(force.scl(2222222));
+
+        //body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
 
@@ -44,6 +52,7 @@ public class Projectile extends Entity {
      * Dispose
      */
     public void dispose(){
+
     }
 
     /**
@@ -54,6 +63,16 @@ public class Projectile extends Entity {
         return dx;
     }
 
+    @Override
+    public void update(float dt){
+
+        System.out.println(String.format("%d", hitpoints));
+        body.setTransform(
+                body.getPosition().add(body.getWorldVector(new Vector2(0, 20)).scl(dt*Constants.PPM)), angle
+        );
+        super.update(dt);
+        lifetimer-=1;
+    }
     public void render(SpriteBatch batch){
         super.render(batch);
     }

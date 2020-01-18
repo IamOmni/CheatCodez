@@ -98,8 +98,7 @@ public class Object{
      * @param sb - SpriteBatch
      */
     public void render(SpriteBatch sb){
-        if (sprite.getTexture().toString().contains("Fire"))
-            System.out.println(body.getPosition().x/ Constants.PPM+offsetX);
+
         sprite.setRegionHeight(sprite.getTexture().getHeight());
         sprite.setRegionWidth(sprite.getTexture().getWidth());
         sprite.setPosition((body.getPosition().x-offsetX), (body.getPosition().y-offsetY));
