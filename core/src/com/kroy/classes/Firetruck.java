@@ -147,6 +147,10 @@ public class Firetruck extends Entity {
         return bullets;
     }
 
+    public int getAmmo(){
+        return ammo;
+    }
+
     /**
      * Helper funciton for collision detection
      * @return int - v

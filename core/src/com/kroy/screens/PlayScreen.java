@@ -394,7 +394,7 @@ public class PlayScreen implements Screen, InputProcessor {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            if (activeFiretruck.getFiredelay()<0){
+            if (activeFiretruck.getFiredelay()<0 && (activeFiretruck.getAmmo() > 0)){
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
