@@ -94,6 +94,7 @@ public class Object{
             String text = String.format("%d HP", hitpoints);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * offsetY + PlayScreen.font.getLineHeight());
+            System.out.println("Scale: " + PlayScreen.font.getScaleX() + ", " + PlayScreen.font.getScaleY());
         }
     }
 
@@ -108,8 +109,8 @@ public class Object{
         sprite.setOrigin(sprite.getRegionWidth()/2, sprite.getRegionHeight()/2);
 
         sprite.setRotation((float) Math.toDegrees(body.getAngle()));
-//        sprite.setX(body.getPosition().x - sprite.getRegionWidth()/2);
-//        sprite.setY(body.getPosition().y- sprite.getRegionHeight()/2);
+        sprite.setX(body.getPosition().x - sprite.getRegionWidth()/2);
+        sprite.setY(body.getPosition().y- sprite.getRegionHeight()/2);
         sb.draw(sprite.getTexture(),
                 body.getPosition().x - sprite.getRegionWidth()/2,body.getPosition().y- sprite.getRegionHeight()/2,
                 sprite.getRegionWidth()/2, sprite.getRegionHeight()/2,sprite.getTexture().getWidth(),sprite.getTexture().getHeight(),

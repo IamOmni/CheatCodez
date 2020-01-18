@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
@@ -18,31 +17,28 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.*;
 
 import com.kroy.classes.Object;
 import com.kroy.game.Constants;
+import com.kroy.modules.MapLoader;
 import com.kroy.modules.ShapeFactory;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Street;
-import com.kroy.scenes.Hud;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class PlayScreen implements Screen, InputProcessor {
@@ -52,7 +48,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private int time;
     private Integer score;
     // Create Map to store all the coords
-    Map<String, Coord> Coords = new HashMap<>();
+    Map<String, Coord> coords = new HashMap<>();
 
     private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
@@ -106,70 +102,57 @@ public class PlayScreen implements Screen, InputProcessor {
 
         toggleActive  = new Button(50, 200, height-200, height-50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
-            loadGraph();
-            loadTiledMap();
-            Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
-            Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
-            Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
-            Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
-            Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
-            Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
-            //int x, int y, int health, Texture texture, float rotation, float scale, World world
-            Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
-            objs.add(genericBuilding);
+            MapLoader.loadGraph(coords,mapGraph);
+            MapLoader.loadObjects(map,world);
+            //load Buildings
+            {
+                Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
+                Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
+                Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
+                Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
+                Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
+                Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
+                //int x, int y, int health, Texture texture, float rotation, float scale, World world
+                Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
 
-            for (int i = 0; i<5; i++) {
-                genericBuilding = new Building(450, 766+(256*i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
                 objs.add(genericBuilding);
+
+                for (int i = 0; i < 5; i++) {
+                    genericBuilding = new Building(450, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                    objs.add(genericBuilding);
+                }
+
+                for (int i = 0; i < 5; i++) {
+                    genericBuilding = new Building(832, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                    objs.add(genericBuilding);
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    genericBuilding = new Building(448 + (256 * i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, world);
+                    objs.add(genericBuilding);
+                }
+                objs.add(cliffordTower);
+                objs.add(yorkStation);
+                objs.add(yorkMinster);
+                objs.add(watertower1);
+                objs.add(watertower2);
+                objs.add(b);
             }
-
-            for (int i = 0; i<5; i++) {
-                genericBuilding = new Building(832, 766+(256*i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
-                objs.add(genericBuilding);
+            //load Firetrucks
+            {
+                Firetruck f = new Firetruck(mapGraph, coords.get("A"), 1, game.manager);
+                firetrucks.add(f);
+                objs.add(f);
+                activeFiretruck = firetrucks.get(0);
+                f = new Firetruck(mapGraph, coords.get("A"), 2, game.manager);
+                firetrucks.add(f);
+                objs.add(f);
             }
-
-            for (int i = 0; i<4; i++) {
-                genericBuilding = new Building(448+(256*i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, world);
-                objs.add(genericBuilding);
-            }
-
-
-            Firetruck f = new Firetruck(mapGraph, Coords.get("A"), 1, game.manager);
-            firetrucks.add(f);
-            objs.add(f);
-            activeFiretruck = firetrucks.get(0);
-            f = new Firetruck(mapGraph, Coords.get("B"), 2, game.manager);
-            firetrucks.add(f);
-            objs.add(f);
-            objs.add(cliffordTower);
-            objs.add(yorkStation);
-            objs.add(yorkMinster);
-            objs.add(watertower1);
-            objs.add(watertower2);
-            objs.add(b);
 
         } catch (IOException e) {
             System.out.println("Error reading file..." + e.toString());
         }
         Gdx.input.setInputProcessor(this);
-    }
-
-
-    public void loadTiledMap(){
-
-        loadObjects();
-    }
-    public void loadObjects(){
-        MapObjects objects = map.getLayers().get("WALLS").getObjects();
-        for (MapObject object: objects) {
-            Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
-            System.out.println(rectangle.getX());
-            System.out.println(rectangle.getY());
-            ShapeFactory.createRectangle(
-                    new Vector2(rectangle.getX()*Constants.PPM+ rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getY()*Constants.PPM + rectangle.getHeight()*Constants.PPM*0.5f), // position
-                    new Vector2(rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getHeight()*Constants.PPM*0.5f), // size
-                    BodyDef.BodyType.StaticBody, world, 1f, false);
-        }
 
     }
 
@@ -178,12 +161,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
     }
 
-    public void newRender(float dt){
-
-    }
-
     @Override
     public void render(float delta) {
+        int x   = (int)(0.07 * width);
+        int y      = (int)(0.07 * height) +50;
+
         handleInput();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Bold.ttf"));
@@ -286,33 +268,44 @@ public class PlayScreen implements Screen, InputProcessor {
                 i.displayHealth(game.batch);
         }
         game.batch.end();
-        //agent.render(game.shapeRenderer,game.batch);
         mB2dr.render(world,camera.combined);
 
         game.batch.setProjectionMatrix(hudCamera.combined);
         game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
         hudViewport.apply();
-        toggleActive.render(game.batch);
-        game.batch.begin();
 
+        toggleActive.render(game.batch);
+
+        game.batch.begin();
 
         font.setColor(Color.WHITE);
         font.getData().scale(1);
-        int x   = (int)(0.07 * width);
-        int y      = (int)(0.07 * height) +50;
+
+
         font.draw( game.batch,"SCORE",x , y);
         font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
-
-        game.shapeRenderer.setColor(Color.WHITE);
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        // game.shapeRenderer.rect(50, height - 100, 100, height - 50);
-        game.shapeRenderer.end();
         game.batch.end();
+
+        removeDeadObjects();
 
         if (time%1000==0) {score+=10;};
 
         if (time>3000) time=0;
 
+    }
+
+    public void removeDeadObjects(){
+        ArrayList<Object> notDeleted = new ArrayList<>();
+        for (Object obj: objs){
+            if(obj.hitpoints >= 0){
+                notDeleted.add(obj);
+            }
+            else{
+                obj.body.setUserData(null);
+                world.destroyBody(obj.body);
+            }
+        }
+        objs = notDeleted;
     }
 
     @Override
@@ -355,39 +348,9 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-    public void loadGraph() throws IOException {
 
-        // 4.5hrs
-        // Read fle and fetch all lines
-        File file = new File("graph.txt");
-        List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
-        for (int i=0; i<lines.size();i++) {
-            String name = lines.get(i).split(" ")[0];
-            String[] connections = lines.get(i).split(":")[1].replace(" ", "").split(",");
-            String s = lines.get(i).split("\\(")[1].split("\\)")[0].replace(" ", "");
-
-            Integer x = Integer.parseInt(s.split(",")[0]);
-            Integer y = Math.abs(3240-Integer.parseInt(s.split(",")[1]));
-
-            Coord c = new Coord(x, y, name, connections );
-            Coords.put(name, c);
-            mapGraph.addPoint(c);
-        }
-
-        // Calculate connections
-
-        for (String key: Coords.keySet()) {
-            // Iterate through all connections
-            for (String conKey: Coords.get(key).connections) {
-                // Create a conneciton between the two nodes
-                mapGraph.connectPoints(Coords.get(key), Coords.get(conKey));
-
-            }
-        }
-
-    }
-
+    // handles inputs not covered by the InputProcessor
     public void handleInput(){
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
@@ -495,10 +458,6 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -523,6 +482,12 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
@@ -540,7 +505,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        camera.translate(0, -100 * amount);
         return false;
     }
 }

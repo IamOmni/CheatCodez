@@ -15,6 +15,9 @@ public class Projectile extends Entity {
     float  dx;
     public float width, height, angle;
 
+    // LibGDX Attributes
+ //   private Texture texture;
+
     /**
      *
      * @param x - int - X position of the projectile
@@ -33,6 +36,7 @@ public class Projectile extends Entity {
         this.angle = angle;
 
         Vector2 force = new Vector2(0, 5000);
+
         hitpoints = 100;
 
     }
@@ -66,6 +70,7 @@ public class Projectile extends Entity {
                 body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
         );
         hitpoints--;
+        super.update(dt);
     }
 
 }
