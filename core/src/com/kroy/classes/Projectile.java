@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.kroy.game.Constants;
 
 
 public class Projectile extends Entity {
     private Math MathsUtils;
     float  dx;
-    public float width, height;
+    public float width, height, angle;
 
     // LibGDX Attributes
  //   private Texture texture;
@@ -27,12 +28,15 @@ public class Projectile extends Entity {
 
         super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 0);
         scale = 1f;
+
+        this.angle = angle;
         //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
         Vector2 force = new Vector2(0, 500000000);
         body.applyForceToCenter(body.getWorldVector(force.scl(500000)), true);
         System.out.println(texture.getHeight());
         System.out.println("PROJECTILE CREATED");
+        hitpoints = 100;
 
 
     }
@@ -57,6 +61,13 @@ public class Projectile extends Entity {
 
     public void render(SpriteBatch batch){
         super.render(batch);
+    }
+
+    public void update(float dt){
+        body.setTransform(
+                body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
+        );
+        hitpoints--;
     }
 
 }
