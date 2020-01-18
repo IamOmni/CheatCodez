@@ -94,6 +94,7 @@ public class Object{
             String text = String.format("%d HP", hitpoints);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * offsetY + PlayScreen.font.getLineHeight());
+
         }
     }
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,34 +11,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kroy.classes.*;
-
 import com.kroy.classes.Object;
+import com.kroy.classes.*;
 import com.kroy.game.Constants;
+import com.kroy.game.kroyGame;
 import com.kroy.modules.MapLoader;
-import com.kroy.modules.ShapeFactory;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
-import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Street;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.lang.Math.atan2;
 
 import static java.lang.Math.atan2;
 import static java.lang.Math.tan;
@@ -250,12 +244,6 @@ public class PlayScreen implements Screen, InputProcessor {
                         float xDif = position1v.x-(Math.abs(position2v.x));
                         float yDif = position1v.y-(Math.abs(position2v.y));
                         angle = (float) atan2(yDif, xDif);
-
-//                        if (i.getModel().getTextureData().toString().contains("station")) {
-//                            System.out.println(angle);
-//                            System.out.println(Math.toDegrees(angle)-90f);
-//                        }
-
                         if (v < 25) {
                             Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
                             tempStore.add(p);
