@@ -26,7 +26,7 @@ public class Projectile extends Entity {
     public Projectile(float x, float y, Texture texture, float angle) {
         //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
-        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) 1);
+        super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) -1);
         scale = 1f;
         this.angle = angle;
         //body.setAngularVelocity(angle);
@@ -70,9 +70,11 @@ public class Projectile extends Entity {
     }
 
     public void update(float dt){
-        body.setTransform(
-                body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
-        );
+//        body.setTransform(
+//                body.getPosition().add(body.getWorldVector(new Vector2(0, 20).scl(dt * Constants.PPM))),angle
+//        );
+        body.setTransform(body.getPosition(),angle);
+        body.setLinearVelocity(body.getWorldVector(new Vector2(0, 2000000000).scl(dt * Constants.PPM)));
         hitpoints--;
         super.update(dt);
     }

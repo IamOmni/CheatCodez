@@ -34,7 +34,7 @@ public class Building extends Object {
                 BodyDef.BodyType.StaticBody, new Vector2(
                         texture.getWidth()*scale*Constants.PPM,
                         texture.getHeight()*scale*Constants.PPM),
-                CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 1);
+                CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 2);
 
         setModel(texture);
         height = texture.getHeight();
