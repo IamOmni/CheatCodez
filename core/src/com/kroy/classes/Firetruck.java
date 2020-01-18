@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
     private int waterVol, waterCap, waterDmg, waterRange;
-    public StatusButton status;
     private boolean active;
 
     // Our attributes
@@ -61,10 +60,8 @@ public class Firetruck extends Entity {
         hitpointCap =  new Random().nextInt(20) + 5;
         hitpoints = hitpointCap;
         this.scale = 0.15f;
-        status = new StatusButton(ufid, manager);
         model = manager.get("Firetruck.png", Texture.class);
 
-        status = new StatusButton(ufid, manager);
 
         down=false;
         up=false;
