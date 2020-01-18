@@ -193,7 +193,7 @@ public class Firetruck extends Entity {
 
         if (!baseVector.isZero()){
 
-            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000000)), true);
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
         }
 
         firedelay-=dt;

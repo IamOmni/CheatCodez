@@ -246,10 +246,30 @@ public class PlayScreen implements Screen, InputProcessor {
         //draw all objects
         ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
-
             if (i instanceof Base) {
-
                 ((Base) i).update(firetrucks);
+            }
+
+            if (i instanceof Landmark){
+
+                ((Landmark)i).setMisiledelay(((Landmark) i).getMisiledelay()-1f);
+                if (((Landmark) i).getMisiledelay()<0) {
+
+                    for (Firetruck firetruck: firetrucks){
+                        Vector2 position1 = firetruck.body.getPosition();
+                        Vector2 position2 = i.body.getPosition();
+                        float v = position1.dst(position2)/ Constants.PPM;
+                        Vector2 angle = position1.sub(position2).nor();
+                        System.out.println(angle);
+                        if (v < 25) {
+                            Projectile p = new Projectile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toDegrees(angle.scl(1/Constants.PPM).angle()));
+                            tempStore.add(p);
+                        }
+
+
+                    }
+                    ((Landmark)i).setMisiledelay(40f);
+                }
 
             }
 
@@ -257,12 +277,13 @@ public class PlayScreen implements Screen, InputProcessor {
             i.update(delta);
 
         }
+
         objs.addAll(tempStore);
-        //  game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
 
 
         for(Object i : objs) {
-            i.displayHealth(game.batch);
+            if (!(i instanceof Projectile))
+                i.displayHealth(game.batch);
         }
         game.batch.end();
         //agent.render(game.shapeRenderer,game.batch);
@@ -273,7 +294,8 @@ public class PlayScreen implements Screen, InputProcessor {
         hudViewport.apply();
         toggleActive.render(game.batch);
         game.batch.begin();
-        // game.batch.draw(kroyGame.manager.get("alien.png", Texture.class), 10, 10, 200, 200);
+
+
         font.setColor(Color.WHITE);
         font.getData().scale(1);
         int x   = (int)(0.07 * width);

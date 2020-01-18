@@ -33,8 +33,6 @@ public class Projectile extends Entity {
         this.angle = angle;
 
         Vector2 force = new Vector2(0, 5000);
-        System.out.println(texture.getHeight());
-        System.out.println("PROJECTILE CREATED");
         hitpoints = 100;
 
     }

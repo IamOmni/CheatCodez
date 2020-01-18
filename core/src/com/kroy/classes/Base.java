@@ -98,14 +98,12 @@ public class Base extends Building {
                 Vector2 position2 = body.getPosition();
                 float v = position1.dst(position2)/ Constants.PPM;
 
-                System.out.println(String.format("V = %f", v));
+                //System.out.println(String.format("V = %f", v));
                 if (v < 10f) {
-
                     System.out.println("REFILLING");
                     firetruck.ammo+=5;
                     refillDelay=5f;
                 }
-
             }
         }
 
