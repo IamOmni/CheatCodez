@@ -88,7 +88,7 @@ public class Base extends Building {
      * @param bullets - Projectiles from the Firetrucks
      */
     public void update(ArrayList<Projectile> bullets, ArrayList<Firetruck> firetrucks){
-        super.update(bullets);
+      //  super.update(bullets);
         float dt = Gdx.graphics.getDeltaTime();
 
         refillDelay-=dt;
