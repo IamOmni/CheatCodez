@@ -61,19 +61,6 @@ public class Building extends Object {
     public int getY(){return (int) body.getPosition().y;};
 
 
-
-
-    /**
-     * Update methodd for the Building, initiates the bullet collision
-     * @param bullets - Projectiles from the Firetrucks
-     */
-    public void update(ArrayList<Projectile> bullets){
-//        for (Projectile bullet: bullets){
-//            hit = hasCollided(bullet);
-//            if (hit) health-=10;
-//        }
-    }
-
     /**
      * Draw method for the Building
      */

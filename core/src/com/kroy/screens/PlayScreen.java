@@ -246,6 +246,13 @@ public class PlayScreen implements Screen, InputProcessor {
         //draw all objects
         ArrayList<Object> tempStore = new ArrayList<>();
         for(Object i : objs) {
+
+            if (i instanceof Base) {
+
+                ((Base) i).update(firetrucks);
+
+            }
+
             i.render(game.batch);
             i.update(delta);
 
