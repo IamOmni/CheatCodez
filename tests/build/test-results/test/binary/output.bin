@@ -1,5 +1,0 @@
-Cjdbc:sqlite:D:\Documents\GitHub\CheatCodez\tests\assets\scores.db
-3Success - Score successfully inserted to local DB
-4Success - scores.size() == 2 fetched from local db
-%Success - Success - fortress shoots
-'Success - score recorded successfully
