@@ -6,7 +6,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.LocalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,23 +15,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TideMapLoader;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
-import com.kroy.screens.MainMenuScreen;
-import com.kroy.screens.PlayScreen;
-import com.kroy.states.GameStateManager;
-
-import java.util.function.Function;
-
 import com.badlogic.gdx.maps.tiled.TiledMap;
-
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.kroy.screens.MainMenuScreen;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -51,13 +36,18 @@ public class kroyGame extends Game {
 	 */
 	private List<String> loadAssetsFolder(String folder){
 		ArrayList<String> results = new ArrayList<>();
-		File[] files = new File(Paths.get("assets",folder).toAbsolutePath().toString()).listFiles();
+
+		if (!System.getProperty("user.dir").contains("assets"))
+			folder =  "assets/"+folder;
+
+		String appendFolder = folder.replace("assets/", "");
+		File[] files = new File(Paths.get(folder).toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
 			System.out.println(file.getName());
 			if (file.isFile()) {
-				results.add(String.format("%s/%s", folder, file.getName()));
-				manager.load(String.format("%s/%s", folder, file.getName()), Texture.class);
+				results.add(String.format("%s/%s", appendFolder, file.getName()));
+				manager.load(String.format("%s/%s", appendFolder, file.getName()), Texture.class);
 			}
 		}
 		return results;
@@ -67,15 +57,18 @@ public class kroyGame extends Game {
 	 * Load assets in the assets folder to one subfolder depth (rushed solution)
 	 */
 	public void loadAssets(){
+
 		manager = new AssetManager();
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
 		ArrayList<String> results = new ArrayList<>();
-
-		File[] files = new File(Paths.get("assets").toAbsolutePath().toString()).listFiles();
+		String p = "";
+		if (!System.getProperty("user.dir").contains("assets"))
+			p =  "assets";
+		File[] files = new File(Paths.get(p).toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
-
+			System.out.println(file.getAbsolutePath());
 			if (file.isFile() && file.getName().contains(".png") ) {
 				results.add(file.getName());
 				manager.setLoader(Texture.class, new TextureLoader(resolver));
@@ -119,7 +112,13 @@ public class kroyGame extends Game {
 	@Override
 	public void create() {
 		System.out.println("running create()");
-		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("assets/Boss Fight.ogg"));
+		System.out.println("Working Directory = " +
+				System.getProperty("user.dir"));
+
+		String p = "assets/Boss Fight.ogg";
+		if (System.getProperty("user.dir").contains("assets"))
+			p = "Boss Fight.ogg";
+		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal(p));
 		mp3Music.play();
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();

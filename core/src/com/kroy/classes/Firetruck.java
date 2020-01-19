@@ -23,11 +23,9 @@ import com.kroy.screens.PlayScreen;
 import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
-    private boolean active;
 
     // Our attributes
     float x,y,firedelay;
-    double xSpeed, ySpeed;
 
     private int ammo;
     private int ammoCap;
@@ -51,18 +49,18 @@ public class Firetruck extends Entity {
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
         super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
-        hitpointCap =  new Random().nextInt(20) + 5;
-        hitpointCap *= 5;
-        setHitpoints(hitpointCap);
+
         this.scale = 0.15f;
-        setModel(manager.get("Firetruck.png", Texture.class));
-
         body.setUserData(this);
-
-        bullets = new ArrayList<Projectile>();
         firedelay = 0f;
         ammoCap=50;
         ammo=ammoCap;
+        hitpointCap =  new Random().nextInt(20) + 5;
+        hitpointCap *= 5;
+
+        setHitpoints(hitpointCap);
+        setModel(manager.get("Firetruck.png", Texture.class));
+
     }
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, Texture texture){
         super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
@@ -81,23 +79,9 @@ public class Firetruck extends Entity {
         ammo=ammoCap;
     }
 
-
-    public boolean isActive() {
-        return active;
-    }
-
     public void setActive(boolean active) {
-        this.active = active;
     }
 
-
-    /**
-     * Fetches all bullets from specific firetruck
-     * @return bullets - ArrayList<Projectile>
-     */
-    public ArrayList<Projectile> getBullets() {
-        return bullets;
-    }
 
     public int getAmmo(){
         return ammo;
@@ -120,6 +104,7 @@ public class Firetruck extends Entity {
      */
     public void update(float dt){
         Vector2 baseVector = new Vector2();
+        // If the firetruck is moving forward, left, right etc...
         if(mTurnDirection == TURN_DIRECTION_RIGHT){
             body.setAngularVelocity(-2.0f);
         }
@@ -136,22 +121,40 @@ public class Firetruck extends Entity {
             baseVector.set(0,-120f);
         }
 
+        // Apply large force to move a big truck
         if (!baseVector.isZero()){
-            System.out.println("position is here:"+ body.getPosition());
-            if(ufid == 1) System.out.println("AAAH: " + body.getPosition());
             body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
-            System.out.println(body.getPosition().toString());
         }
 
+        // Reduce the firedelay
         firedelay-=dt;
 
     }
+
+    /**
+     * GetX of the Firetruck
+     * @return
+     */
     public int getX() { return (int) this.x; }
+
+    /**
+     * GetY of the Firetruck
+     * @return
+     */
     public int getY() { return (int) this.y; }
+
+    /**
+     * Get fire delay
+     * @return
+     */
     public float getFiredelay() {
         return firedelay;
     }
 
+    /**
+     * Set firedelay
+     * @param firedelay float for setting new fire delay
+     */
     public void setFiredelay(float firedelay) {
         this.firedelay = firedelay;
     }
@@ -172,12 +175,14 @@ public class Firetruck extends Entity {
         return new Projectile(body.getPosition().x, body.getPosition().y, tx, body.getAngle());
     }
 
+    /**
+     * Display health for the Firetruck
+     * @param sb - Game sprite batch
+     */
     @Override
     public void displayHealth(SpriteBatch sb){
-
             PlayScreen.font.setColor(Color.RED);
             PlayScreen.font.getData().scale(0.25f);
-
             String text = String.format("%d HP / %d WP", getHitpoints(), getAmmo());
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());

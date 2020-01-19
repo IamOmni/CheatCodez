@@ -4,12 +4,6 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 
-// Imports for cloud DB
-
-
-// Local DB imports
-
-
 public class DB {
 
     /**
@@ -49,6 +43,7 @@ public class DB {
      * @return boolean for success
      */
     public boolean local_uploadScore(String username, int score) {
+
         String url = "jdbc:sqlite:"+ Paths.get("assets", "scores.db").toAbsolutePath().toString();
         System.out.println(url);
         String sql = String.format("INSERT INTO `scores` (username, score) VALUES (\"%s\", %d) ", username, score);

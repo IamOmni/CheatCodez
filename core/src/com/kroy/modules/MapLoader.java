@@ -1,9 +1,6 @@
 package com.kroy.modules;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
@@ -13,15 +10,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
 import com.kroy.pathfinding.Street;
-import com.kroy.screens.MainMenuScreen;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +36,9 @@ public class MapLoader {
 
         // 4.5hrs
         // Read fle and fetch all lines
+
+        if (!System.getProperty("user.dir").contains("assets"))
+            path =  "assets/"+path;
         File file = new File(path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
@@ -81,8 +78,6 @@ public class MapLoader {
         MapObjects objects = map.getLayers().get("WALLS").getObjects();
         for (MapObject object: objects) {
             Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
-            System.out.println(rectangle.getX());
-            System.out.println(rectangle.getY());
             ShapeFactory.createRectangle(
                     new Vector2(rectangle.getX()* Constants.PPM+ rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getY()*Constants.PPM + rectangle.getHeight()*Constants.PPM*0.5f), // position
                     new Vector2(rectangle.getWidth()*Constants.PPM*0.5f, rectangle.getHeight()*Constants.PPM*0.5f), // size
