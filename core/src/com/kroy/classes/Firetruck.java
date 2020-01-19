@@ -71,6 +71,7 @@ public class Firetruck extends Entity {
         super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
         hitpointCap =  new Random().nextInt(20) + 5;
+        hitpointCap *= 5;
         setHitpoints(hitpointCap);
         this.scale = 0.15f;
         setModel(texture);
@@ -141,7 +142,8 @@ public class Firetruck extends Entity {
 
         if (!baseVector.isZero()){
             System.out.println(baseVector.toString());
-            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
+            //body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
+            body.setLinearVelocity(body.getWorldVector(baseVector.scl(8000000)));
             System.out.println(body.getPosition().toString());
         }
 
