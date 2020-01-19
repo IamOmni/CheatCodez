@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="FiretruckTestNew" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-01-19T11:52:07" hostname="DESKTOP-A8HDS67" time="0.07">
+<testsuite name="FiretruckTestNew" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-01-19T12:03:29" hostname="DESKTOP-A8HDS67" time="0.079">
   <properties/>
-  <testcase name="test_firetruck_move_up" classname="FiretruckTestNew" time="0.07"/>
+  <testcase name="test_firetruck_move_up" classname="FiretruckTestNew" time="0.079"/>
   <system-out><![CDATA[8.0
 580.0
 8.0

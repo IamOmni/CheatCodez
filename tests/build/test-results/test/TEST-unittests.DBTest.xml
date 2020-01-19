@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="unittests.DBTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-01-19T11:52:07" hostname="DESKTOP-A8HDS67" time="0.588">
+<testsuite name="unittests.DBTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-01-19T12:03:29" hostname="DESKTOP-A8HDS67" time="2.291">
   <properties/>
-  <testcase name="insert" classname="unittests.DBTest" time="0.458"/>
-  <testcase name="fetch_amount_2" classname="unittests.DBTest" time="0.129"/>
+  <testcase name="insert" classname="unittests.DBTest" time="2.132"/>
+  <testcase name="fetch_amount_2" classname="unittests.DBTest" time="0.157"/>
   <system-out><![CDATA[Success - Score successfully inserted to DB
 Success - scores.size() == 2
 ]]></system-out>
