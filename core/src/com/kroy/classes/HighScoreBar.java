@@ -25,8 +25,10 @@ public class HighScoreBar {
          score = record.get(1);
         if(name.length()>16)
             name = name.substring(0,10);
-        System.out.println("name: " + name );
-        System.out.println("score: " + score);
+    }
+
+    public String getScore(){
+        return score;
     }
 
     /**

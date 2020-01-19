@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.kroy.screens.PlayScreen;
 
 
 /**
@@ -15,13 +14,6 @@ public class Button {
     public double x1, x2, y1, y2;
     public Sprite sprite;
     float wRatio, hRatio;
-    public Button(double x1, double x2, double y1, double y2, String path){
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
-        sprite = new Sprite(new Texture(path));
-    }
 
     public Button(double x1, double x2, double y1, double y2, Texture tex){
         this.x1 = x1;
@@ -38,10 +30,6 @@ public class Button {
     public boolean hasBeenClicked(int screenX, int screenY, boolean noScale){
         screenY = Gdx.graphics.getHeight() - screenY;
         if(noScale) {
-            System.out.println("Screen X: " + screenX);
-            System.out.println("Screen Y: " + screenY);
-            System.out.println("Button X: (" + x1 + ", " + x2 + ")");
-            System.out.println("Button Y: (" + y1 + ", " + y2 + ")");
             if (
                     screenX >= (this.x1)
                             && screenX <= (this.x2)
@@ -56,8 +44,6 @@ public class Button {
         return false;
     }
     public boolean hasBeenClicked(int screenX, int screenY){
-        System.out.println("Screen X: " + screenX);
-        System.out.println("Screen Y: " + screenY);
         screenY = Gdx.graphics.getHeight() - screenY;
         if(
                 screenX    >= (this.x1 * Gdx.graphics.getWidth())

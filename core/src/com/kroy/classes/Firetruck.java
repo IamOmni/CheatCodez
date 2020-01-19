@@ -23,11 +23,9 @@ import com.kroy.screens.PlayScreen;
 import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
-    private boolean active;
 
     // Our attributes
     float x,y,firedelay;
-    double xSpeed, ySpeed;
 
     private int ammo;
     private int ammoCap;
@@ -81,13 +79,7 @@ public class Firetruck extends Entity {
         ammo=ammoCap;
     }
 
-
-    public boolean isActive() {
-        return active;
-    }
-
     public void setActive(boolean active) {
-        this.active = active;
     }
 
 
@@ -137,10 +129,7 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            System.out.println("position is here:"+ body.getPosition());
-            if(ufid == 1) System.out.println("AAAH: " + body.getPosition());
             body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
-            System.out.println(body.getPosition().toString());
         }
 
         firedelay-=dt;

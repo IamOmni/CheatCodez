@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -14,7 +13,6 @@ import com.kroy.screens.PlayScreen;
 
 
 public class Object{
-   // public Texture sprite.getTexture();
     protected float scale;
     public Vector3 position;
     public Sprite sprite;
@@ -114,7 +112,6 @@ public class Object{
 
         if(!immortal) {
             PlayScreen.font.setColor(Color.RED);
-          //  PlayScreen.font.getData().scale(0.25f);
 
             String text = String.format("%d HP", hitpoints);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);

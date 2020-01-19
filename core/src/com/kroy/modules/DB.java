@@ -4,12 +4,6 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 
-// Imports for cloud DB
-
-
-// Local DB imports
-
-
 public class DB {
 
     /**
