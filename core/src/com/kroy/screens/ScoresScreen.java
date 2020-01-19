@@ -18,7 +18,6 @@ import com.kroy.game.kroyGame;
 import com.kroy.modules.DB;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ScoresScreen implements Screen, InputProcessor {

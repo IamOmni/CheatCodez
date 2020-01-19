@@ -17,18 +17,19 @@ import java.util.ArrayList;
 public class Alien extends Entity {
     private int speed, damage;
 
-    float x, y, degree,  rotationSpeed, dx, dy, radians, v, dt, radius;
+    float degree;
+    float v;
+    float dt;
+    float radius;
     double xSpeed, ySpeed;
-    private Math MathsUtils;
     private float firedelay;
     private ArrayList<Projectile> projectiles;
 
     // LibGDX Attributes
-    private Texture texture;
-    private Sprite sprite;
     private boolean isAttack;
     private ShapeRenderer shapeRenderer;
     private Color color;
+    private Math MathsUtils;
 
     public boolean isAttack() {
         return isAttack;

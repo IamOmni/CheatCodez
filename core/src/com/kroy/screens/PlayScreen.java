@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -385,7 +384,6 @@ public class PlayScreen implements Screen, InputProcessor {
     void switchFiretruck() {
         for (int i = 0; i < firetrucks.size(); i++) {
             if (activeFiretruck.ufid == firetrucks.get(i).ufid) {
-                System.out.println("ID: " + activeFiretruck.ufid);
                 activeFiretruck.setActive(false);
                 if (i < firetrucks.size() - 1) {
                     activeFiretruck = firetrucks.get(i + 1);
@@ -406,12 +404,6 @@ public class PlayScreen implements Screen, InputProcessor {
         hudViewport.update(width, height);
         hudCamera.update();
         camera.update();
-
-        //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
-        System.out.println("----");
-        System.out.println(width);
-        System.out.println(height);
-        System.out.println("----");
     }
 
     @Override
@@ -494,7 +486,6 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (toggleActive.hasBeenClicked(screenX, screenY, true)) {
-            System.out.println("BUTTON PRESSED");
             switchFiretruck();
             return false;
         }
@@ -504,8 +495,7 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         camera.zoom = camera.zoom + amount;
-        return
-                false;
+        return false;
     }
 
     @Override

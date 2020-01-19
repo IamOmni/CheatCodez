@@ -38,7 +38,6 @@ public class Base extends Building {
 
                 //System.out.println(String.format("V = %f", v));
                 if (v < Constants.REFILL_RADIUS) {
-                    System.out.println("REFILLING");
                     firetruck.refillAmmo(2);
                     firetruck.setHitpoints(firetruck.getHitpoints()+1);
                     refillDelay=2f;
