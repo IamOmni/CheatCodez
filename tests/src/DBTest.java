@@ -1,4 +1,3 @@
-package unittests;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,6 +40,33 @@ public class DBTest {
             return;
         }catch (AssertionError a){
             fail(String.format("Failed to insert junit-com.kroy.test and score %d", num));
+        }
+    }
+
+    @Test
+    public void local_fetch_amount_2(){
+        ArrayList scores = db.local_getLeaderboard("2");
+        try {
+            assertEquals(String.format("%d", scores.size()), "2");
+            success("scores.size() == 2 fetched from local db");
+            return;
+        }
+        catch (AssertionError a) {
+            fail("scores.size() != 2 fetching from local db");
+        }
+    }
+
+    @Test
+    public void local_insert(){
+        int num = (int) Math.floor(Math.random()*1000);
+        boolean insert = db.local_uploadScore("junit-test", num);
+
+        try{
+            assertTrue(insert);
+            success("Score successfully inserted to local DB");
+            return;
+        }catch (AssertionError a){
+            fail(String.format("Failed to insert junit-test and score %d", num));
         }
     }
 }

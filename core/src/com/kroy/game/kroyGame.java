@@ -108,6 +108,8 @@ public class kroyGame extends Game {
 	@Override
 	public void create() {
 		System.out.println("running create()");
+//		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("Boss Fight.ogg"));
+//		mp3Music.play();
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		loadAssets();

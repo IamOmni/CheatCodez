@@ -117,7 +117,6 @@ public class Firetruck extends Entity {
      */
     public void update(float dt){
         Vector2 baseVector = new Vector2();
-
         if(mTurnDirection == TURN_DIRECTION_RIGHT){
             body.setAngularVelocity(-2.0f);
         }
@@ -135,8 +134,9 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-
+            System.out.println(baseVector.toString());
             body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
+            System.out.println(body.getPosition().toString());
         }
 
         firedelay-=dt;

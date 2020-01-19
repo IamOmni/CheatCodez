@@ -29,7 +29,6 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 
 public class GameTestRunner extends BlockJUnit4ClassRunner implements ApplicationListener {
-    public static AssetManager manager;
     public static World world;
     public static  Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
 
@@ -54,6 +53,7 @@ public class GameTestRunner extends BlockJUnit4ClassRunner implements Applicatio
     public void render() {
         synchronized (invokeInRender) {
             for (Map.Entry<FrameworkMethod, RunNotifier> each : invokeInRender.entrySet()) {
+
                 super.runChild(each.getKey(), each.getValue());
             }
             invokeInRender.clear();
