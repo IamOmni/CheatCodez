@@ -31,6 +31,9 @@ public class kroyGame extends Game {
 	public static AssetManager manager;
 	public SpriteBatch batch;
 
+	/**
+	 * Load assets in the assets subfolder folder
+	 */
 	private List<String> loadAssetsFolder(String folder){
 		ArrayList<String> results = new ArrayList<>();
 		File[] files = new File(Paths.get("assets",folder).toAbsolutePath().toString()).listFiles();
@@ -38,7 +41,6 @@ public class kroyGame extends Game {
 		for (File file : files) {
 			System.out.println(file.getName());
 			if (file.isFile()) {
-				System.out.println(String.format("%s/%s", folder, file.getName()));
 				results.add(String.format("%s/%s", folder, file.getName()));
 				manager.load(String.format("%s/%s", folder, file.getName()), Texture.class);
 			}
@@ -46,18 +48,19 @@ public class kroyGame extends Game {
 		return results;
 	}
 
+	/**
+	 * Load assets in the assets folder to one subfolder depth (rushed solution)
+	 */
 	public void loadAssets(){
 		manager = new AssetManager();
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
-		System.out.println(Paths.get("assets").toAbsolutePath().toString());
 		ArrayList<String> results = new ArrayList<>();
 
 		File[] files = new File(Paths.get("assets").toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
-			System.out.println(file.getName());
-			//&& file.getName().contains(".png")
+
 			if (file.isFile() && file.getName().contains(".png") ) {
 				results.add(file.getName());
 				manager.setLoader(Texture.class, new TextureLoader(resolver));
@@ -79,11 +82,8 @@ public class kroyGame extends Game {
 				results.addAll(s);
 			}
 		}
-
-
 		manager.finishLoading();
 		manager.update();
-		System.out.println("loaded assets: " + manager.getLoadedAssets());
 
 	}
 

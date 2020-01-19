@@ -76,9 +76,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
         //set initial variables
         mapGraph = new MapGraph();
-        score = 0;
+
         map = game.manager.get("map-two-layer-new.tmx", TiledMap.class);
 
+        // Initial play state variables
+        score = 0;
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
         scoreX = (int) (0.07 * width);
@@ -87,14 +89,13 @@ public class PlayScreen implements Screen, InputProcessor {
         hudCamera = new OrthographicCamera(width, height);
         viewport = new FitViewport(width / Constants.PPM, height / Constants.PPM, camera);
         hudViewport = new FitViewport(width, height, hudCamera);
-
         camera.zoom = 40;
-        //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
         camera.update();
         hudCamera.update();
         camera.position.set(game.WIDTH / 2, game.HEIGHT / 2, 0);
         hudCamera.position.set(game.WIDTH / 2, game.HEIGHT / 2, 0);
 
+        // Map renderer
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView(camera);
 
@@ -104,10 +105,12 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
         toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("switch.png", Texture.class));
-        try {
-            MapLoader.loadGraph(coords,mapGraph, "graph.txt");
-            MapLoader.loadObjects(map,Constants.world);
 
+        try {
+            // Load the AI map
+            MapLoader.loadGraph(coords,mapGraph, "graph.txt");
+            // Load the objects into the Tiled Map
+            MapLoader.loadObjects(map,Constants.world);
 
             map.getLayers().get(0).setVisible(true);
             map.getLayers().get(1).setVisible(true);
@@ -152,10 +155,11 @@ public class PlayScreen implements Screen, InputProcessor {
                 bases.add(watertower2);
 
 
-
+                // Add landmarks to objs
                 for (Landmark lm : landmarks) {
                     objs.add(lm);
                 }
+                // Add bases to objs
                 for (Base base : bases) {
                     objs.add(base);
                 }
@@ -173,13 +177,17 @@ public class PlayScreen implements Screen, InputProcessor {
             }
 
         } catch (IOException e) {
+            // If error reading the graph txt throw this error
             System.out.println("Error reading file..." + e.toString());
         }
 
+        // Create generator for the custom font
         generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Bold.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 16;
 
+
+        // Set the input processor to be handled in PlayScreen
         Gdx.input.setInputProcessor(this);
 
     }
@@ -191,12 +199,12 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-
+        // Handle inputs from user
         handleInput();
-
 
         font = generator.generateFont(parameter);
 
+        // Increase time variables using Delta time
         time += Math.ceil(Gdx.graphics.getDeltaTime());
         camera.update();
 
@@ -205,6 +213,8 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Constants.world.step(delta, 6, 2);
 
+
+        // Set the camera to be above the active firetruck
         camera.position.set(activeFiretruck.body.getPosition(), 0);
         game.shapeRenderer.setColor(Color.WHITE);
         viewport.apply();
@@ -224,27 +234,30 @@ public class PlayScreen implements Screen, InputProcessor {
         //draw and update all objects in map
         ArrayList<Object> tempStore = new ArrayList<>();
         for (Object i : objs) {
+
+            // Update bases and pass in the firetrucks
             if (i instanceof Base) {
                 ((Base) i).update(firetrucks);
             }
 
+
+            // If the object is a landmark we need to check for firetrucks that are nearby
             if (i instanceof Landmark) {
 
                 ((Landmark) i).setMisiledelay(((Landmark) i).getMisiledelay() - 1f);
                 if (((Landmark) i).getMisiledelay() < 0 && ((Landmark) i).invaded) {
-
+                    // For each landmark (enemy base) shoot nearby firetrucks
                     for (Firetruck firetruck : firetrucks) {
-
+                        // Calculate distance between landmark and firetruck
                         Vector2 position1v = firetruck.body.getPosition();
                         Vector2 position2v = i.body.getPosition();
                         float v = (float) Math.sqrt(position2v.dst(position1v));
-
                         float xDif = position1v.x - (Math.abs(position2v.x));
                         float yDif = position1v.y - (Math.abs(position2v.y));
                         float angle = (float) atan2(yDif, xDif);
 
-
                         if (v < Constants.FORTRESS_FIRE_RADIUS) {
+
                             FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle) - 90f));
                             tempStore.add(p);
                         }
@@ -268,18 +281,12 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
 
         //Rendering Overlay
-
         game.batch.setProjectionMatrix(hudCamera.combined);
         game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
         hudViewport.apply();
-
         toggleActive.render(game.batch);
-
         game.batch.begin();
-
         font.setColor(Color.WHITE);
-
-
         font.draw(game.batch, "SCORE", scoreX, scoreY);
         font.draw(game.batch, String.format("%d", score), (float) (scoreX + 0.15 * width), scoreY);
         game.batch.end();
@@ -287,12 +294,9 @@ public class PlayScreen implements Screen, InputProcessor {
         removeDeadObjects();
         processCollisions();
 
-
         if (time % 1000 == 0) {
             score += 10;
         }
-        ;
-
         if (time > 3000) time = 0;
 
     }
@@ -301,19 +305,21 @@ public class PlayScreen implements Screen, InputProcessor {
         Array<Contact> contacts = Constants.world.getContactList();
 
         for (Contact contact : contacts) {
-
             Object a = (Object) contact.getFixtureA().getBody().getUserData();
             Object b = (Object) contact.getFixtureB().getBody().getUserData();
+
+            //Detect landmark and projectile collision. Set to !fortress missilie, will ignore all other objects due to collision bits
             if (a instanceof Landmark && !(b instanceof FortressMissile)) {
                 ((Object) contact.getFixtureB().getBody().getUserData()).kill();
                 ((Object) contact.getFixtureA().getBody().getUserData()).takeDamage(Constants.FIRETRUCK_DAMAGE);
                 score += Constants.FORTRESS_DAMAGE_SCORE;
+
+                // If you have destroyed the object, get more points
                 if(((Object) contact.getFixtureA().getBody().getUserData()).getHitpoints() <= 0)
                     score += Constants.FORTRESS_DESTROY_SCORE_BOOST;
             }
 
             if (b instanceof FortressMissile && a instanceof Firetruck) {
-
                 ((Object) contact.getFixtureB().getBody().getUserData()).kill();
                 ((Object) contact.getFixtureA().getBody().getUserData()).takeDamage(Constants.FORTRESS_DAMAGE);
             }
@@ -321,6 +327,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     }
 
+    /**
+     * Remove dead objects from the playscreen
+     */
     public void removeDeadObjects() {
         ArrayList<Object> notDeleted = new ArrayList<>();
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
@@ -482,7 +491,14 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-
+    /**
+     * Touchdown, used for detecting a change in firetruck selection
+     * @param screenX - positionx
+     * @param screenY  - positiony
+     * @param pointer - pointer
+     * @param button - button int
+     * @return
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (toggleActive.hasBeenClicked(screenX, screenY, true)) {
@@ -492,9 +508,15 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
+    /**
+     * When user scrolls, zoom camera
+     * @param amount
+     * @return
+     */
     @Override
     public boolean scrolled(int amount) {
-        camera.zoom = camera.zoom + amount;
+        if (camera.zoom + amount>0)
+            camera.zoom = camera.zoom + amount;
         return false;
     }
 

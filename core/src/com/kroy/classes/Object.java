@@ -31,7 +31,16 @@ public class Object{
     }
 
 
-    
+    /**
+     * Constructor for the Object class
+     * @param position - Position of the object
+     * @param world - Box2D world
+     * @param type - Type of the body
+     * @param size - Size of the object
+     * @param cb - Collision bits (what is the object for box2d reference)
+     * @param mb - Mask bits (what can the object collide with)
+     * @param gindex - Can the object collide/not collide with the mask
+     */
     public Object(Vector3 position, World world, BodyDef.BodyType type, Vector2 size, short cb, short mb, short gindex){
         sprite = new Sprite();
 
@@ -95,6 +104,10 @@ public class Object{
         sprite.setRotation(degree);
     }
 
+    /**
+     * Display health of the object
+     * @param sb - Game sprite batch
+     */
     public void displayHealth(SpriteBatch sb){
 
         if(!immortal) {

@@ -13,6 +13,16 @@ import com.kroy.game.Constants;
 public class ShapeFactory {
     private static int PPM;
 
+    /**
+     * Create rectangle in box2d
+     * @param position - Vector of the position
+     * @param size - Size of the rectanlge
+     * @param type - type of body
+     * @param world - world
+     * @param density - desity of the object
+     * @param sensor - sensor
+     * @return body;
+     */
     public static Body createRectangle(final Vector2 position, final Vector2 size, final BodyDef.BodyType type, final World world, float density, final boolean sensor) {
         PPM=4;
         // define body

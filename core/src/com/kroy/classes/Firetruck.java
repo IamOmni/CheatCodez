@@ -1,9 +1,6 @@
 package com.kroy.classes;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -157,6 +154,11 @@ public class Firetruck extends Entity {
     public Projectile createProjectile(){
         ammo -= 1;
         return new Projectile(body.getPosition().x, body.getPosition().y, kroyGame.manager.get("bullet.png"), body.getAngle());
+    }
+
+    public Projectile createProjectileTest(Texture tx){
+        ammo -= 1;
+        return new Projectile(body.getPosition().x, body.getPosition().y, tx, body.getAngle());
     }
 
     @Override

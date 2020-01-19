@@ -11,8 +11,6 @@ public class Projectile extends Entity {
     float  dx;
     public float width, height, angle;
 
-    // LibGDX Attributes
- //   private Texture texture;
 
     /**
      *

@@ -4,14 +4,16 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 
-
 public class DB {
 
+    /**
+     * Fetch leaderboard
+     * @param amount - Amount wanting to be fetched
+     * @return
+     */
     public ArrayList<ArrayList<String>> local_getLeaderboard(String amount) {
         ArrayList<ArrayList<String>> results = new ArrayList<>();
-
         String url = "jdbc:sqlite:"+ Paths.get("assets")+"/scores.db";
-        System.out.println(url);
         String sql = "SELECT * FROM `scores` LIMIT " + amount;
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -34,6 +36,12 @@ public class DB {
 
     }
 
+    /**
+     * Insert score to DB
+     * @param username - username of the player
+     * @param score - score the player achieved
+     * @return boolean for success
+     */
     public boolean local_uploadScore(String username, int score) {
         String url = "jdbc:sqlite:"+ Paths.get("assets", "scores.db").toAbsolutePath().toString();
         System.out.println(url);
