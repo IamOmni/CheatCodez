@@ -58,13 +58,6 @@ public class Entity extends Object{
         this.previous = start;
     }
 
-    public int getHitpoints() {
-        return hitpoints;
-    }
-
-    public void setHitpoints(int hitpoints) {
-        this.hitpoints = hitpoints;
-    }
 
     public int getSpeedMove() {
         return speedMove;

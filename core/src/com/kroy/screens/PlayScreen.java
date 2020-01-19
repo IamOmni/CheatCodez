@@ -15,12 +15,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kroy.classes.Object;
@@ -38,9 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Math.atan2;
-
-import static java.lang.Math.atan2;
-import static java.lang.Math.tan;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
@@ -63,7 +58,6 @@ public class PlayScreen implements Screen, InputProcessor {
     public static BitmapFont font;
 
     private int width, height;
-    private int ratioW, ratioH;
     private Button toggleActive;
     private Box2DDebugRenderer mB2dr;
 
@@ -78,8 +72,6 @@ public class PlayScreen implements Screen, InputProcessor {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        ratioW = Gdx.graphics.getWidth() / game.WIDTH;
-        ratioH = Gdx.graphics.getHeight() / game.HEIGHT;
         camera = new OrthographicCamera(width / Constants.PPM, height / Constants.PPM);
         hudCamera = new OrthographicCamera(width, height);
         viewport = new FitViewport(width / Constants.PPM, height / Constants.PPM, camera);
@@ -152,6 +144,7 @@ public class PlayScreen implements Screen, InputProcessor {
             {
                 Firetruck f = new Firetruck(mapGraph, coords.get("B"), 1, game.manager);
                 firetrucks.add(f);
+                objs.add(f);
                 f = new Firetruck(mapGraph, coords.get("C"), 2, game.manager);
                 firetrucks.add(f);
                 objs.add(f);
@@ -247,14 +240,14 @@ public class PlayScreen implements Screen, InputProcessor {
 
                         Vector2 position1v = firetruck.body.getPosition();
                         Vector2 position2v = i.body.getPosition();
-                        float v = position2v.dst(position1v) / Constants.PPM;
+                        float v = (float) Math.sqrt(position2v.dst(position1v));
 
                         float xDif = position1v.x - (Math.abs(position2v.x));
                         float yDif = position1v.y - (Math.abs(position2v.y));
                         float angle = (float) atan2(yDif, xDif);
 
 
-                        if (v < 15) {
+                        if (v < 25) {
                             FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle) - 90f));
                             tempStore.add(p);
                         }
@@ -303,14 +296,17 @@ public class PlayScreen implements Screen, InputProcessor {
             Object a = (Object) contact.getFixtureA().getBody().getUserData();
             Object b = (Object) contact.getFixtureB().getBody().getUserData();
             if (a instanceof Landmark && !(b instanceof FortressMissile)) {
-                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints = 0;
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints -= 10;
+                ((Object) contact.getFixtureB().getBody().getUserData()).kill();
+                ((Object) contact.getFixtureA().getBody().getUserData()).takeDamage(Constants.FIRETRUCK_DAMAGE);
+                score += Constants.FORTRESS_DAMAGE_SCORE;
+                if(((Object) contact.getFixtureA().getBody().getUserData()).getHitpoints() <= 0)
+                    score += Constants.FORTRESS_DESTROY_SCORE_BOOST;
             }
 
             if (b instanceof FortressMissile && a instanceof Firetruck) {
 
-                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints = 0;
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints -= Constants.FORTRESS_DAMAGE;
+                ((Object) contact.getFixtureB().getBody().getUserData()).kill();
+                ((Object) contact.getFixtureA().getBody().getUserData()).takeDamage(Constants.FORTRESS_DAMAGE);
             }
         }
 
@@ -331,31 +327,28 @@ public class PlayScreen implements Screen, InputProcessor {
         ArrayList<Base> remainingBs = new ArrayList<>();
         int enemyCount = 0;
         for (Firetruck ft : firetrucks) {
-            if (ft.hitpoints > 0)
+            if (ft.getHitpoints() > 0)
                 remainingFTs.add(ft);
         }
         for (Landmark lm:landmarks){
-            if(lm.hitpoints >0) {
+            if(lm.getHitpoints() >0) {
                 remainingLMs.add(lm);
-                if(lm.invaded)
-                    enemyCount++;
             }
         }
         for (Base bs:bases){
-            if(bs.hitpoints >0)
+            if(bs.getHitpoints() >0)
                 remainingBs.add(bs);
         }
 
         for (Object obj : objs) {
-            if (obj.hitpoints >= 0) {
+            if (obj.getHitpoints() > 0) {
                 notDeleted.add(obj);
             } else {
                 //if a firetruck has low health check if it is the active firetruck
                 // if the fire truck is the active firetruck then switch to a remaining firetruck if possible
                 if (obj instanceof Firetruck) {
                     if (activeFiretruck == obj) {
-
-                        switchFiretruck();
+                        activeFiretruck = null;
                     }
 
                 }
@@ -368,17 +361,17 @@ public class PlayScreen implements Screen, InputProcessor {
         bases = remainingBs;
         landmarks = remainingLMs;
         // if there are no firetrucks remaining the game ends
-        if (remainingFTs.size() <= 0 || enemyCount == 0) {
+        if (remainingFTs.size() <= 0 || remainingLMs.size() <= 0) {
             game.setScreen(new MainMenuScreen(game));
         }
+        if(activeFiretruck == null)
+            switchFiretruck();
     }
 
     @Override
     public void resize(int width, int height) {
         this.height = height;
         this.width = width;
-        ratioW = width / game.WIDTH;
-        ratioH = height / game.HEIGHT;
         viewport.update(width, height);
         hudViewport.update(width, height);
         hudCamera.update();
@@ -473,52 +466,18 @@ public class PlayScreen implements Screen, InputProcessor {
 
             //   camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
 
-            if (activeFiretruck != null) {
-                if (keycode == (Input.Keys.W)) {
 
-                }
-                if (keycode == (Input.Keys.D)) {
-                    System.out.println("D key is pressed");
-                    activeFiretruck.setRight(true);
-                }
-                if (keycode == (Input.Keys.A)) {
-                    System.out.println("A key is pressed");
-
-                    activeFiretruck.setLeft(true);
-                }
-                if (keycode == (Input.Keys.S)) {
-                    System.out.println("S key is pressed");
-                    activeFiretruck.setDown(true);
-                }
-            }
         }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (activeFiretruck != null) {
-            if (keycode == (Input.Keys.W)) {
-                System.out.println("W key is pressed");
-                activeFiretruck.setUp(false);
-            }
-            if (keycode == (Input.Keys.D)) {
-                System.out.println("D key is pressed");
-                activeFiretruck.setRight(false);
-            }
-            if (keycode == (Input.Keys.A)) {
-                System.out.println("A key is pressed");
-                activeFiretruck.setLeft(false);
-            }
-            if (keycode == (Input.Keys.S)) {
-                System.out.println("S key is pressed");
-                activeFiretruck.setDown(false);
-            }
-        }
+
         return false;
     }
 
-
+    //changes active firetruck to next firetruck available in list
     void switchFiretruck() {
         for (int i = 0; i < firetrucks.size(); i++) {
             if (activeFiretruck.ufid == firetrucks.get(i).ufid) {
@@ -531,6 +490,7 @@ public class PlayScreen implements Screen, InputProcessor {
                     activeFiretruck = firetrucks.get(0);
                 }
                 activeFiretruck.setActive(true);
+                return;
             }
         }
     }

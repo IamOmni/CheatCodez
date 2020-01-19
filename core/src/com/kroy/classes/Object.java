@@ -18,10 +18,10 @@ public class Object{
     protected float scale;
     public Vector3 position;
     public Sprite sprite;
-    public int hitpoints = 0;
+    private int hitpoints = 0;
     public Body body;
     private float offsetX, offsetY;;
-
+    private boolean immortal;
 
 
     /**
@@ -55,6 +55,8 @@ public class Object{
 
         shape.dispose();
 
+        immortal = false;
+
     }
 
     /**
@@ -70,6 +72,21 @@ public class Object{
      * @param dt
      */
     public void update(float dt){
+
+    }
+    public void setHitpoints(int hitpoints){
+        this.hitpoints = hitpoints;
+    }
+    public int getHitpoints(){
+        return hitpoints;
+    }
+    public void kill(){
+        if(!immortal)
+            hitpoints = 0;
+    }
+
+    public void takeDamage(float dmg){
+        this.hitpoints -= dmg;
     }
 
     /**
@@ -87,7 +104,7 @@ public class Object{
 
     public void displayHealth(SpriteBatch sb){
 
-        if(true) {
+        if(!immortal) {
             PlayScreen.font.setColor(Color.RED);
           //  PlayScreen.font.getData().scale(0.25f);
 
@@ -121,4 +138,11 @@ public class Object{
     }
 
 
+    public boolean isImmortal() {
+        return immortal;
+    }
+
+    public void setImmortal(boolean immortal) {
+        this.immortal = immortal;
+    }
 }
