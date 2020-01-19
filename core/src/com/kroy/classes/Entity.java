@@ -67,11 +67,6 @@ public class Entity extends Object{
         this.speedMove = speedMove;
     }
 
-
-
-    public void move(){};
-    public void takeDmg(){};
-
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         super.render(batch);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -89,6 +84,11 @@ public class Entity extends Object{
         //position.add(position);
         checkCollision();
     }
+
+    ///////////////////////
+    //////PATHFINDING//////
+    ///////////////////////
+
 
     /**
      * Set the goal Coord, calculate a path, and start moving.

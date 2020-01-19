@@ -55,6 +55,7 @@ public class Firetruck extends Entity {
         super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
         hitpointCap =  new Random().nextInt(20) + 5;
+        hitpointCap *= 5;
         setHitpoints(hitpointCap);
         this.scale = 0.15f;
         setModel(manager.get("Firetruck.png", Texture.class));

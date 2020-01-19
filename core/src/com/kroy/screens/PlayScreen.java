@@ -29,7 +29,6 @@ import com.kroy.modules.DB;
 import com.kroy.modules.MapLoader;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
-import com.kroy.pathfinding.Street;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,37 +41,46 @@ public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
     private OrthographicCamera camera, hudCamera;
     private Viewport viewport, hudViewport;
+    int scoreX;
+    int scoreY;
     private int time;
-    private Integer score;
+    private int score;
     // Create Map to store all the coords
     Map<String, Coord> coords = new HashMap<>();
-
+    //Tiled Map and renderer
     private TiledMap map;
     private TiledMapRenderer tiledMapRenderer;
 
     private MapGraph mapGraph;
+    //Map objects
     private ArrayList<Object> objs = new ArrayList<Object>();
     private ArrayList<Firetruck> firetrucks = new ArrayList<>();
     private ArrayList<Landmark> landmarks = new ArrayList<>();
     private ArrayList<Base> bases = new ArrayList<>();
     private Firetruck activeFiretruck;
+
+    //font variables
     public static BitmapFont font;
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
     private int width, height;
+
     private Button toggleActive;
     private Box2DDebugRenderer mB2dr;
 
     public PlayScreen(kroyGame game) {
         this.game = game;
 
-        //set empty variables
+        //set initial variables
         mapGraph = new MapGraph();
         score = 0;
         map = game.manager.get("map-two-layer-new.tmx", TiledMap.class);
 
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
-
+        scoreX = (int) (0.07 * width);
+        scoreY = (int) (0.07 * height) + 50;
         camera = new OrthographicCamera(width / Constants.PPM, height / Constants.PPM);
         hudCamera = new OrthographicCamera(width, height);
         viewport = new FitViewport(width / Constants.PPM, height / Constants.PPM, camera);
@@ -98,6 +106,10 @@ public class PlayScreen implements Screen, InputProcessor {
         try {
             MapLoader.loadGraph(coords,mapGraph, "graph.txt");
             MapLoader.loadObjects(map,Constants.world);
+
+
+            map.getLayers().get(0).setVisible(true);
+            map.getLayers().get(1).setVisible(true);
             //load Buildings
             {
                 Landmark b = new Landmark(3500, 1600, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, Constants.world);
@@ -161,6 +173,11 @@ public class PlayScreen implements Screen, InputProcessor {
         } catch (IOException e) {
             System.out.println("Error reading file..." + e.toString());
         }
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Bold.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 16;
+
         Gdx.input.setInputProcessor(this);
 
     }
@@ -172,18 +189,15 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        int x = (int) (0.07 * width);
-        int y = (int) (0.07 * height) + 50;
 
         handleInput();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 16;
+
         font = generator.generateFont(parameter);
 
         time += Math.ceil(Gdx.graphics.getDeltaTime());
         camera.update();
+
         // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -193,44 +207,19 @@ public class PlayScreen implements Screen, InputProcessor {
         game.shapeRenderer.setColor(Color.WHITE);
         viewport.apply();
 
-        Gdx.gl.glViewport(
-                (int) (0),
-                (int) (0),
-                (int) (width),
-                (int) (height)
-        );
-
-
-        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        game.shapeRenderer.end();
-
-        game.batch.begin();
         game.batch.setProjectionMatrix(camera.combined);
         game.shapeRenderer.setProjectionMatrix(camera.combined);
-        game.batch.end();
 
 
         // Render level
         tiledMapRenderer.setView(camera);
-
-        map.getLayers().get(0).setVisible(true);
-        map.getLayers().get(1).setVisible(true);
         tiledMapRenderer.render();
         //
-        for (Street street : mapGraph.streets) {
-            street.render(game.shapeRenderer);
-        }
 
-
-        // Draw all points
-        for (Coord city : mapGraph.coords) {
-            city.render(game.shapeRenderer, game.batch, font, false);
-        }
 
         game.batch.begin();
 
-        //draw all objects
+        //draw and update all objects in map
         ArrayList<Object> tempStore = new ArrayList<>();
         for (Object i : objs) {
             if (i instanceof Base) {
@@ -270,12 +259,15 @@ public class PlayScreen implements Screen, InputProcessor {
 
         objs.addAll(tempStore);
 
-
+        //display health indicator for objects
         for (Object i : objs) {
             i.displayHealth(game.batch);
         }
         game.batch.end();
-        mB2dr.render(Constants.world, camera.combined);
+
+      //  mB2dr.render(Constants.world, camera.combined);
+
+        //Rendering Overlay
 
         game.batch.setProjectionMatrix(hudCamera.combined);
         game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
@@ -286,15 +278,26 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.begin();
 
         font.setColor(Color.WHITE);
-        font.getData().scale(1);
 
 
-        font.draw(game.batch, "SCORE", x, y);
-        font.draw(game.batch, String.format("%d", score), (float) (x + 0.15 * width), y);
+        font.draw(game.batch, "SCORE", scoreX, scoreY);
+        font.draw(game.batch, String.format("%d", score), (float) (scoreX + 0.15 * width), scoreY);
         game.batch.end();
 
         removeDeadObjects();
+        processCollisions();
 
+
+        if (time % 1000 == 0) {
+            score += 10;
+        }
+        ;
+
+        if (time > 3000) time = 0;
+
+    }
+
+    public void processCollisions(){
         Array<Contact> contacts = Constants.world.getContactList();
 
         for (Contact contact : contacts) {
@@ -316,14 +319,6 @@ public class PlayScreen implements Screen, InputProcessor {
             }
         }
 
-
-        if (time % 1000 == 0) {
-            score += 10;
-        }
-        ;
-
-        if (time > 3000) time = 0;
-
     }
 
     public void removeDeadObjects() {
@@ -333,19 +328,22 @@ public class PlayScreen implements Screen, InputProcessor {
         ArrayList<Base> remainingBs = new ArrayList<>();
 
         int enemyCount = 0;
-        for (Firetruck ft : firetrucks) {
-            if (ft.getHitpoints() > 0)
-                remainingFTs.add(ft);
-        }
-        for (Landmark lm:landmarks){
-            if(lm.getHitpoints() >0) {
-                remainingLMs.add(lm);
-                enemyCount++;
+        //update no.
+        {
+            for (Firetruck ft : firetrucks) {
+                if (ft.getHitpoints() > 0)
+                    remainingFTs.add(ft);
             }
-        }
-        for (Base bs:bases){
-            if(bs.getHitpoints() >0)
-                remainingBs.add(bs);
+            for (Landmark lm : landmarks) {
+                if (lm.getHitpoints() > 0) {
+                    remainingLMs.add(lm);
+                    enemyCount++;
+                }
+            }
+            for (Base bs : bases) {
+                if (bs.getHitpoints() > 0)
+                    remainingBs.add(bs);
+            }
         }
         //get all living objects
         //remove dead objects
