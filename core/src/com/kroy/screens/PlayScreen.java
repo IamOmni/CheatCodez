@@ -105,31 +105,32 @@ public class PlayScreen implements Screen, InputProcessor {
             MapLoader.loadObjects(map,Constants.world);
             //load Buildings
             {
-                Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, Constants.world);
-                Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, Constants.world);
-                Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
-                Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
-                Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
-                Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
+                Landmark b = new Landmark(3500, 1600, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, Constants.world);
+                Landmark cliffordTower = new Landmark(1792, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, Constants.world);
+                Landmark yorkStation = new Landmark(512, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
+                Landmark yorkMinster = new Landmark(3008, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
+                Base watertower1 = new Base(1920, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
+                Base watertower2 = new Base(448, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
                 //int x, int y, int health, Texture texture, float rotation, float scale, World world
-                Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
-
+                Building genericBuilding = new Building(0, 766, 0, game.manager.get("building4.png", Texture.class), 0f, 1.2f, Constants.world);
                 objs.add(genericBuilding);
 
-                for (int i = 0; i < 5; i++) {
-                    genericBuilding = new Building(450, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
-                    objs.add(genericBuilding);
-                }
+                genericBuilding = new Building(0, (int) (766+ (256 * 2.4)), 0, game.manager.get("building4.png", Texture.class), 0f, 1.2f, Constants.world);
+                objs.add(genericBuilding);
+                genericBuilding = new Building(0, (int) (766+ (256 * 2.4)), 0, game.manager.get("building4.png", Texture.class), 0f, 1.2f, Constants.world);
+                objs.add(genericBuilding);
+                genericBuilding = new Building(832, 510, 0, game.manager.get("building2.png", Texture.class), 0f, 1.35f, Constants.world);
+                objs.add(genericBuilding);
+                genericBuilding = new Building(832, (int) (510+(570*1.35)), 0, game.manager.get("building2.png", Texture.class), 0f, 1.35f, Constants.world);
+                objs.add(genericBuilding);
 
-                for (int i = 0; i < 5; i++) {
-                    genericBuilding = new Building(832, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
-                    objs.add(genericBuilding);
-                }
+                genericBuilding = new Building(3136, 150, 0, game.manager.get("building3.png", Texture.class), 0f, 1.37f, Constants.world);
+                objs.add(genericBuilding);
 
-                for (int i = 0; i < 4; i++) {
-                    genericBuilding = new Building(448 + (256 * i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, Constants.world);
-                    objs.add(genericBuilding);
-                }
+                genericBuilding = new Building(4096, 1100, 0, game.manager.get("building5.png", Texture.class), 0f, 1.37f, Constants.world);
+                objs.add(genericBuilding);
+                genericBuilding = new Building(2688, (int) (1984), 0, game.manager.get("building2.png", Texture.class), 0f, 1.1f, Constants.world);
+                objs.add(genericBuilding);
                 landmarks.add(cliffordTower);
                 landmarks.add(yorkStation);
                 landmarks.add(b);
