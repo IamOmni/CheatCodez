@@ -106,6 +106,11 @@ public class Firetruck extends Entity {
     public int getAmmo(){
         return ammo;
     }
+
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
     public void refillAmmo(int amt){
         if(ammo < ammoCap)
             ammo += amt;
