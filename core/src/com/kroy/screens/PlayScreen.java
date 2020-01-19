@@ -94,7 +94,7 @@ public class PlayScreen implements Screen, InputProcessor {
         DB d = new DB();
 
 
-        toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
+        toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("switch.png", Texture.class));
         try {
             MapLoader.loadGraph(coords,mapGraph, "graph.txt");
             MapLoader.loadObjects(map,Constants.world);
