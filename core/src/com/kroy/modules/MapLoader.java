@@ -28,7 +28,7 @@ public class MapLoader {
 
         // 4.5hrs
         // Read fle and fetch all lines
-        File file = new File(path);
+        File file = new File("assets/"+path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
         for (int i=0; i<lines.size();i++) {
