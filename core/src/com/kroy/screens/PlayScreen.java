@@ -111,6 +111,10 @@ public class PlayScreen implements Screen, InputProcessor {
                 Landmark yorkMinster = new Landmark(3008, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
                 Base watertower1 = new Base(1920, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
                 Base watertower2 = new Base(448, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
+                yorkMinster.invaded = true;
+                yorkStation.invaded = true;
+                cliffordTower.invaded = true;
+
                 //int x, int y, int health, Texture texture, float rotation, float scale, World world
                 Building genericBuilding = new Building(0, 766, 0, game.manager.get("building4.png", Texture.class), 0f, 1.2f, Constants.world);
                 objs.add(genericBuilding);
@@ -148,7 +152,9 @@ public class PlayScreen implements Screen, InputProcessor {
             }
             //load Firetrucks
             {
-                Firetruck f = new Firetruck(mapGraph, coords.get("A"), 1, game.manager);
+                Firetruck f = new Firetruck(mapGraph, coords.get("B"), 1, game.manager);
+                firetrucks.add(f);
+                f = new Firetruck(mapGraph, coords.get("C"), 2, game.manager);
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
@@ -237,7 +243,7 @@ public class PlayScreen implements Screen, InputProcessor {
             if (i instanceof Landmark) {
 
                 ((Landmark) i).setMisiledelay(((Landmark) i).getMisiledelay() - 1f);
-                if (((Landmark) i).getMisiledelay() < 0) {
+                if (((Landmark) i).getMisiledelay() < 0 && ((Landmark) i).invaded) {
 
                     for (Firetruck firetruck : firetrucks) {
 
@@ -323,9 +329,23 @@ public class PlayScreen implements Screen, InputProcessor {
     public void removeDeadObjects() {
         ArrayList<Object> notDeleted = new ArrayList<>();
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
+        ArrayList<Landmark> remainingLMs = new ArrayList<>();
+        ArrayList<Base> remainingBs = new ArrayList<>();
+        int enemyCount = 0;
         for (Firetruck ft : firetrucks) {
             if (ft.hitpoints > 0)
                 remainingFTs.add(ft);
+        }
+        for (Landmark lm:landmarks){
+            if(lm.hitpoints >0) {
+                remainingLMs.add(lm);
+                if(lm.invaded)
+                    enemyCount++;
+            }
+        }
+        for (Base bs:bases){
+            if(bs.hitpoints >0)
+                remainingBs.add(bs);
         }
 
         for (Object obj : objs) {
@@ -347,8 +367,10 @@ public class PlayScreen implements Screen, InputProcessor {
         }
         objs = notDeleted;
         firetrucks = remainingFTs;
+        bases = remainingBs;
+        landmarks = remainingLMs;
         // if there are no firetrucks remaining the game ends
-        if (remainingFTs.size() <= 0) {
+        if (remainingFTs.size() <= 0 || enemyCount == 0) {
             game.setScreen(new MainMenuScreen(game));
         }
     }
@@ -395,6 +417,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     // handles inputs not covered by the InputProcessor
     public void handleInput() {
+        //firetruck movement
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -410,13 +433,13 @@ public class PlayScreen implements Screen, InputProcessor {
         } else {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
         }
-
+        //firetruck projectile launch
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if (activeFiretruck.getFiredelay() < 0f && (activeFiretruck.getAmmo() > 0)) {
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
-                activeFiretruck.setFiredelay(50f);
+                activeFiretruck.setFiredelay(Constants.FIRETRUCK_FIRE_RATE);
             }
 
         }
@@ -524,6 +547,12 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
+    @Override
+    public boolean scrolled(int amount) {
+        camera.zoom = camera.zoom + amount;
+        return
+                false;
+    }
 
     @Override
     public boolean keyTyped(char character) {
@@ -545,10 +574,4 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-    @Override
-    public boolean scrolled(int amount) {
-        camera.zoom = camera.zoom + amount;
-        return
-                false;
-    }
 }
