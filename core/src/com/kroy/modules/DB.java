@@ -1,5 +1,6 @@
 package com.kroy.modules;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +14,11 @@ public class DB {
      */
     public ArrayList<ArrayList<String>> local_getLeaderboard(String amount) {
         ArrayList<ArrayList<String>> results = new ArrayList<>();
-        String url = "jdbc:sqlite:"+ Paths.get("assets")+"/scores.db";
+        String path = "scores.db";
+        if (!System.getProperty("user.dir").contains("assets"))
+            path =  "assets/"+path;
+
+        String url = "jdbc:sqlite:"+ Paths.get(path).toAbsolutePath().toString();
         String sql = "SELECT * FROM `scores` LIMIT " + amount;
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -43,8 +48,11 @@ public class DB {
      * @return boolean for success
      */
     public boolean local_uploadScore(String username, int score) {
+        String path = "scores.db";
+        if (!System.getProperty("user.dir").contains("assets"))
+            path =  "assets/"+path;
 
-        String url = "jdbc:sqlite:"+ Paths.get("assets", "scores.db").toAbsolutePath().toString();
+        String url = "jdbc:sqlite:"+ Paths.get(path).toAbsolutePath().toString();
         System.out.println(url);
         String sql = String.format("INSERT INTO `scores` (username, score) VALUES (\"%s\", %d) ", username, score);
         try (Connection conn = DriverManager.getConnection(url)) {

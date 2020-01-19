@@ -1,13 +1,0 @@
-%Success - Success - fortress shoots
-Cjdbc:sqlite:D:\Documents\GitHub\CheatCodez\tests\assets\scores.db
-–java.sql.SQLException: path to 'D:\Documents\GitHub\CheatCodez\tests\assets\scores.db': 'D:\Documents\GitHub\CheatCodez\tests\assets' does not exist
-4Failed - Failed to insert junit-test and score 854
-jdbc:sqlite:assets/scores.db
-qjava.sql.SQLException: path to 'assets/scores.db': 'D:\Documents\GitHub\CheatCodez\tests\assets' does not exist
-4Failed - scores.size() != 2 fetching from local db
-name: Bob
-score: 200
-'Success - score recorded successfully
-name: Bob
-score: 200
-,Success - short name recorded successfully
