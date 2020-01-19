@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="DBTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-01-19T20:23:19" hostname="DESKTOP-A8HDS67" time="0.216">
+<testsuite name="DBTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-01-19T22:04:29" hostname="DESKTOP-JF2CHDI" time="0.468">
   <properties/>
-  <testcase name="local_insert" classname="DBTest" time="0.211"/>
-  <testcase name="local_fetch_amount_2" classname="DBTest" time="0.003"/>
-  <system-out><![CDATA[jdbc:sqlite:D:\Documents\GitHub\CheatCodez\tests\..\android\assets\scores.db
+  <testcase name="local_insert" classname="DBTest" time="0.46"/>
+  <testcase name="local_fetch_amount_2" classname="DBTest" time="0.008"/>
+  <system-out><![CDATA[jdbc:sqlite:C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\scores.db
 Success - Score successfully inserted to local DB
-jdbc:sqlite:..\android\assets/scores.db
 Success - scores.size() == 2 fetched from local db
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

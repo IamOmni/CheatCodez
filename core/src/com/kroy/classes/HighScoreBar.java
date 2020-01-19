@@ -27,9 +27,6 @@ public class HighScoreBar {
             name = name.substring(0,10);
     }
 
-    public String getScore(){
-        return score;
-    }
 
     /**
      * Render the highscore bar
