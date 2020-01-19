@@ -54,7 +54,7 @@ public class FiretruckTestNew {
         Vector2 baseVector = new Vector2();
         baseVector.set(0, 120f);
         for (int i = 0; i < 100; i++) {
-            engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(80000)), true);
+            engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
             GameTestRunner.world.step(60, 60, 2);
         }
         TimeUnit.SECONDS.sleep(3);
