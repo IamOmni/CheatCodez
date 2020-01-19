@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -78,7 +81,15 @@ public class kroyGame extends Game {
 				results.add(file.getName());
 				manager.setLoader(TiledMap.class, new TmxMapLoader(resolver));
 				manager.load(file.getName(), TiledMap.class);
-			} else if (!file.isFile()){
+			}
+			else if (file.isFile() && file.getName().contains(".ttf")) {
+				manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+				manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+				FreetypeFontLoader.FreeTypeFontLoaderParameter parms = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+				parms.fontFileName = file.getName();    // path of .ttf file where that exist
+				parms.fontParameters.size = 16;
+				manager.load(file.getName(), BitmapFont.class, parms);
+			}else if (!file.isFile()){
 				List<String> s = loadAssetsFolder(file.getName());
 				results.addAll(s);
 			}
