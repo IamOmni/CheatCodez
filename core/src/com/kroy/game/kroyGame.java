@@ -48,7 +48,7 @@ public class kroyGame extends Game {
 
 	private List<String> loadAssetsFolder(String folder){
 		ArrayList<String> results = new ArrayList<>();
-		File[] files = new File(Paths.get(folder).toAbsolutePath().toString()).listFiles();
+		File[] files = new File(Paths.get("assets",folder).toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
 			System.out.println(file.getName());
@@ -65,10 +65,10 @@ public class kroyGame extends Game {
 		manager = new AssetManager();
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
-		System.out.println(Paths.get("").toAbsolutePath().toString());
+		System.out.println(Paths.get("assets").toAbsolutePath().toString());
 		ArrayList<String> results = new ArrayList<>();
 
-		File[] files = new File(Paths.get("").toAbsolutePath().toString()).listFiles();
+		File[] files = new File(Paths.get("assets").toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
 			System.out.println(file.getName());
@@ -119,8 +119,8 @@ public class kroyGame extends Game {
 	@Override
 	public void create() {
 		System.out.println("running create()");
-//		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("Boss Fight.ogg"));
-//		mp3Music.play();
+		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("assets/Boss Fight.ogg"));
+		mp3Music.play();
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		loadAssets();
