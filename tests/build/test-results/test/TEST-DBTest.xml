@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DBTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-01-19T22:29:22" hostname="DESKTOP-A8HDS67" time="0.349">
+  <properties/>
+  <testcase name="local_insert" classname="DBTest" time="0.345"/>
+  <testcase name="local_fetch_amount_2" classname="DBTest" time="0.004"/>
+  <system-out><![CDATA[jdbc:sqlite:D:\Documents\GitHub\CheatCodez\tests\assets\scores.db
+Success - Score successfully inserted to local DB
+Success - scores.size() == 2 fetched from local db
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
