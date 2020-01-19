@@ -37,12 +37,10 @@ public class MapLoader {
         // 4.5hrs
         // Read fle and fetch all lines
         System.out.println(System.getProperty("user.dir"));
-        if (!System.getProperty("user.dir").contains("assets"))
-            path =  Paths.get("assets",path).toString();
-
-        if (System.getProperty("user.dir").contains("test"))
-            path = Paths.get("..", "android", "assets","graph.txt").toAbsolutePath().toString();
-
+        if (System.getProperty("user.dir").contains("tests"))
+            path = Paths.get("..", "android", "assets", path).toAbsolutePath().toString();
+        else if (!System.getProperty("user.dir").contains("assets"))
+            path =  Paths.get(".","assets", path).toString();
 
         File file = new File(path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));

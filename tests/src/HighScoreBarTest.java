@@ -1,4 +1,4 @@
-import com.kroy.classes.HighScoreBar;
+ import com.kroy.classes.HighScoreBar;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
