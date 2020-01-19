@@ -322,9 +322,19 @@ public class PlayScreen implements Screen, InputProcessor {
     public void removeDeadObjects() {
         ArrayList<Object> notDeleted = new ArrayList<>();
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
+        ArrayList<Landmark> remainingLMs = new ArrayList<>();
+        ArrayList<Base> remainingBs = new ArrayList<>();
         for (Firetruck ft : firetrucks) {
             if (ft.hitpoints > 0)
                 remainingFTs.add(ft);
+        }
+        for (Landmark lm:landmarks){
+            if(lm.hitpoints >0)
+                remainingLMs.add(lm);
+        }
+        for (Base bs:bases){
+            if(bs.hitpoints >0)
+                remainingBs.add(bs);
         }
 
         for (Object obj : objs) {
@@ -346,8 +356,10 @@ public class PlayScreen implements Screen, InputProcessor {
         }
         objs = notDeleted;
         firetrucks = remainingFTs;
+        bases = remainingBs;
+        landmarks = remainingLMs;
         // if there are no firetrucks remaining the game ends
-        if (remainingFTs.size() <= 0) {
+        if (remainingFTs.size() <= 0 || remainingLMs.size() <= 0) {
             game.setScreen(new MainMenuScreen(game));
         }
     }
@@ -394,6 +406,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     // handles inputs not covered by the InputProcessor
     public void handleInput() {
+        //firetruck movement
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
@@ -409,13 +422,13 @@ public class PlayScreen implements Screen, InputProcessor {
         } else {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
         }
-
+        //firetruck projectile launch
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             if (activeFiretruck.getFiredelay() < 0f && (activeFiretruck.getAmmo() > 0)) {
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
-                activeFiretruck.setFiredelay(50f);
+                activeFiretruck.setFiredelay(Constants.FIRETRUCK_FIRE_RATE);
             }
 
         }
@@ -523,6 +536,12 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
+    @Override
+    public boolean scrolled(int amount) {
+        camera.zoom = camera.zoom + amount;
+        return
+                false;
+    }
 
     @Override
     public boolean keyTyped(char character) {
@@ -544,10 +563,4 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-    @Override
-    public boolean scrolled(int amount) {
-        camera.zoom = camera.zoom + amount;
-        return
-                false;
-    }
 }
