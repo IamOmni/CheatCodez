@@ -42,7 +42,10 @@ public class MapLoader {
 
         // 4.5hrs
         // Read fle and fetch all lines
-        File file = new File("assets/"+path);
+
+        if (!System.getProperty("user.dir").contains("assets"))
+            path =  "assets/"+path;
+        File file = new File(path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
         // Parse the file

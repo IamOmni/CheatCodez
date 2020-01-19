@@ -51,13 +51,18 @@ public class kroyGame extends Game {
 	 */
 	private List<String> loadAssetsFolder(String folder){
 		ArrayList<String> results = new ArrayList<>();
-		File[] files = new File(Paths.get("assets",folder).toAbsolutePath().toString()).listFiles();
+
+		if (!System.getProperty("user.dir").contains("assets"))
+			folder =  "assets/"+folder;
+
+		String appendFolder = folder.replace("assets/", "");
+		File[] files = new File(Paths.get(folder).toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
 			System.out.println(file.getName());
 			if (file.isFile()) {
-				results.add(String.format("%s/%s", folder, file.getName()));
-				manager.load(String.format("%s/%s", folder, file.getName()), Texture.class);
+				results.add(String.format("%s/%s", appendFolder, file.getName()));
+				manager.load(String.format("%s/%s", appendFolder, file.getName()), Texture.class);
 			}
 		}
 		return results;
@@ -67,15 +72,18 @@ public class kroyGame extends Game {
 	 * Load assets in the assets folder to one subfolder depth (rushed solution)
 	 */
 	public void loadAssets(){
+
 		manager = new AssetManager();
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		manager.setLoader(Texture.class, new TextureLoader(resolver));
 		ArrayList<String> results = new ArrayList<>();
-
-		File[] files = new File(Paths.get("assets").toAbsolutePath().toString()).listFiles();
+		String p = "";
+		if (!System.getProperty("user.dir").contains("assets"))
+			p =  "assets";
+		File[] files = new File(Paths.get(p).toAbsolutePath().toString()).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null.
 		for (File file : files) {
-
+			System.out.println(file.getAbsolutePath());
 			if (file.isFile() && file.getName().contains(".png") ) {
 				results.add(file.getName());
 				manager.setLoader(Texture.class, new TextureLoader(resolver));
@@ -119,7 +127,13 @@ public class kroyGame extends Game {
 	@Override
 	public void create() {
 		System.out.println("running create()");
-		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal("assets/Boss Fight.ogg"));
+		System.out.println("Working Directory = " +
+				System.getProperty("user.dir"));
+
+		String p = "assets/Boss Fight.ogg";
+		if (System.getProperty("user.dir").contains("assets"))
+			p = "Boss Fight.ogg";
+		Music mp3Music = Gdx.audio.newMusic(Gdx.files.internal(p));
 		mp3Music.play();
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
