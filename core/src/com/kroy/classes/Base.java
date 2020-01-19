@@ -87,9 +87,9 @@ public class Base extends Building {
                 float v = position1.dst(position2)/ Constants.PPM;
 
                 //System.out.println(String.format("V = %f", v));
-                if (v < 10f && firetruck.ammo < firetruck.ammoCap) {
+                if (v < 10f) {
                     System.out.println("REFILLING");
-                    firetruck.ammo += 1;
+                    firetruck.refillAmmo(2);
                     refillDelay=2f;
                 }
             }

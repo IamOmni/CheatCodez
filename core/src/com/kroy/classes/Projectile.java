@@ -33,7 +33,7 @@ public class Projectile extends Entity {
         body.setTransform(body.getWorldCenter(), angle);
         body.isFixedRotation();
         this.angle = angle;
-        hitpoints = 100;
+        setHitpoints(100);
         body.setUserData(this);
 
     }
@@ -48,7 +48,7 @@ public class Projectile extends Entity {
         body.setTransform(body.getWorldCenter(), angle);
         body.isFixedRotation();
         this.angle = angle;
-        hitpoints = 100;
+        setHitpoints(100);
         body.setUserData(this);
 
     }
@@ -85,7 +85,7 @@ public class Projectile extends Entity {
         body.setTransform(body.getPosition(),angle);
 
         //body.setLinearVelocity(body.getWorldVector(new Vector2(0, 2000000000).scl(dt * Constants.PPM)));
-        hitpoints--;
+        takeDamage(1);
         super.update(dt);
     }
 
