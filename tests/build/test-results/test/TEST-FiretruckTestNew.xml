@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="FiretruckTestNew" tests="9" skipped="0" failures="5" errors="0" timestamp="2020-01-19T23:08:05" hostname="DESKTOP-JF2CHDI" time="6.639">
+<testsuite name="FiretruckTestNew" tests="9" skipped="0" failures="4" errors="0" timestamp="2020-01-19T23:21:39" hostname="DESKTOP-JF2CHDI" time="0.303">
   <properties/>
-  <testcase name="test_firetruck_turn_right" classname="FiretruckTestNew" time="0.106">
-    <failure message="java.lang.AssertionError: firetruck has not turned right" type="java.lang.AssertionError">java.lang.AssertionError: firetruck has not turned right
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_turn_right(FiretruckTestNew.java:149)
+  <testcase name="test_firetruck_turn_right" classname="FiretruckTestNew" time="0.066">
+    <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:41)
+	at FiretruckTestNew.test_firetruck_turn_right(FiretruckTestNew.java:121)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -21,12 +27,18 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_ammo_refill_full" classname="FiretruckTestNew" time="0.036"/>
-  <testcase name="test_firetruck_move_forwards" classname="FiretruckTestNew" time="3.017">
-    <failure message="java.lang.AssertionError: firetruck has not moved forwards" type="java.lang.AssertionError">java.lang.AssertionError: firetruck has not moved forwards
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_move_forwards(FiretruckTestNew.java:83)
+  <testcase name="test_firetruck_ammo_refill_full" classname="FiretruckTestNew" time="0.038"/>
+  <testcase name="test_firetruck_move_forwards" classname="FiretruckTestNew" time="0.009">
+    <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:41)
+	at FiretruckTestNew.test_firetruck_move_forwards(FiretruckTestNew.java:53)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -42,12 +54,18 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_ammo_decreases" classname="FiretruckTestNew" time="0.012"/>
-  <testcase name="test_firetruck_move_backwards" classname="FiretruckTestNew" time="3.012">
-    <failure message="java.lang.AssertionError: firetruck has not moved backwards" type="java.lang.AssertionError">java.lang.AssertionError: firetruck has not moved backwards
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_move_backwards(FiretruckTestNew.java:112)
+  <testcase name="test_firetruck_ammo_decreases" classname="FiretruckTestNew" time="0.013"/>
+  <testcase name="test_firetruck_move_backwards" classname="FiretruckTestNew" time="0.01">
+    <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:41)
+	at FiretruckTestNew.test_firetruck_move_backwards(FiretruckTestNew.java:92)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -63,11 +81,17 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_turn_left" classname="FiretruckTestNew" time="0.056">
-    <failure message="java.lang.AssertionError: firetruck has not turned left" type="java.lang.AssertionError">java.lang.AssertionError: firetruck has not turned left
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_turn_left(FiretruckTestNew.java:180)
+  <testcase name="test_firetruck_turn_left" classname="FiretruckTestNew" time="0.007">
+    <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 19: ..\android\assets\C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:41)
+	at FiretruckTestNew.test_firetruck_turn_left(FiretruckTestNew.java:158)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -83,267 +107,24 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_fortress_shoot" classname="FiretruckTestNew" time="0.019"/>
-  <testcase name="test_firetruck_can_shoot" classname="FiretruckTestNew" time="0.179">
-    <failure message="java.nio.file.NoSuchFileException: C:\Users\glesb\Documents\GitHub\CheatCodez\tests\graph.txt" type="java.nio.file.NoSuchFileException">java.nio.file.NoSuchFileException: C:\Users\glesb\Documents\GitHub\CheatCodez\tests\graph.txt
-	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
-	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
-	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
-	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:235)
-	at java.base/java.nio.file.Files.newByteChannel(Files.java:370)
-	at java.base/java.nio.file.Files.newByteChannel(Files.java:421)
-	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
-	at java.base/java.nio.file.Files.newInputStream(Files.java:155)
-	at java.base/java.nio.file.Files.newBufferedReader(Files.java:2838)
-	at java.base/java.nio.file.Files.readAllLines(Files.java:3327)
-	at java.base/java.nio.file.Files.readAllLines(Files.java:3367)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:48)
-	at FiretruckTestNew.test_firetruck_can_shoot(FiretruckTestNew.java:190)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at GameTestRunner.render(GameTestRunner.java:57)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
-</failure>
-  </testcase>
-  <testcase name="test_firetruck_ammo_refill_low" classname="FiretruckTestNew" time="0.017"/>
+  <testcase name="test_fortress_shoot" classname="FiretruckTestNew" time="0.029"/>
+  <testcase name="test_firetruck_can_shoot" classname="FiretruckTestNew" time="0.043"/>
+  <testcase name="test_firetruck_ammo_refill_low" classname="FiretruckTestNew" time="0.022"/>
   <system-out><![CDATA[C:\Users\glesb\Documents\GitHub\CheatCodez\tests
-Texture not null
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-Failed - firetruck has not turned right
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
 Texture not null
 Success - Success - ammo does not refill when full
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
-Texture not null
-2188.000000, 2188.000000
-809.200012, 809.200012
-OldY: 2188.000000, NewY 2188.000000
-Failed - firetruck has not moved forwards
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
 Texture not null
 Success - Success - ammo decreases when shooting
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
-Texture not null
-2188.000000, 2188.000000
-Failed - firetruck has not moved backwards
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
-Texture not null
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-Failed - firetruck has not turned left
 Success - Success - fortress shoots
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\graph.txt
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+Success - firetruck has shot
 C:\Users\glesb\Documents\GitHub\CheatCodez\tests
 Texture not null
 Success - Success - ammo refills when low

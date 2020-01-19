@@ -187,7 +187,7 @@ public class FiretruckTestNew {
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
         System.out.println(Paths.get("assets","graph.txt").toAbsolutePath().toString());
-        MapLoader.loadGraph(coords,mapGraph, Paths.get("graph.txt").toAbsolutePath().toString());
+        MapLoader.loadGraph(coords,mapGraph, "graph.txt");
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
@@ -206,7 +206,7 @@ public class FiretruckTestNew {
         MapGraph mapGraph = new MapGraph();
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
-        MapLoader.loadGraph(coords,mapGraph, Paths.get("..", "android", "assets","graph.txt").toAbsolutePath().toString());
+        MapLoader.loadGraph(coords,mapGraph, "graph.txt");
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
@@ -229,7 +229,7 @@ public class FiretruckTestNew {
         MapGraph mapGraph = new MapGraph();
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
-        MapLoader.loadGraph(coords,mapGraph, Paths.get("..", "android", "assets","graph.txt").toAbsolutePath().toString());
+        MapLoader.loadGraph(coords,mapGraph, "graph.txt");
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
@@ -250,7 +250,7 @@ public class FiretruckTestNew {
         MapGraph mapGraph = new MapGraph();
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
-        MapLoader.loadGraph(coords,mapGraph, Paths.get("..", "android", "assets","graph.txt").toAbsolutePath().toString());
+        MapLoader.loadGraph(coords,mapGraph, "graph.txt");
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
