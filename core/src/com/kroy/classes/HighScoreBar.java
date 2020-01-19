@@ -12,11 +12,14 @@ import java.util.ArrayList;
 
 public class HighScoreBar {
 
-     public String name;
+    public String name;
     private String score;
 
 
-
+    /**
+     * Constructor for the HighScoreBar
+     * @param record - Array list of the username and score
+     */
     public HighScoreBar(ArrayList<String> record){
          name = record.get(0);
          score = record.get(1);
@@ -26,6 +29,14 @@ public class HighScoreBar {
         System.out.println("score: " + score);
     }
 
+    /**
+     * Render the highscore bar
+     * @param shapeRenderer - shaperenderer object
+     * @param sb - SpriteBatch
+     * @param width - Width of the text area
+     * @param height - Height of the text area
+     * @param num - amount
+     */
     public void render(ShapeRenderer shapeRenderer, SpriteBatch sb, int width, int height, int num){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("TitilliumWeb-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -39,6 +50,10 @@ public class HighScoreBar {
         sb.end();
     }
 
+    /**
+     * Get Score, return score of the highscore bar
+     * @return String score
+     */
     public String getScore() {
         return score;
     }

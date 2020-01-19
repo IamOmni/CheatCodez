@@ -31,6 +31,13 @@ import java.util.Map;
 
 public class MapLoader {
 
+    /**
+     * Load graph.txt for the Pathfinding
+     * @param coords - Coords Map, connections between nodes
+     * @param mapGraph - The mapgraph
+     * @param path - Path of the FILE
+     * @throws IOException
+     */
     public static void loadGraph(Map<String,Coord> coords, MapGraph mapGraph, String path) throws IOException {
 
         // 4.5hrs
@@ -38,6 +45,7 @@ public class MapLoader {
         File file = new File("assets/"+path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
+        // Parse the file
         for (int i=0; i<lines.size();i++) {
             String name = lines.get(i).split(" ")[0];
             String[] connections = lines.get(i).split(":")[1].replace(" ", "").split(",");
@@ -84,7 +92,7 @@ public class MapLoader {
     }
 
     /**
-     * Renders the graph on the screen
+     * Renders the graph on the screen REMOVED for Assessment 1 as unused
      * @param sb SpriteBatch
      * @param sr ShapeRenderer
      * @param mapGraph MapGraph
@@ -95,8 +103,6 @@ public class MapLoader {
                 Street street : mapGraph.streets) {
             street.render(sr);
         }
-
-
         // Draw all points
         for (Coord city : mapGraph.coords) {
             city.render(sr, sb, font, false);

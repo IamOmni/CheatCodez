@@ -8,13 +8,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Queue;
 import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
-import com.kroy.screens.PlayScreen;
-import com.kroy.states.PlayState;
 
 public class Entity extends Object{
     protected int hitpointCap, speedMove;
@@ -26,6 +23,15 @@ public class Entity extends Object{
     public GraphPath<Coord> graphPath;
 
 
+    /**
+     * Constructor without passing a Coord
+     * @param position
+     * @param texture
+     * @param scale
+     * @param cb
+     * @param mb
+     * @param gindex
+     */
     public Entity(Vector3 position, Texture texture, float scale, short cb, short mb, short gindex) {
         super(
                 position, Constants.world,
@@ -37,6 +43,16 @@ public class Entity extends Object{
 
     }
 
+    /**
+     * Constructor for the Entity class with Coord/Graph usage
+     * @param mapGraph
+     * @param start
+     * @param texture
+     * @param scale
+     * @param cb
+     * @param mb
+     * @param gindex
+     */
     public Entity(MapGraph mapGraph, Coord start, Texture texture, float scale, short cb, short mb, short gindex) {
 
         super(
@@ -67,6 +83,11 @@ public class Entity extends Object{
         this.speedMove = speedMove;
     }
 
+    /**
+     * Render entities
+     * @param shapeRenderer - Game shape renderer
+     * @param batch - Game batch
+     */
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         super.render(batch);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -79,6 +100,11 @@ public class Entity extends Object{
         shapeRenderer.circle(position.x, position.y, 5);
         shapeRenderer.end();
     }
+
+    /**
+     * Check update oly used to check collisions
+     * @param dt
+     */
     @Override
     public void update(float dt) {
         //position.add(position);

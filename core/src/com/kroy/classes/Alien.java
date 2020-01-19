@@ -1,16 +1,12 @@
 package com.kroy.classes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.World;
-import com.kroy.screens.PlayScreen;
 
 import java.util.ArrayList;
 
@@ -39,12 +35,14 @@ public class Alien extends Entity {
     }
 
 
-
-
-    public Alien(Landmark parent, String direction, AssetManager manager) {
+    /**
+     * Constructor for Alien
+     * @param parent - parent landmark, used for spawning
+     * @param manager - AssetManager for getting the graphic
+     */
+    public Alien(Landmark parent, AssetManager manager) {
         super(new Vector3(parent.getX(), parent.getY()-64,0),  manager.get("alien.png", Texture.class), 1f, CollisionBits.FIRETRUCK, CollisionBits.FIRETRUCK, (short) 1);
-        //super.setModel(manager.get("alien.png", Texture.class));
-        shapeRenderer = new ShapeRenderer();
+
         setModel(manager.get("alien.png", Texture.class));
         xSpeed=0.7;
         ySpeed=0.7;
@@ -53,23 +51,11 @@ public class Alien extends Entity {
         dt=0.1f;
         projectiles = new ArrayList<Projectile>();
 
+        // Check whether alien is offensive or defensive
         double test = Math.random();
         if (test>0.5) isAttack=true;
         else isAttack=false;
 
-        isAttack=true;
-        System.out.println(test);
-        System.out.println(isAttack);
-
-        if (test>0.5) {
-            isAttack=true;
-            color = new Color(1f, 0, 0, 0.5f);
-        }
-        else {
-            isAttack=false;
-            this.radius=250;
-            color = new Color(0, 1f, 0, 0.5f);
-        }
         super.position.x = parent.getX()+(float)test*400;
         super.position.y = parent.getY()+(float)test*400;
 
@@ -88,6 +74,9 @@ public class Alien extends Entity {
         return ySpeed;
     }
 
+    /**
+     *If alien is defensive
+     */
     private void defend(ArrayList<Firetruck> firetrucks){
         this.xSpeed=0.7;
         this.ySpeed=0.7;
@@ -95,6 +84,9 @@ public class Alien extends Entity {
 
     }
 
+    /**
+     *If alien is offensive
+     */
     private void attack(ArrayList<Firetruck> firetrucks) {
         this.xSpeed=0.5;
         this.ySpeed=0.5;
@@ -102,6 +94,10 @@ public class Alien extends Entity {
 
     }
 
+    /**
+     * Calculate aliens move to the firetruck, wont work on multiple firetrucks.
+     * @param firetrucks - Arraylist of firetrucks
+     */
     private void calcMove(ArrayList<Firetruck> firetrucks) {
         for (Firetruck truck: firetrucks){
             float truckX = truck.getX();
@@ -130,16 +126,15 @@ public class Alien extends Entity {
                 super.position.y+=(absDifY/v)*ySpeed;
             }
 
+            // Shoot if difference is lower than the radius of the alien (dependant on the type)
             if (v<radius){ shoot(); }
         }
     }
 
-    public ArrayList<Projectile> getProjectiles(){ return projectiles; }
-
-    public void setFiredelay(float firedelay) {
-        this.firedelay = firedelay;
-    }
-
+    /**
+     * OLD BOX2D NOT IMPLEMENTED - MAY NOT PROPERLY WORK.
+     * Shoot projectile at the firetruck
+     */
     public void shoot(){
 
         // Clean up the projectiles
@@ -155,19 +150,26 @@ public class Alien extends Entity {
         }
         if (firedelay<0) {
             System.out.format("%f |\n", firedelay);
-//            Projectile p = new Projectile(x, x, y, degree);
-//            projectiles.add(p);
+
             firedelay=2f;
         }
     }
 
+    /**
+     * Update Alien
+     * @param firetrucks - array of firetrucks ready for attacking
+     */
     public void update(ArrayList<Firetruck> firetrucks){
         firedelay-=dt;
         if (isAttack==false) { defend(firetrucks); }
         else { attack(firetrucks); }
     }
 
-
+    /**
+     * Render function for Alien
+     * @param sb - SpriteBatch to render the sprite
+     * @param firetrucks - Array of firetrucks for attacking
+     */
     public void render(SpriteBatch sb, ArrayList<Firetruck> firetrucks){
         update(firetrucks);
         super.render(sb);

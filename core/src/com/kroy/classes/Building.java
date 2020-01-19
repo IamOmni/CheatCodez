@@ -18,16 +18,16 @@ public class Building extends Object {
     private boolean hit;
     private float height, width;
 
-
     /**
-     * Constructor class for Building
-     * @param x - int x coordinate
-     * @param y  - int y coordinate
-     * @param health - health
+     *
+     * @param x
+     * @param y
+     * @param health
+     * @param texture
+     * @param rotation
+     * @param scale
+     * @param world
      */
-
-
-
     public Building(int x, int y, int health, Texture texture, float rotation, float scale, World world) {
         super(new Vector3(x,
                 y,0), world,
@@ -37,13 +37,13 @@ public class Building extends Object {
                 CollisionBits.BUILDING, (short) (CollisionBits.BUILDING | CollisionBits.PROJECTILE), (short) 2);
 
         setModel(texture);
-        height = texture.getHeight();
         setHitpoints(health);
+
+        height = texture.getHeight();
         if(health<=0)
             setImmortal(true);
         width = texture.getWidth();
         sprite.setPosition(body.getPosition().x/Constants.PPM*scale,body.getPosition().y/Constants.PPM*scale);
-
         this.scale = scale;
         setRotation(rotation);
     }
@@ -61,17 +61,6 @@ public class Building extends Object {
      * @return float y
      */
     public int getY(){return (int) body.getPosition().y;};
-
-
-    /**
-     * Draw method for the Building
-     */
-//    public void draw(){
-//        sprite.draw(batch);
-//
-//        hit = false;
-//    }
-
 
     public void render(SpriteBatch sp){
         super.render(sp);

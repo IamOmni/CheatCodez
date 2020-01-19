@@ -1,24 +1,10 @@
 package com.kroy.modules;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.io.StringBufferInputStream;
-// Imports for cloud DB
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+
+// Imports for cloud DB
 
 
 // Local DB imports
@@ -26,11 +12,14 @@ import java.util.concurrent.ExecutionException;
 
 public class DB {
 
+    /**
+     * Fetch leaderboard
+     * @param amount - Amount wanting to be fetched
+     * @return
+     */
     public ArrayList<ArrayList<String>> local_getLeaderboard(String amount) {
         ArrayList<ArrayList<String>> results = new ArrayList<>();
-
         String url = "jdbc:sqlite:"+ Paths.get("assets")+"/scores.db";
-        System.out.println(url);
         String sql = "SELECT * FROM `scores` LIMIT " + amount;
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
@@ -53,6 +42,12 @@ public class DB {
 
     }
 
+    /**
+     * Insert score to DB
+     * @param username - username of the player
+     * @param score - score the player achieved
+     * @return boolean for success
+     */
     public boolean local_uploadScore(String username, int score) {
         String url = "jdbc:sqlite:"+ Paths.get("assets", "scores.db").toAbsolutePath().toString();
         System.out.println(url);
