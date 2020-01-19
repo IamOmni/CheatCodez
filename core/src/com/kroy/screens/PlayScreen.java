@@ -154,6 +154,7 @@ public class PlayScreen implements Screen, InputProcessor {
             {
                 Firetruck f = new Firetruck(mapGraph, coords.get("B"), 1, game.manager);
                 firetrucks.add(f);
+                objs.add(f);
                 f = new Firetruck(mapGraph, coords.get("C"), 2, game.manager);
                 firetrucks.add(f);
                 objs.add(f);
