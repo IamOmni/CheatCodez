@@ -66,7 +66,7 @@ public class DBTest {
             success("Score successfully inserted to local DB");
             return;
         }catch (AssertionError a){
-            fail(String.format("Failed to insert junit-com.kroy.test and score %d", num));
+            fail(String.format("Failed to insert junit-test and score %d", num));
         }
     }
 }

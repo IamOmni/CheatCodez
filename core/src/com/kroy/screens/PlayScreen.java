@@ -25,6 +25,7 @@ import com.kroy.classes.Object;
 import com.kroy.classes.*;
 import com.kroy.game.Constants;
 import com.kroy.game.kroyGame;
+import com.kroy.modules.DB;
 import com.kroy.modules.MapLoader;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -90,6 +91,8 @@ public class PlayScreen implements Screen, InputProcessor {
         this.mB2dr = new Box2DDebugRenderer();
         Constants.world = new World(new Vector2(0.0f, 0.0f), true);
 
+        DB d = new DB();
+
 
         toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
@@ -133,6 +136,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 landmarks.add(yorkMinster);
                 bases.add(watertower1);
                 bases.add(watertower2);
+
 
 
                 for (Landmark lm : landmarks) {
