@@ -1,6 +1,41 @@
-Zjdbc:sqlite:C:\Users\glesb\Documents\GitHub\CheatCodez\tests\..\android\assets\scores.db
-3Success - Score successfully inserted to local DB
--Success - Score successfully inserted to DB
-)jdbc:sqlite:..\android\assets/scores.db
-4Success - scores.size() == 2 fetched from local db
-Success - scores.size() == 2
+8.0
+580.0
+8.0
+2124.0
+644.0
+2696.0
+2828.0
+2700.0
+780.0
+2120.0
+1864.0
+1476.0
+776.0
+584.0
+0.0
+8.0
+456.0
+-4.0
+2180.0
+580.0
+1724.0
+580.0
+2184.0
+964.0
+2500.0
+1484.0
+3208.0
+1468.0
+2884.0
+964.0
+2884.0
+4.0
+3724.0
+0.0
+3712.0
+968.0
+4284.0
+2696.0
+Texture not null
+2188.000000, 2188.000000
+%Failed - firetruck has not moved up
