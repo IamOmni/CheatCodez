@@ -103,7 +103,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         toggleActive  = new Button(50, 200, height-200, height-50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
-            MapLoader.loadGraph(coords,mapGraph);
+            MapLoader.loadGraph(coords,mapGraph, "graph.txt");
             MapLoader.loadObjects(map,world);
             //load Buildings
             {
@@ -145,7 +145,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
-            
+
             }
 
         } catch (IOException e) {

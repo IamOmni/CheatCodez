@@ -24,11 +24,11 @@ import java.util.Map;
 
 public class MapLoader {
 
-    public static void loadGraph(Map<String,Coord> coords, MapGraph mapGraph) throws IOException {
+    public static void loadGraph(Map<String,Coord> coords, MapGraph mapGraph, String path) throws IOException {
 
         // 4.5hrs
         // Read fle and fetch all lines
-        File file = new File("graph.txt");
+        File file = new File(path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
         for (int i=0; i<lines.size();i++) {

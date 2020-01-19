@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class FiretruckTestNew {
         MapGraph mapGraph = new MapGraph();
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
-        MapLoader.loadGraph(coords,mapGraph);
+        MapLoader.loadGraph(coords,mapGraph, Paths.get("assets","graph.txt").toAbsolutePath().toString());
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
