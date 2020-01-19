@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-@RunWith(GameTestRunner.class)
 public class HighScoreBarTest {
 
     private void success(String description){ System.out.println("Success - " + description); }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="HighScoreBarTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-01-19T22:38:47" hostname="DESKTOP-JF2CHDI" time="0.004">
+  <properties/>
+  <testcase name="test_highscore_long_name" classname="HighScoreBarTest" time="0.003"/>
+  <testcase name="test_highscore_score" classname="HighScoreBarTest" time="0.001"/>
+  <testcase name="test_highscore_short_name" classname="HighScoreBarTest" time="0.0"/>
+  <system-out><![CDATA[Success - long name recorded successfully
+Success - score recorded successfully
+Success - short name recorded successfully
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

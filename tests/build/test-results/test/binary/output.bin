@@ -1,3 +1,242 @@
-Ojdbc:sqlite:C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\scores.db
-3Success - Score successfully inserted to local DB
-4Success - scores.size() == 2 fetched from local db
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+)Failed - firetruck has not turned right
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+4Success - Success - ammo does not refill when full
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+2188.000000, 2188.000000
+809.200012, 809.200012
+%OldY: 2188.000000, NewY 2188.000000
++Failed - firetruck has not moved forwards
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+2Success - Success - ammo decreases when shooting
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+2188.000000, 2188.000000
+,Failed - firetruck has not moved backwards
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+Texture not null
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+(Failed - firetruck has not turned left
+%Success - Success - fortress shoots
+	2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+	Texture not null
+	Success - firetruck has shot
+
+2C:\Users\glesb\Documents\GitHub\CheatCodez\tests
+
+Texture not null
+
++Success - Success - ammo refills when low
+Ojdbc:sqlite:C:\Users\glesb\Documents\GitHub\CheatCodez\tests\assets\scores.db
+3Success - Score successfully inserted to local DB
+4Success - scores.size() == 2 fetched from local db
++Success - long name recorded successfully
+'Success - score recorded successfully
+,Success - short name recorded successfully
