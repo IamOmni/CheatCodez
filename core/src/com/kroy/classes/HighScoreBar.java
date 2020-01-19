@@ -38,4 +38,8 @@ public class HighScoreBar {
         font.draw(sb,score, (1 * width / 2), (num) * height / 8 + height / 2);
         sb.end();
     }
+
+    public String getScore() {
+        return score;
+    }
 }

@@ -33,7 +33,7 @@ public class Firetruck extends Entity {
     float x,y, degree,  rotationSpeed, rotation, acceleration, decelleration, maxSpeed, dx, dy, radians, firedelay, v;
     double xSpeed, ySpeed;
     private boolean left, right, up, down;
-    int height, width, health, ammo;
+    int height, width, ammo;
     private ArrayList<Projectile> bullets;
     private Texture model;
     public static final int DRIVE_DIRECTION_NONE = 0;
@@ -75,7 +75,37 @@ public class Firetruck extends Entity {
         height=50;
         width=100;
         rotation = 0.0f;
-        health=500;
+        degree = 0;
+        xSpeed = 0;
+        ySpeed = 0;
+        bullets = new ArrayList<Projectile>();
+        firedelay = 0f;
+        ammoCap=50;
+        ammo=ammoCap;
+    }
+    public Firetruck(MapGraph mapGraph, Coord start, int ufid, Texture texture){
+        super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
+        this.ufid = ufid;
+        waterCap =  new Random().nextInt(20) + 5;
+        waterVol = waterCap;
+        hitpointCap =  new Random().nextInt(20) + 5;
+        hitpoints = hitpointCap;
+        this.scale = 0.15f;
+        model = texture;
+
+        body.setUserData(this);
+
+        down=false;
+        up=false;
+        right=false;
+        left=false;
+        rotationSpeed = 120;
+        acceleration = 200f;
+        decelleration = 30f;
+        maxSpeed = 200;
+        height=50;
+        width=100;
+        rotation = 0.0f;
         degree = 0;
         xSpeed = 0;
         ySpeed = 0;
@@ -159,11 +189,6 @@ public class Firetruck extends Entity {
      */
     public float getDegree() { return degree; }
 
-    /**
-     * Get current health of the player
-     * @return int - health
-     */
-    public int getHealth(){ return health; }
 
 
     /**
@@ -264,14 +289,14 @@ public class Firetruck extends Entity {
 
     @Override
     public void displayHealth(SpriteBatch sb){
-        if(hitpoints > 0) {
+
             PlayScreen.font.setColor(Color.RED);
             PlayScreen.font.getData().scale(0.25f);
 
             String text = String.format("%d HP / %d WP", hitpoints, ammo);
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());
-        }
+
 
     }
 

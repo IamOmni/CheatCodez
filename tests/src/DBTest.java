@@ -1,3 +1,5 @@
+package unittests;
+
 import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class DBTest {
 
     private DB db = new DB();
-    
+
     private void success(String description){ System.out.println("Success - " + description); }
     private void fail(String description) {
         System.out.println("Failed - " +description);
@@ -32,7 +34,7 @@ public class DBTest {
     public void insert(){
         int num = (int) Math.floor(Math.random()*1000);
         boolean insert = db.uploadScore("junit-com.kroy.test", num);
-    
+
         try{
             assertTrue(insert);
             success("Score successfully inserted to DB");
