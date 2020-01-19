@@ -11,7 +11,6 @@ import com.kroy.game.Constants;
 
 
 public class Projectile extends Entity {
-    private Math MathsUtils;
     float  dx;
     public float width, height, angle;
 
@@ -22,12 +21,10 @@ public class Projectile extends Entity {
      * @param y - int - Y positiong of the projectile
      */
     public Projectile(float x, float y, Texture texture, float angle) {
-        //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
         super(new Vector3(x, y, 0), texture, 1f, CollisionBits.PROJECTILE, (short) (CollisionBits.BUILDING), (short) -1);
         scale = 1f;
         this.angle = angle;
-        //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
         body.isFixedRotation();
         this.angle = angle;
@@ -37,12 +34,10 @@ public class Projectile extends Entity {
     }
 
     public Projectile(float x, float y, Texture texture, float angle, short cb, short mb) {
-        //Vector3 position, World world, BodyDef.BodyType type, Vector2 size
 
         super(new Vector3(x, y, 0), texture, 1f, cb, (short) mb, (short) 1);
         scale = 1f;
         this.angle = angle;
-        //body.setAngularVelocity(angle);
         body.setTransform(body.getWorldCenter(), angle);
         body.isFixedRotation();
         this.angle = angle;
@@ -51,10 +46,6 @@ public class Projectile extends Entity {
 
     }
 
-
-    public Sprite getSprite() {
-        return sprite;
-    }
 
     /**
      * Dispose

@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Math.atan2;
+import static java.lang.Math.random;
 
 public class PlayScreen implements Screen, InputProcessor {
     private kroyGame game;
@@ -53,7 +54,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private MapGraph mapGraph;
     //Map objects
-    private ArrayList<Object> objs = new ArrayList<Object>();
+    private ArrayList<Object> objs = new ArrayList<>();
     private ArrayList<Firetruck> firetrucks = new ArrayList<>();
     private ArrayList<Landmark> landmarks = new ArrayList<>();
     private ArrayList<Base> bases = new ArrayList<>();
@@ -68,6 +69,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private Button toggleActive;
     private Box2DDebugRenderer mB2dr;
+
+    DB database = new DB();
 
     public PlayScreen(kroyGame game) {
         this.game = game;
@@ -95,12 +98,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
         // Map renderer
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
-        tiledMapRenderer.setView((OrthographicCamera) camera);
+        tiledMapRenderer.setView(camera);
 
         this.mB2dr = new Box2DDebugRenderer();
         Constants.world = new World(new Vector2(0.0f, 0.0f), true);
 
-        DB d = new DB();
 
 
         toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("switch.png", Texture.class));
@@ -122,6 +124,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 Base watertower1 = new Base(1920, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
                 Base watertower2 = new Base(448, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
                 yorkMinster.invaded = true;
+                b.invaded = true;
                 yorkStation.invaded = true;
                 cliffordTower.invaded = true;
 
@@ -254,7 +257,8 @@ public class PlayScreen implements Screen, InputProcessor {
                         float yDif = position1v.y - (Math.abs(position2v.y));
                         float angle = (float) atan2(yDif, xDif);
 
-                        if (v < 25) {
+                        if (v < Constants.FORTRESS_FIRE_RADIUS) {
+
                             FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle) - 90f));
                             tempStore.add(p);
                         }
@@ -276,7 +280,6 @@ public class PlayScreen implements Screen, InputProcessor {
             i.displayHealth(game.batch);
         }
         game.batch.end();
-
 
         //Rendering Overlay
         game.batch.setProjectionMatrix(hudCamera.combined);
@@ -380,6 +383,7 @@ public class PlayScreen implements Screen, InputProcessor {
         //if there are no enemies remaining the game ends
         if (remainingFTs.size() <= 0 || enemyCount <= 0)
         {
+            database.local_uploadScore("bitch no. " + random(), score);
             game.setScreen(new MainMenuScreen(game));
         }
         //if the active firetruck has been destroyed switch to an available firetruck

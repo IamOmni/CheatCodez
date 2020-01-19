@@ -50,6 +50,7 @@ public class HighScoreBar {
         sb.end();
     }
 
+
     /**
      * Get Score, return score of the highscore bar
      * @return String score
@@ -57,4 +58,5 @@ public class HighScoreBar {
     public String getScore() {
         return score;
     }
+
 }

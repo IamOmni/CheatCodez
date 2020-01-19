@@ -7,7 +7,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kroy.classes.Firetruck;
+import com.kroy.classes.FortressMissile;
+import com.kroy.classes.Landmark;
 import com.kroy.classes.Projectile;
+import com.kroy.game.Constants;
+import com.kroy.game.kroyGame;
 import com.kroy.modules.MapLoader;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
@@ -48,17 +52,27 @@ public class FiretruckTestNew {
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
         MapLoader.loadGraph(coords,mapGraph, Paths.get("assets","graph.txt").toAbsolutePath().toString());
         MapLoader.loadObjects(map, GameTestRunner.world);
-        Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
+        Firetruck engine = new Firetruck(mapGraph, coords.get("B"), 1, new Texture("Firetruck.png"));
 
         float oldY = engine.body.getPosition().y;
+        //float oldY = engine.getY();
+        float oldX = engine.body.getPosition().x;
         Vector2 baseVector = new Vector2();
         baseVector.set(0, 120f);
         for (int i = 0; i < 100; i++) {
+            //engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
+            engine.mDriveDirection = engine.DRIVE_DIRECTION_FORWARD;
+            engine.update(5);
             engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
             GameTestRunner.world.step(60, 60, 2);
         }
         TimeUnit.SECONDS.sleep(3);
         float newY = engine.body.getPosition().y;
+        //float newY = engine.getY();
+        float newX = engine.body.getPosition().x;
+        System.out.println(String.format("%f, %f", oldY, newY));
+        System.out.println(String.format("%f, %f", oldX, newX));
+        
         System.out.println(String.format("OldY: %f, NewY %f", oldY, newY));
 
         try {
@@ -114,10 +128,21 @@ public class FiretruckTestNew {
             GameTestRunner.world.step(60, 60, 2);
         }
 
-        // CHECK TURNED RIGHT
+        float oldAngle = engine.body.getAngle();
+        //engine.body.setAngularVelocity(2.0f);
+        for (int i = 0; i < 100; i++) {
+            engine.body.setAngularVelocity(2.0f);
+            //engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(800000)), true);
+            GameTestRunner.world.step(1/60f, 6, 2);
+            System.out.println(engine.body.getAngle());
+        }
+
+        float newAngle = engine.body.getAngle();
+        System.out.println(oldAngle);
+        System.out.println(newAngle);
 
         try {
-            assertTrue(1 > 2);
+            assertTrue(oldAngle > newAngle);
             success("firetruck has turned right");
         }
         catch (AssertionError a) {
@@ -134,16 +159,21 @@ public class FiretruckTestNew {
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
-        engine.body.setAngularVelocity(2.0f);
+        float oldAngle = engine.body.getAngle();
+        //engine.body.setAngularVelocity(2.0f);
         for (int i = 0; i < 100; i++) {
+            engine.body.setAngularVelocity(2.0f);
             //engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(800000)), true);
-            GameTestRunner.world.step(60, 60, 2);
+            GameTestRunner.world.step(1/60f, 6, 2);
+            System.out.println(engine.body.getAngle());
         }
 
-        // CHECK TURNED LEFT
+        float newAngle = engine.body.getAngle();
+        System.out.println(oldAngle);
+        System.out.println(newAngle);
 
         try {
-            assertTrue(1 > 2);
+            assertTrue(oldAngle < newAngle);
             success("firetruck has turned left");
         }
         catch (AssertionError a) {
@@ -160,7 +190,7 @@ public class FiretruckTestNew {
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
-        Projectile shot = engine.createProjectile();
+        Projectile shot = engine.createProjectileTest(new Texture(Paths.get("..", "android", "assets","bullet.png").toAbsolutePath().toString()));
         try {
             assertTrue(shot != null);
             success("firetruck has shot");
@@ -179,8 +209,9 @@ public class FiretruckTestNew {
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
+
         int startAmmo = engine.getAmmo();
-        engine.createProjectile();
+        Projectile shot = engine.createProjectileTest(new Texture(Paths.get("..", "android", "assets","bullet.png").toAbsolutePath().toString()));
         int newAmmo = engine.getAmmo();
 
         try {
@@ -230,6 +261,20 @@ public class FiretruckTestNew {
         }
         catch (AssertionError a) {
             fail("Failure - ammo refills when full");
+        }
+    }
+
+    @Test
+    public void test_fortress_shoot() {
+        Landmark i = new Landmark(3500, 1600, 100, new Texture(Paths.get("..", "android", "assets", "shambles_invaded.png").toAbsolutePath().toString()), -50f, 0.6f, Constants.world);
+        i.invaded = true;
+        FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, new Texture(Paths.get("..", "android", "assets", "alienbullet.png").toAbsolutePath().toString()), (float) Math.toRadians(Math.toDegrees(0)));
+
+        try {
+            assertTrue(p != null);
+            success("Success - fortress shoots");
+        } catch (AssertionError a) {
+            fail("Failure - fortress does not shoot");
         }
     }
 }

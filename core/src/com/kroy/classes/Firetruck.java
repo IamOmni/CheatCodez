@@ -74,9 +74,6 @@ public class Firetruck extends Entity {
         setModel(texture);
 
         body.setUserData(this);
-        xSpeed = 0;
-        ySpeed = 0;
-
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
@@ -113,6 +110,8 @@ public class Firetruck extends Entity {
     public void refillAmmo(int amt){
         if(ammo < ammoCap)
             ammo += amt;
+        if(ammo>ammoCap)
+            ammo = ammoCap;
     }
 
     /**
@@ -138,9 +137,9 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            System.out.println(baseVector.toString());
-            //body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
-            body.setLinearVelocity(body.getWorldVector(baseVector.scl(8000000)));
+            System.out.println("position is here:"+ body.getPosition());
+            if(ufid == 1) System.out.println("AAAH: " + body.getPosition());
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
             System.out.println(body.getPosition().toString());
         }
 
@@ -166,6 +165,11 @@ public class Firetruck extends Entity {
     public Projectile createProjectile(){
         ammo -= 1;
         return new Projectile(body.getPosition().x, body.getPosition().y, kroyGame.manager.get("bullet.png"), body.getAngle());
+    }
+
+    public Projectile createProjectileTest(Texture tx){
+        ammo -= 1;
+        return new Projectile(body.getPosition().x, body.getPosition().y, tx, body.getAngle());
     }
 
     @Override
