@@ -10,5 +10,7 @@ public class Constants {
     public static float FIRETRUCK_DAMAGE = 10f;
     public static int FORTRESS_DAMAGE_SCORE = 10;
     public static int FORTRESS_DESTROY_SCORE_BOOST = 100;
+    public static int REFILL_RADIUS = 25;
+    public static int FORTRESS_FIRE_RADIUS = 25;
     public static World world = new World(new Vector2(0,0),true);
 }

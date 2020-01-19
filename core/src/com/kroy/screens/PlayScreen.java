@@ -327,6 +327,7 @@ public class PlayScreen implements Screen, InputProcessor {
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
         ArrayList<Landmark> remainingLMs = new ArrayList<>();
         ArrayList<Base> remainingBs = new ArrayList<>();
+
         int enemyCount = 0;
         for (Firetruck ft : firetrucks) {
             if (ft.getHitpoints() > 0)
@@ -335,15 +336,17 @@ public class PlayScreen implements Screen, InputProcessor {
         for (Landmark lm:landmarks){
             if(lm.getHitpoints() >0) {
                 remainingLMs.add(lm);
+                enemyCount++;
             }
         }
         for (Base bs:bases){
             if(bs.getHitpoints() >0)
                 remainingBs.add(bs);
         }
-
+        //get all living objects
+        //remove dead objects
         for (Object obj : objs) {
-            if (obj.getHitpoints() > 0) {
+            if (obj.getHitpoints() > 0 || obj.isImmortal()) {
                 notDeleted.add(obj);
             } else {
                 //if a firetruck has low health check if it is the active firetruck
@@ -358,18 +361,39 @@ public class PlayScreen implements Screen, InputProcessor {
                 Constants.world.destroyBody(obj.body);
             }
         }
+
         objs = notDeleted;
         firetrucks = remainingFTs;
         bases = remainingBs;
         landmarks = remainingLMs;
+
         // if there are no firetrucks remaining the game ends
-        if (remainingFTs.size() <= 0 || remainingLMs.size() <= 0) {
+        //if there are no enemies remaining the game ends
+        if (remainingFTs.size() <= 0 || enemyCount <= 0)
+        {
             game.setScreen(new MainMenuScreen(game));
         }
+        //if the active firetruck has been destroyed switch to an available firetruck
         if(activeFiretruck == null)
-            switchFiretruck();
+            activeFiretruck = firetrucks.get(0);
     }
+    //changes active firetruck to next firetruck available in list
+    void switchFiretruck() {
+        for (int i = 0; i < firetrucks.size(); i++) {
+            if (activeFiretruck.ufid == firetrucks.get(i).ufid) {
+                System.out.println("ID: " + activeFiretruck.ufid);
+                activeFiretruck.setActive(false);
+                if (i < firetrucks.size() - 1) {
+                    activeFiretruck = firetrucks.get(i + 1);
 
+                } else {
+                    activeFiretruck = firetrucks.get(0);
+                }
+                activeFiretruck.setActive(true);
+                return;
+            }
+        }
+    }
     @Override
     public void resize(int width, int height) {
         this.height = height;
@@ -388,8 +412,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-        System.out.println("paused");
-
     }
 
     @Override
@@ -411,20 +433,22 @@ public class PlayScreen implements Screen, InputProcessor {
     // handles inputs not covered by the InputProcessor
     public void handleInput() {
         //firetruck movement
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
-        } else {
-            activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
-        }
+        {
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
+            } else {
+                activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
+            }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
-        } else {
-            activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
+            } else {
+                activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
+            }
         }
         //firetruck projectile launch
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -446,29 +470,11 @@ public class PlayScreen implements Screen, InputProcessor {
             game.setScreen(new MainMenuScreen(game));
 
         }
-        if (keycode == Input.Keys.LEFT) {
-            camera.translate(-10f, 0f);
-        }
-        if (keycode == Input.Keys.RIGHT) {
-            camera.translate(10f, 0f);
-        }
-        if (keycode == Input.Keys.UP) {
-            camera.translate(0, 10f);
-        }
         if (keycode == Input.Keys.Q) {
             camera.zoom = camera.zoom - 10f;
         }
         if (keycode == Input.Keys.E) {
             camera.zoom = camera.zoom + 10f;
-        }
-        if (keycode == Input.Keys.DOWN) {
-            {
-                camera.translate(0f, -10f);
-            }
-
-            //   camera.position.set((float) cameraCoords.get(xCounterCam).get(yCounterCam).get(0), (float) cameraCoords.get(xCounterCam).get(yCounterCam).get(1), 0);
-
-
         }
         return false;
     }
@@ -479,23 +485,7 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-    //changes active firetruck to next firetruck available in list
-    void switchFiretruck() {
-        for (int i = 0; i < firetrucks.size(); i++) {
-            if (activeFiretruck.ufid == firetrucks.get(i).ufid) {
-                System.out.println("ID: " + activeFiretruck.ufid);
-                activeFiretruck.setActive(false);
-                if (i < firetrucks.size() - 1) {
-                    activeFiretruck = firetrucks.get(i + 1);
 
-                } else {
-                    activeFiretruck = firetrucks.get(0);
-                }
-                activeFiretruck.setActive(true);
-                return;
-            }
-        }
-    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {

@@ -84,10 +84,10 @@ public class Base extends Building {
             for (Firetruck firetruck: firetrucks){
                 Vector2 position1 = firetruck.body.getPosition();
                 Vector2 position2 = body.getPosition();
-                float v = position1.dst(position2)/ Constants.PPM;
+                float v = (float) Math.sqrt(position1.dst(position2));
 
                 //System.out.println(String.format("V = %f", v));
-                if (v < 10f) {
+                if (v < Constants.REFILL_RADIUS) {
                     System.out.println("REFILLING");
                     firetruck.refillAmmo(2);
                     refillDelay=2f;
