@@ -17,7 +17,7 @@ public class DBTest {
     }
 
     @Test
-    public void fetch_amount_2(){
+    public void server_fetch_amount_2(){
         ArrayList scores = db.getLeaderboard("2");
         try {
             assertEquals(String.format("%d", scores.size()), "2");
@@ -30,7 +30,7 @@ public class DBTest {
     }
 
     @Test
-    public void insert(){
+    public void server_insert(){
         int num = (int) Math.floor(Math.random()*1000);
         boolean insert = db.uploadScore("junit-com.kroy.test", num);
 
@@ -69,5 +69,21 @@ public class DBTest {
             fail(String.format("Failed to insert junit-test and score %d", num));
         }
     }
+
+//    @Test
+//    public void server_insert_wrong_type(){
+//        //int num = (int) Math.floor(Math.random()*1000);
+//        String wrong = "this shouldn't be inserted";
+//        boolean insert = db.uploadScore("junit-com.kroy.test", wrong);
+//
+//        try{
+//            assertFalse(insert);
+//            success("Success - bad score was not inserted to DB");
+//            return;
+//        }catch (AssertionError a){
+//            fail("Failure - bad score inserted to DB");
+//        }
+//    }
+
 }
 

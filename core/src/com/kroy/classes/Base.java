@@ -90,6 +90,7 @@ public class Base extends Building {
                 if (v < Constants.REFILL_RADIUS) {
                     System.out.println("REFILLING");
                     firetruck.refillAmmo(2);
+                    firetruck.setHitpoints(firetruck.getHitpoints()+1);
                     refillDelay=2f;
                 }
             }

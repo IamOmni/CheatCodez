@@ -2,6 +2,10 @@ package com.kroy.modules;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -9,12 +13,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
 import com.kroy.pathfinding.MapGraph;
+import com.kroy.pathfinding.Street;
 import com.kroy.screens.MainMenuScreen;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +35,7 @@ public class MapLoader {
 
         // 4.5hrs
         // Read fle and fetch all lines
-        File file = new File(path);
+        File file = new File("assets/"+path);
         List<String> lines = Files.readAllLines(Paths.get(file.getCanonicalPath()));
 
         for (int i=0; i<lines.size();i++) {
@@ -57,6 +64,11 @@ public class MapLoader {
 
     }
 
+    /**
+     * extracts all objects on wall layer and adds them to world
+     * @param map  map imported from Tiled
+     * @param world Box2D world
+     */
     public static void loadObjects(TiledMap map, World world){
         MapObjects objects = map.getLayers().get("WALLS").getObjects();
         for (MapObject object: objects) {
@@ -70,4 +82,25 @@ public class MapLoader {
         }
 
     }
+
+    /**
+     * Renders the graph on the screen
+     * @param sb SpriteBatch
+     * @param sr ShapeRenderer
+     * @param mapGraph MapGraph
+     * @param font BitmapFont
+     */
+    public void renderGraph(SpriteBatch sb, ShapeRenderer sr, MapGraph mapGraph, BitmapFont font) {
+        for (
+                Street street : mapGraph.streets) {
+            street.render(sr);
+        }
+
+
+        // Draw all points
+        for (Coord city : mapGraph.coords) {
+            city.render(sr, sb, font, false);
+        }
+    }
+
 }
