@@ -109,6 +109,9 @@ public class PlayScreen implements Screen, InputProcessor {
                 Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, Constants.world);
                 Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
                 Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
+                yorkMinster.invaded = true;
+                yorkStation.invaded = true;
+                cliffordTower.invaded = true;
                 Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
                 Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
                 //int x, int y, int health, Texture texture, float rotation, float scale, World world
@@ -147,7 +150,9 @@ public class PlayScreen implements Screen, InputProcessor {
             }
             //load Firetrucks
             {
-                Firetruck f = new Firetruck(mapGraph, coords.get("A"), 1, game.manager);
+                Firetruck f = new Firetruck(mapGraph, coords.get("B"), 1, game.manager);
+                firetrucks.add(f);
+                f = new Firetruck(mapGraph, coords.get("C"), 2, game.manager);
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
@@ -236,7 +241,7 @@ public class PlayScreen implements Screen, InputProcessor {
             if (i instanceof Landmark) {
 
                 ((Landmark) i).setMisiledelay(((Landmark) i).getMisiledelay() - 1f);
-                if (((Landmark) i).getMisiledelay() < 0) {
+                if (((Landmark) i).getMisiledelay() < 0 && ((Landmark) i).invaded) {
 
                     for (Firetruck firetruck : firetrucks) {
 
@@ -324,13 +329,17 @@ public class PlayScreen implements Screen, InputProcessor {
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
         ArrayList<Landmark> remainingLMs = new ArrayList<>();
         ArrayList<Base> remainingBs = new ArrayList<>();
+        int enemyCount = 0;
         for (Firetruck ft : firetrucks) {
             if (ft.hitpoints > 0)
                 remainingFTs.add(ft);
         }
         for (Landmark lm:landmarks){
-            if(lm.hitpoints >0)
+            if(lm.hitpoints >0) {
                 remainingLMs.add(lm);
+                if(lm.invaded)
+                    enemyCount++;
+            }
         }
         for (Base bs:bases){
             if(bs.hitpoints >0)
@@ -359,7 +368,7 @@ public class PlayScreen implements Screen, InputProcessor {
         bases = remainingBs;
         landmarks = remainingLMs;
         // if there are no firetrucks remaining the game ends
-        if (remainingFTs.size() <= 0 || remainingLMs.size() <= 0) {
+        if (remainingFTs.size() <= 0 || enemyCount == 0) {
             game.setScreen(new MainMenuScreen(game));
         }
     }

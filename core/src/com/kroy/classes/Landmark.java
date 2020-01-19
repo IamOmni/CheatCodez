@@ -18,6 +18,7 @@ public class Landmark extends Building{
     private int spawnTime;
     protected ArrayList<Projectile> misiles;
     protected float misiledelay;
+    public boolean invaded;
     /**
      * Constructor class for Building
      *
@@ -31,6 +32,7 @@ public class Landmark extends Building{
         misiledelay=4f;
         spawnTime=500;
         shoot=false;
+        invaded = false;
         body.setUserData(this);
     }
 
