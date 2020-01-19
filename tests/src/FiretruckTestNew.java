@@ -72,7 +72,7 @@ public class FiretruckTestNew {
         float newX = engine.body.getPosition().x;
         System.out.println(String.format("%f, %f", oldY, newY));
         System.out.println(String.format("%f, %f", oldX, newX));
-        
+
         System.out.println(String.format("OldY: %f, NewY %f", oldY, newY));
 
         try {

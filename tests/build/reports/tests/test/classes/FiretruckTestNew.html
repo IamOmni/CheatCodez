@@ -29,7 +29,7 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">5</div>
+<div class="counter">9</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">3.184s</div>
+<div class="counter">0.129s</div>
 <p>duration</p>
 </div>
 </td>
@@ -51,7 +51,7 @@
 </td>
 <td>
 <div class="infoBox failures" id="successRate">
-<div class="percent">50%</div>
+<div class="percent">10%</div>
 <p>successful</p>
 </div>
 </td>
@@ -73,13 +73,139 @@
 <div id="tab0" class="tab">
 <h2>Failed tests</h2>
 <div class="test">
+<a name="test_firetruck_ammo_decreases"></a>
+<h3 class="failures">test_firetruck_ammo_decreases</h3>
+<span class="code">
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_ammo_decreases(FiretruckTestNew.java:208)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at GameTestRunner.render(GameTestRunner.java:57)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="test_firetruck_ammo_refill_full"></a>
+<h3 class="failures">test_firetruck_ammo_refill_full</h3>
+<span class="code">
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_ammo_refill_full(FiretruckTestNew.java:252)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at GameTestRunner.render(GameTestRunner.java:57)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="test_firetruck_ammo_refill_low"></a>
+<h3 class="failures">test_firetruck_ammo_refill_low</h3>
+<span class="code">
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_ammo_refill_low(FiretruckTestNew.java:231)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at GameTestRunner.render(GameTestRunner.java:57)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="test_firetruck_can_shoot"></a>
+<h3 class="failures">test_firetruck_can_shoot</h3>
+<span class="code">
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_can_shoot(FiretruckTestNew.java:189)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at GameTestRunner.render(GameTestRunner.java:57)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
+</pre>
+</span>
+</div>
+<div class="test">
 <a name="test_firetruck_move_backwards"></a>
 <h3 class="failures">test_firetruck_move_backwards</h3>
 <span class="code">
-<pre>java.lang.AssertionError: firetruck has not moved backwards
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_move_backwards(FiretruckTestNew.java:110)
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_move_backwards(FiretruckTestNew.java:92)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -100,18 +226,14 @@
 <a name="test_firetruck_move_forwards"></a>
 <h3 class="failures">test_firetruck_move_forwards</h3>
 <span class="code">
-<pre>java.nio.file.NoSuchFileException: D:\Documents\GitHub\CheatCodez\tests\assets\graph.txt
-	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
-	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
-	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
-	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:235)
-	at java.base/java.nio.file.Files.newByteChannel(Files.java:370)
-	at java.base/java.nio.file.Files.newByteChannel(Files.java:421)
-	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
-	at java.base/java.nio.file.Files.newInputStream(Files.java:155)
-	at java.base/java.nio.file.Files.newBufferedReader(Files.java:2838)
-	at java.base/java.nio.file.Files.readAllLines(Files.java:3327)
-	at java.base/java.nio.file.Files.readAllLines(Files.java:3367)
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\tests\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
 	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_move_forwards(FiretruckTestNew.java:53)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -134,10 +256,16 @@
 <a name="test_firetruck_turn_left"></a>
 <h3 class="failures">test_firetruck_turn_left</h3>
 <span class="code">
-<pre>java.lang.AssertionError: firetruck has not turned left
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_turn_left(FiretruckTestNew.java:178)
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_turn_left(FiretruckTestNew.java:158)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -158,10 +286,16 @@
 <a name="test_firetruck_turn_right"></a>
 <h3 class="failures">test_firetruck_turn_right</h3>
 <span class="code">
-<pre>java.lang.AssertionError: firetruck has not turned right
-	at org.junit.Assert.fail(Assert.java:88)
-	at FiretruckTestNew.fail(FiretruckTestNew.java:45)
-	at FiretruckTestNew.test_firetruck_turn_right(FiretruckTestNew.java:147)
+<pre>java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
+	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
+	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:77)
+	at java.base/sun.nio.fs.WindowsPath.parse(WindowsPath.java:92)
+	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
+	at java.base/java.nio.file.Path.of(Path.java:147)
+	at java.base/java.nio.file.Paths.get(Paths.java:69)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
+	at FiretruckTestNew.test_firetruck_turn_right(FiretruckTestNew.java:121)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -211,48 +345,48 @@
 </tr>
 </thead>
 <tr>
-<td class="success">test_firetruck_ammo_decreases</td>
-<td class="success">0.012s</td>
-<td class="success">passed</td>
+<td class="failures">test_firetruck_ammo_decreases</td>
+<td class="failures">0.006s</td>
+<td class="failures">failed</td>
 </tr>
 <tr>
-<td class="success">test_firetruck_ammo_refill_full</td>
-<td class="success">0.016s</td>
-<td class="success">passed</td>
+<td class="failures">test_firetruck_ammo_refill_full</td>
+<td class="failures">0.012s</td>
+<td class="failures">failed</td>
 </tr>
 <tr>
-<td class="success">test_firetruck_ammo_refill_low</td>
-<td class="success">0.010s</td>
-<td class="success">passed</td>
+<td class="failures">test_firetruck_ammo_refill_low</td>
+<td class="failures">0.010s</td>
+<td class="failures">failed</td>
 </tr>
 <tr>
-<td class="success">test_firetruck_can_shoot</td>
-<td class="success">0.021s</td>
-<td class="success">passed</td>
+<td class="failures">test_firetruck_can_shoot</td>
+<td class="failures">0.007s</td>
+<td class="failures">failed</td>
 </tr>
 <tr>
 <td class="failures">test_firetruck_move_backwards</td>
-<td class="failures">3.016s</td>
+<td class="failures">0.004s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
 <td class="failures">test_firetruck_move_forwards</td>
-<td class="failures">0.008s</td>
+<td class="failures">0.005s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
 <td class="failures">test_firetruck_turn_left</td>
-<td class="failures">0.023s</td>
+<td class="failures">0.004s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
 <td class="failures">test_firetruck_turn_right</td>
-<td class="failures">0.067s</td>
+<td class="failures">0.060s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
 <td class="success">test_fortress_shoot</td>
-<td class="success">0.011s</td>
+<td class="success">0.021s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -265,492 +399,7 @@
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-Failed - firetruck has not turned right
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-Success - Success - ammo does not refill when full
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-Success - Success - ammo decreases when shooting
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-2188.000000, 2188.000000
-Failed - firetruck has not moved backwards
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-0.0
-Failed - firetruck has not turned left
-Success - Success - fortress shoots
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-Success - firetruck has shot
-8.0
-580.0
-8.0
-2124.0
-644.0
-2696.0
-2828.0
-2700.0
-780.0
-2120.0
-1864.0
-1476.0
-776.0
-584.0
-0.0
-8.0
-456.0
--4.0
-2180.0
-580.0
-1724.0
-580.0
-2184.0
-964.0
-2500.0
-1484.0
-3208.0
-1468.0
-2884.0
-964.0
-2884.0
-4.0
-3724.0
-0.0
-3712.0
-968.0
-4284.0
-2696.0
-Texture not null
-Success - Success - ammo refills when low
+<pre>Success - Success - fortress shoots
 </pre>
 </span>
 </div>
@@ -762,7 +411,7 @@ Success - Success - ammo refills when low
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 5.4.1</a> at 19 Jan 2020, 20:23:23</p>
+<a href="http://www.gradle.org">Gradle 5.4.1</a> at 19 Jan 2020, 21:14:43</p>
 </div>
 </div>
 </body>
