@@ -71,14 +71,12 @@ public class Firetruck extends Entity {
         super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
         hitpointCap =  new Random().nextInt(20) + 5;
+        hitpointCap *= 5;
         setHitpoints(hitpointCap);
         this.scale = 0.15f;
         setModel(texture);
 
         body.setUserData(this);
-        xSpeed = 0;
-        ySpeed = 0;
-
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
@@ -140,7 +138,7 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            System.out.println(baseVector.toString());
+            System.out.println("position is here:"+ body.getPosition());
             body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
             System.out.println(body.getPosition().toString());
         }
@@ -167,6 +165,11 @@ public class Firetruck extends Entity {
     public Projectile createProjectile(){
         ammo -= 1;
         return new Projectile(body.getPosition().x, body.getPosition().y, kroyGame.manager.get("bullet.png"), body.getAngle());
+    }
+
+    public Projectile createProjectileTest(Texture tx){
+        ammo -= 1;
+        return new Projectile(body.getPosition().x, body.getPosition().y, tx, body.getAngle());
     }
 
     @Override

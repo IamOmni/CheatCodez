@@ -48,18 +48,26 @@ public class FiretruckTestNew {
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
         MapLoader.loadGraph(coords,mapGraph, Paths.get("assets","graph.txt").toAbsolutePath().toString());
         MapLoader.loadObjects(map, GameTestRunner.world);
-        Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
+        Firetruck engine = new Firetruck(mapGraph, coords.get("B"), 1, new Texture("Firetruck.png"));
 
         float oldY = engine.body.getPosition().y;
+        //float oldY = engine.getY();
+        float oldX = engine.body.getPosition().x;
         Vector2 baseVector = new Vector2();
         baseVector.set(0, 120f);
         for (int i = 0; i < 100; i++) {
-            engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(80000)), true);
+            //engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
+            engine.mDriveDirection = engine.DRIVE_DIRECTION_FORWARD;
+            engine.update(5);
             GameTestRunner.world.step(60, 60, 2);
         }
         TimeUnit.SECONDS.sleep(3);
         float newY = engine.body.getPosition().y;
+        //float newY = engine.getY();
+        float newX = engine.body.getPosition().x;
         System.out.println(String.format("%f, %f", oldY, newY));
+        System.out.println(String.format("%f, %f", oldX, newX));
+
 
         try {
             assertTrue(newY < oldY);
@@ -160,7 +168,7 @@ public class FiretruckTestNew {
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
-        Projectile shot = engine.createProjectile();
+        Projectile shot = engine.createProjectileTest(new Texture(Paths.get("..", "android", "assets","bullet.png").toAbsolutePath().toString()));
         try {
             assertTrue(shot != null);
             success("firetruck has shot");
@@ -179,8 +187,9 @@ public class FiretruckTestNew {
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
+
         int startAmmo = engine.getAmmo();
-        engine.createProjectile();
+        Projectile shot = engine.createProjectileTest(new Texture(Paths.get("..", "android", "assets","bullet.png").toAbsolutePath().toString()));
         int newAmmo = engine.getAmmo();
 
         try {
