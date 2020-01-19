@@ -74,7 +74,7 @@ public class FiretruckTestNew {
         MapGraph mapGraph = new MapGraph();
         Map<String, Coord> coords = new HashMap<>();
         TiledMap map = new TmxMapLoader().load("map-three-layer-new-walls.tmx");
-        MapLoader.loadGraph(coords,mapGraph, Paths.get("assets","graph.txt").toAbsolutePath().toString());
+        MapLoader.loadGraph(coords,mapGraph, Paths.get("..", "android", "assets","graph.txt").toAbsolutePath().toString());
         MapLoader.loadObjects(map, GameTestRunner.world);
         Firetruck engine = new Firetruck(mapGraph, coords.get("A"), 1, new Texture("Firetruck.png"));
 
@@ -82,7 +82,7 @@ public class FiretruckTestNew {
         Vector2 baseVector = new Vector2();
         baseVector.set(0, -120f);
         for (int i = 0; i < 100; i++) {
-            engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(80000)), true);
+            engine.body.applyForceToCenter(engine.body.getWorldVector(baseVector.scl(800000)), true);
             GameTestRunner.world.step(60, 60, 2);
         }
         TimeUnit.SECONDS.sleep(3);

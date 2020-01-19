@@ -39,6 +39,8 @@ public class Building extends Object {
         setModel(texture);
         height = texture.getHeight();
         setHitpoints(health);
+        if(health<=0)
+            setImmortal(true);
         width = texture.getWidth();
         sprite.setPosition(body.getPosition().x/Constants.PPM*scale,body.getPosition().y/Constants.PPM*scale);
 

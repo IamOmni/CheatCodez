@@ -37,15 +37,5 @@
 4284.0
 2696.0
 Texture not null
-"Success - firetruck has moved up
-name: ThisNameWi
-score: 200
-+Success - long name recorded successfully
-name: Bob
-score: 200
-'Success - score recorded successfully
-name: Bob
-score: 200
-,Success - short name recorded successfully
--Success - Score successfully inserted to DB
-	Success - scores.size() == 2
+2188.000000, 2188.000000
+%Failed - firetruck has not moved up
