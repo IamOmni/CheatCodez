@@ -34,7 +34,7 @@ public class ScoresScreen implements Screen, InputProcessor {
 
     private BitmapFont font;
     private ArrayList<HighScoreBar> bars;
-    int count = 9;
+    int count;
     public ScoresScreen(kroyGame game){
         this.game   = game;
         database = new DB();

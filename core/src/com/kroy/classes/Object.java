@@ -61,13 +61,6 @@ public class Object{
 
     }
 
-    /**
-     * Getter for Object sprite.getTexture()
-     * @return sprite.getTexture()
-     */
-    public Texture getModel(){
-        return sprite.getTexture();
-    }
 
     /**
      * Update method for the Object class

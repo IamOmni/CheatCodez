@@ -77,9 +77,6 @@ public class Firetruck extends Entity {
         setModel(texture);
 
         body.setUserData(this);
-        xSpeed = 0;
-        ySpeed = 0;
-
 
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
@@ -116,6 +113,8 @@ public class Firetruck extends Entity {
     public void refillAmmo(int amt){
         if(ammo < ammoCap)
             ammo += amt;
+        if(ammo>ammoCap)
+            ammo = ammoCap;
     }
 
     /**
@@ -141,9 +140,8 @@ public class Firetruck extends Entity {
         }
 
         if (!baseVector.isZero()){
-            System.out.println(baseVector.toString());
-            //body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
-            body.setLinearVelocity(body.getWorldVector(baseVector.scl(8000000)));
+            if(ufid == 1) System.out.println("AAAH: " + body.getPosition());
+            body.applyForceToCenter(body.getWorldVector(baseVector.scl(80000)), true);
             System.out.println(body.getPosition().toString());
         }
 

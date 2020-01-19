@@ -39,7 +39,4 @@ public class HighScoreBar {
         sb.end();
     }
 
-    public String getScore() {
-        return score;
-    }
 }
