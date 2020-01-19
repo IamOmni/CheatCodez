@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="FiretruckTestNew" tests="11" skipped="0" failures="10" errors="0" timestamp="2020-01-19T22:06:27" hostname="DESKTOP-A8HDS67" time="0.217">
+<testsuite name="FiretruckTestNew" tests="10" skipped="0" failures="9" errors="0" timestamp="2020-01-19T21:14:42" hostname="DESKTOP-A8HDS67" time="0.298">
   <properties/>
-  <testcase name="test_firetruck_turn_right" classname="FiretruckTestNew" time="0.036">
+  <testcase name="test_firetruck_turn_right" classname="FiretruckTestNew" time="0.06">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -10,7 +10,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_turn_right(FiretruckTestNew.java:121)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -27,7 +27,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_ammo_refill_full" classname="FiretruckTestNew" time="0.009">
+  <testcase name="test_firetruck_ammo_refill_full" classname="FiretruckTestNew" time="0.012">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -36,7 +36,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_ammo_refill_full(FiretruckTestNew.java:252)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -53,7 +53,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_move_forwards" classname="FiretruckTestNew" time="0.007">
+  <testcase name="test_firetruck_move_forwards" classname="FiretruckTestNew" time="0.005">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\tests\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\tests\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -62,7 +62,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_move_forwards(FiretruckTestNew.java:53)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -79,7 +79,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_ammo_decreases" classname="FiretruckTestNew" time="0.004">
+  <testcase name="test_firetruck_ammo_decreases" classname="FiretruckTestNew" time="0.006">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -88,7 +88,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_ammo_decreases(FiretruckTestNew.java:208)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -105,7 +105,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_move_backwards" classname="FiretruckTestNew" time="0.003">
+  <testcase name="test_firetruck_move_backwards" classname="FiretruckTestNew" time="0.004">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -114,7 +114,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_move_backwards(FiretruckTestNew.java:92)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -140,7 +140,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_turn_left(FiretruckTestNew.java:158)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -157,8 +157,8 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_fortress_shoot" classname="FiretruckTestNew" time="0.019"/>
-  <testcase name="test_firetruck_can_shoot" classname="FiretruckTestNew" time="0.006">
+  <testcase name="test_fortress_shoot" classname="FiretruckTestNew" time="0.021"/>
+  <testcase name="test_firetruck_can_shoot" classname="FiretruckTestNew" time="0.007">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -167,7 +167,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_can_shoot(FiretruckTestNew.java:189)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -184,7 +184,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_firetruck_ammo_refill_low" classname="FiretruckTestNew" time="0.004">
+  <testcase name="test_firetruck_ammo_refill_low" classname="FiretruckTestNew" time="0.01">
     <failure message="java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt" type="java.nio.file.InvalidPathException">java.nio.file.InvalidPathException: Illegal char &lt;:&gt; at index 45: D:\Documents\GitHub\CheatCodez\tests\assets\D:\Documents\GitHub\CheatCodez\android\assets\graph.txt
 	at java.base/sun.nio.fs.WindowsPathParser.normalize(WindowsPathParser.java:182)
 	at java.base/sun.nio.fs.WindowsPathParser.parse(WindowsPathParser.java:153)
@@ -193,7 +193,7 @@
 	at java.base/sun.nio.fs.WindowsFileSystem.getPath(WindowsFileSystem.java:229)
 	at java.base/java.nio.file.Path.of(Path.java:147)
 	at java.base/java.nio.file.Paths.get(Paths.java:69)
-	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:43)
+	at com.kroy.modules.MapLoader.loadGraph(MapLoader.java:39)
 	at FiretruckTestNew.test_firetruck_ammo_refill_low(FiretruckTestNew.java:231)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -210,24 +210,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
 </failure>
   </testcase>
-  <testcase name="test_highscore_long_name" classname="FiretruckTestNew" time="0.001">
-    <failure message="java.lang.IllegalArgumentException: object is not an instance of declaring class" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: object is not an instance of declaring class
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at GameTestRunner.render(GameTestRunner.java:57)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:129)
-	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:96)
-</failure>
-  </testcase>
-  <testcase name="test_highscore_short_name" classname="FiretruckTestNew" time="0.0">
+  <testcase name="test_highscore_long_name" classname="FiretruckTestNew" time="0.0">
     <failure message="java.lang.IllegalArgumentException: object is not an instance of declaring class" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: object is not an instance of declaring class
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)

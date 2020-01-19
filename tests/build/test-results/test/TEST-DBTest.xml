@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="DBTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2020-01-19T22:06:27" hostname="DESKTOP-A8HDS67" time="0.05">
+<testsuite name="DBTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2020-01-19T21:14:43" hostname="DESKTOP-A8HDS67" time="0.049">
   <properties/>
-  <testcase name="local_insert" classname="DBTest" time="0.05">
-    <failure message="java.lang.AssertionError: Failed to insert junit-test and score 818" type="java.lang.AssertionError">java.lang.AssertionError: Failed to insert junit-test and score 818
+  <testcase name="local_insert" classname="DBTest" time="0.047">
+    <failure message="java.lang.AssertionError: Failed to insert junit-test and score 854" type="java.lang.AssertionError">java.lang.AssertionError: Failed to insert junit-test and score 854
 	at org.junit.Assert.fail(Assert.java:88)
 	at DBTest.fail(DBTest.java:16)
 	at DBTest.local_insert(DBTest.java:69)
@@ -55,7 +55,7 @@
 	at java.base/java.lang.Thread.run(Thread.java:834)
 </failure>
   </testcase>
-  <testcase name="local_fetch_amount_2" classname="DBTest" time="0.0">
+  <testcase name="local_fetch_amount_2" classname="DBTest" time="0.001">
     <failure message="java.lang.AssertionError: scores.size() != 2 fetching from local db" type="java.lang.AssertionError">java.lang.AssertionError: scores.size() != 2 fetching from local db
 	at org.junit.Assert.fail(Assert.java:88)
 	at DBTest.fail(DBTest.java:16)
@@ -111,7 +111,8 @@
   </testcase>
   <system-out><![CDATA[jdbc:sqlite:D:\Documents\GitHub\CheatCodez\tests\assets\scores.db
 java.sql.SQLException: path to 'D:\Documents\GitHub\CheatCodez\tests\assets\scores.db': 'D:\Documents\GitHub\CheatCodez\tests\assets' does not exist
-Failed - Failed to insert junit-test and score 818
+Failed - Failed to insert junit-test and score 854
+jdbc:sqlite:assets/scores.db
 java.sql.SQLException: path to 'assets/scores.db': 'D:\Documents\GitHub\CheatCodez\tests\assets' does not exist
 Failed - scores.size() != 2 fetching from local db
 ]]></system-out>
