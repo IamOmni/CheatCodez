@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class Landmark extends Building{
     public boolean shoot;
-    private String name;
-    private int level;
     private int spawnTime;
     protected ArrayList<Projectile> misiles;
     protected float misiledelay;
@@ -38,18 +36,6 @@ public class Landmark extends Building{
 
     public float getMisiledelay(){return misiledelay;};
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void upgrade(){};
-
-    public int getSpawnTime() { return this.spawnTime; };
 
     public void setMisiledelay(float v) { this.misiledelay=v; }
 

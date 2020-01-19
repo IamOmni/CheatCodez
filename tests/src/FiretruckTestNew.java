@@ -63,6 +63,7 @@ public class FiretruckTestNew {
             //engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
             engine.mDriveDirection = engine.DRIVE_DIRECTION_FORWARD;
             engine.update(5);
+            engine.body.setLinearVelocity(engine.body.getWorldVector(baseVector.scl(80000)));
             GameTestRunner.world.step(60, 60, 2);
         }
         TimeUnit.SECONDS.sleep(3);
@@ -71,7 +72,8 @@ public class FiretruckTestNew {
         float newX = engine.body.getPosition().x;
         System.out.println(String.format("%f, %f", oldY, newY));
         System.out.println(String.format("%f, %f", oldX, newX));
-
+        
+        System.out.println(String.format("OldY: %f, NewY %f", oldY, newY));
 
         try {
             assertTrue(newY < oldY);
