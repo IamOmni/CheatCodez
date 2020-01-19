@@ -59,7 +59,7 @@ public class FiretruckTestNew {
         }
         TimeUnit.SECONDS.sleep(3);
         float newY = engine.body.getPosition().y;
-        System.out.println(String.format("%f, %f", oldY, newY));
+        System.out.println(String.format("OldY: %f, NewY %f", oldY, newY));
 
         try {
             assertTrue(newY < oldY);
