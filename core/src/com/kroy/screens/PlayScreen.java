@@ -101,8 +101,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
         toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
-            MapLoader.loadGraph(coords, mapGraph);
-            MapLoader.loadObjects(map, Constants.world);
+            MapLoader.loadGraph(coords,mapGraph, "graph.txt");
+            MapLoader.loadObjects(map,Constants.world);
             //load Buildings
             {
                 Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, Constants.world);
@@ -151,8 +151,6 @@ public class PlayScreen implements Screen, InputProcessor {
                 firetrucks.add(f);
                 objs.add(f);
                 activeFiretruck = firetrucks.get(0);
-                f = new Firetruck(mapGraph, coords.get("G"), 2, game.manager);
-                firetrucks.add(f);
 
             }
 

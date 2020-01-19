@@ -78,6 +78,37 @@ public class Firetruck extends Entity {
         degree = 0;
         xSpeed = 0;
         ySpeed = 0;
+        bullets = new ArrayList<Projectile>();
+        firedelay = 0f;
+        ammoCap=50;
+        ammo=ammoCap;
+    }
+    public Firetruck(MapGraph mapGraph, Coord start, int ufid, Texture texture){
+        super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
+        this.ufid = ufid;
+        waterCap =  new Random().nextInt(20) + 5;
+        waterVol = waterCap;
+        hitpointCap =  new Random().nextInt(20) + 5;
+        hitpoints = hitpointCap;
+        this.scale = 0.15f;
+        model = texture;
+
+        body.setUserData(this);
+
+        down=false;
+        up=false;
+        right=false;
+        left=false;
+        rotationSpeed = 120;
+        acceleration = 200f;
+        decelleration = 30f;
+        maxSpeed = 200;
+        height=50;
+        width=100;
+        rotation = 0.0f;
+        degree = 0;
+        xSpeed = 0;
+        ySpeed = 0;
 
 
         bullets = new ArrayList<Projectile>();

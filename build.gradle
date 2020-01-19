@@ -6,9 +6,7 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven {
-            url  "https://dl.bintray.com/mockito/maven"
-        }
+
         jcenter()
         google()
     }
@@ -42,9 +40,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-	    maven {
-            url "https://dl.bintray.com/mockito/maven"
-        }
+
     }
 
 }
@@ -66,15 +62,6 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         implementation "junit:junit:4.12"
         implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
-        testImplementation "junit:junit:4.12"
-        testImplementation "org.mockito:mockito-core:2.2.29"
-        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        testImplementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        testImplementation  "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        testImplementation  "com.badlogicgames.gdx:backends:$gdxVersion:natives-desktop"
-        testImplementation  "com.badlogicgames.gdx:$gdxVersion:natives-desktop"
 
     }
 }
@@ -116,8 +103,7 @@ project(":android") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx-ai:1.8.0"
-        testImplementation "junit:junit:4.11"
-        testImplementation "org.mockito:mockito-core:1.9.5"
+
 
     }
 }
@@ -224,6 +210,12 @@ project(":tests") {
         testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
         testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
     }
 }
 

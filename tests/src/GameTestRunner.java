@@ -1,7 +1,20 @@
 
+import java.io.File;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
@@ -15,13 +28,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 
-public class TestRunner extends BlockJUnit4ClassRunner implements ApplicationListener {
+public class GameTestRunner extends BlockJUnit4ClassRunner implements ApplicationListener {
+    public static AssetManager manager;
+    public static World world;
+    public static  Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
 
-    private Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<FrameworkMethod, RunNotifier>();
-
-    public TestRunner(Class<?> klass) throws InitializationError {
+    public GameTestRunner(Class<?> klass) throws InitializationError {
         super(klass);
         HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
+        world = new World(new Vector2(0.0f, 0.0f), true);
 
         new HeadlessApplication(this, conf);
         Gdx.gl = mock(GL20.class);
@@ -48,6 +63,7 @@ public class TestRunner extends BlockJUnit4ClassRunner implements ApplicationLis
     @Override
     public void resize(int width, int height) {
     }
+
 
     @Override
     public void pause() {
