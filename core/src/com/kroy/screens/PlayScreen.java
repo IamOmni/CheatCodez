@@ -57,87 +57,93 @@ public class PlayScreen implements Screen, InputProcessor {
     private MapGraph mapGraph;
     private ArrayList<Object> objs = new ArrayList<Object>();
     private ArrayList<Firetruck> firetrucks = new ArrayList<>();
+    private ArrayList<Landmark> landmarks = new ArrayList<>();
+    private ArrayList<Base> bases = new ArrayList<>();
     private Firetruck activeFiretruck;
     public static BitmapFont font;
 
     private int width, height;
     private int ratioW, ratioH;
     private Button toggleActive;
-    public static World world;
     private Box2DDebugRenderer mB2dr;
 
-    public PlayScreen(kroyGame game){
-        this.game   = game;
+    public PlayScreen(kroyGame game) {
+        this.game = game;
 
-
+        //set empty variables
         mapGraph = new MapGraph();
         score = 0;
         map = game.manager.get("map-two-layer-new.tmx", TiledMap.class);
 
-        width  = Gdx.graphics.getWidth();
+        width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
 
-        ratioW = Gdx.graphics.getWidth()/game.WIDTH;
-        ratioH = Gdx.graphics.getHeight()/game.HEIGHT;
-        camera = new OrthographicCamera(width/ Constants.PPM, height/ Constants.PPM);
+        ratioW = Gdx.graphics.getWidth() / game.WIDTH;
+        ratioH = Gdx.graphics.getHeight() / game.HEIGHT;
+        camera = new OrthographicCamera(width / Constants.PPM, height / Constants.PPM);
         hudCamera = new OrthographicCamera(width, height);
-        viewport = new FitViewport(width/ Constants.PPM, height/ Constants.PPM, camera);
+        viewport = new FitViewport(width / Constants.PPM, height / Constants.PPM, camera);
         hudViewport = new FitViewport(width, height, hudCamera);
 
         camera.zoom = 40;
-
-
-        System.out.println(width/3);
         //    camera.position.set((float)cameraCoords.get(xCounterCam).get(yCounterCam).get(0) , (float)cameraCoords.get(xCounterCam).get(yCounterCam).get(1) , 0);
         camera.update();
         hudCamera.update();
-        camera.position.set(game.WIDTH /2, game.HEIGHT/2, 0);
-        hudCamera.position.set(game.WIDTH/2, game.HEIGHT/2, 0);
+        camera.position.set(game.WIDTH / 2, game.HEIGHT / 2, 0);
+        hudCamera.position.set(game.WIDTH / 2, game.HEIGHT / 2, 0);
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1);
         tiledMapRenderer.setView((OrthographicCamera) camera);
 
         this.mB2dr = new Box2DDebugRenderer();
-        world = new World(new Vector2(0.0f, 0.0f),true);
+        Constants.world = new World(new Vector2(0.0f, 0.0f), true);
 
 
-        toggleActive  = new Button(50, 200, height-200, height-50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
+        toggleActive = new Button(50, 200, height - 200, height - 50, game.manager.get("Menu_Assets/HELP.png", Texture.class));
         try {
-            MapLoader.loadGraph(coords,mapGraph);
-            MapLoader.loadObjects(map,world);
+            MapLoader.loadGraph(coords, mapGraph);
+            MapLoader.loadObjects(map, Constants.world);
             //load Buildings
             {
-                Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, world);
-                Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, world);
-                Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, world);
-                Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, world);
-                Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, world);
-                Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, world);
+                Landmark b = new Landmark(3500, 1610, 100, game.manager.get("shambles_invaded.png", Texture.class), -50f, 0.6f, Constants.world);
+                Landmark cliffordTower = new Landmark(1810, 510, 100, game.manager.get("cliffordtower_invaded.png", Texture.class), 0f, 0.5f, Constants.world);
+                Landmark yorkStation = new Landmark(500, 2750, 100, game.manager.get("yorkstation_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
+                Landmark yorkMinster = new Landmark(3005, 2750, 100, game.manager.get("minster_invaded.png", Texture.class), 0f, 0.7f, Constants.world);
+                Base watertower1 = new Base(1919, 1792, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.6f, Constants.world);
+                Base watertower2 = new Base(450, 510, 100, game.manager.get("waterstation_normal.png", Texture.class), 0f, 0.4f, Constants.world);
                 //int x, int y, int health, Texture texture, float rotation, float scale, World world
-                Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                Building genericBuilding = new Building(450, 766, 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
 
                 objs.add(genericBuilding);
 
                 for (int i = 0; i < 5; i++) {
-                    genericBuilding = new Building(450, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                    genericBuilding = new Building(450, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
                     objs.add(genericBuilding);
                 }
 
                 for (int i = 0; i < 5; i++) {
-                    genericBuilding = new Building(832, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, world);
+                    genericBuilding = new Building(832, 766 + (256 * i), 0, game.manager.get("generic_building_2.png", Texture.class), 0f, 1, Constants.world);
                     objs.add(genericBuilding);
                 }
 
                 for (int i = 0; i < 4; i++) {
-                    genericBuilding = new Building(448 + (256 * i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, world);
+                    genericBuilding = new Building(448 + (256 * i), 128, 0, game.manager.get("generic_building.png", Texture.class), 0f, 1, Constants.world);
                     objs.add(genericBuilding);
                 }
-                objs.add(cliffordTower);
-                objs.add(yorkStation);
-                objs.add(yorkMinster);
-                objs.add(watertower1);
-                objs.add(watertower2);
-                objs.add(b);
+                landmarks.add(cliffordTower);
+                landmarks.add(yorkStation);
+                landmarks.add(b);
+                landmarks.add(yorkMinster);
+                bases.add(watertower1);
+                bases.add(watertower2);
+
+
+                for (Landmark lm : landmarks) {
+                    objs.add(lm);
+                }
+                for (Base base : bases) {
+                    objs.add(base);
+                }
             }
             //load Firetrucks
             {
@@ -164,8 +170,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        int x   = (int)(0.07 * width);
-        int y      = (int)(0.07 * height) +50;
+        int x = (int) (0.07 * width);
+        int y = (int) (0.07 * height) + 50;
 
         handleInput();
 
@@ -174,27 +180,23 @@ public class PlayScreen implements Screen, InputProcessor {
         parameter.size = 16;
         font = generator.generateFont(parameter);
 
-        time +=Math.ceil(Gdx.graphics.getDeltaTime());
+        time += Math.ceil(Gdx.graphics.getDeltaTime());
         camera.update();
         // display background layout
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(0,0,0,1);
-        world.step(delta, 6, 2);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Constants.world.step(delta, 6, 2);
 
-        camera.position.set(activeFiretruck.body.getPosition(),0);
+        camera.position.set(activeFiretruck.body.getPosition(), 0);
         game.shapeRenderer.setColor(Color.WHITE);
         viewport.apply();
 
         Gdx.gl.glViewport(
-                (int)(0),
-                (int)(0),
-                (int)(width),
-                (int)(height)
+                (int) (0),
+                (int) (0),
+                (int) (width),
+                (int) (height)
         );
-
-
-
-
 
 
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -228,36 +230,33 @@ public class PlayScreen implements Screen, InputProcessor {
 
         //draw all objects
         ArrayList<Object> tempStore = new ArrayList<>();
-        for(Object i : objs) {
+        for (Object i : objs) {
             if (i instanceof Base) {
                 ((Base) i).update(firetrucks);
             }
 
-            if (i instanceof Landmark){
+            if (i instanceof Landmark) {
 
-                ((Landmark)i).setMisiledelay(((Landmark) i).getMisiledelay()-1f);
-                if (((Landmark) i).getMisiledelay()<0) {
+                ((Landmark) i).setMisiledelay(((Landmark) i).getMisiledelay() - 1f);
+                if (((Landmark) i).getMisiledelay() < 0) {
 
-                    for (Firetruck firetruck: firetrucks){
+                    for (Firetruck firetruck : firetrucks) {
 
                         Vector2 position1v = firetruck.body.getPosition();
                         Vector2 position2v = i.body.getPosition();
-                        float v = position2v.dst(position1v)/ Constants.PPM;
+                        float v = position2v.dst(position1v) / Constants.PPM;
 
-                        float xDif = position1v.x-(Math.abs(position2v.x));
-                        float yDif = position1v.y-(Math.abs(position2v.y));
+                        float xDif = position1v.x - (Math.abs(position2v.x));
+                        float yDif = position1v.y - (Math.abs(position2v.y));
                         float angle = (float) atan2(yDif, xDif);
 
-                        if (i.getModel().getTextureData().toString().contains("station")){
-                            System.out.println(angle);
-                        }
 
                         if (v < 15) {
-                            FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle)-90f));
+                            FortressMissile p = new FortressMissile(i.body.getPosition().x, i.body.getPosition().y, kroyGame.manager.get("alienbullet.png"), (float) Math.toRadians(Math.toDegrees(angle) - 90f));
                             tempStore.add(p);
                         }
                     }
-                    ((Landmark)i).setMisiledelay(40f);
+                    ((Landmark) i).setMisiledelay(40f);
                 }
 
             }
@@ -270,11 +269,11 @@ public class PlayScreen implements Screen, InputProcessor {
         objs.addAll(tempStore);
 
 
-        for(Object i : objs) {
+        for (Object i : objs) {
             i.displayHealth(game.batch);
         }
         game.batch.end();
-        mB2dr.render(world,camera.combined);
+        mB2dr.render(Constants.world, camera.combined);
 
         game.batch.setProjectionMatrix(hudCamera.combined);
         game.shapeRenderer.setProjectionMatrix(hudCamera.combined);
@@ -288,65 +287,69 @@ public class PlayScreen implements Screen, InputProcessor {
         font.getData().scale(1);
 
 
-        font.draw( game.batch,"SCORE",x , y);
-        font.draw( game.batch,String.format("%d", score), (float) (x+0.15*width), y);
+        font.draw(game.batch, "SCORE", x, y);
+        font.draw(game.batch, String.format("%d", score), (float) (x + 0.15 * width), y);
         game.batch.end();
 
         removeDeadObjects();
 
-        Array<Contact> contacts = world.getContactList();
+        Array<Contact> contacts = Constants.world.getContactList();
 
-        for(Contact contact : contacts) {
+        for (Contact contact : contacts) {
 
             Object a = (Object) contact.getFixtureA().getBody().getUserData();
             Object b = (Object) contact.getFixtureB().getBody().getUserData();
             if (a instanceof Landmark && !(b instanceof FortressMissile)) {
-                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=10;
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints = 0;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints -= 10;
             }
 
             if (b instanceof FortressMissile && a instanceof Firetruck) {
 
-                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints=0;
-                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints-=Constants.FORTRESS_DAMAGE;
+                ((Object) contact.getFixtureB().getBody().getUserData()).hitpoints = 0;
+                ((Object) contact.getFixtureA().getBody().getUserData()).hitpoints -= Constants.FORTRESS_DAMAGE;
             }
         }
 
 
+        if (time % 1000 == 0) {
+            score += 10;
+        }
+        ;
 
-        if (time%1000==0) {score+=10;};
-
-        if (time>3000) time=0;
+        if (time > 3000) time = 0;
 
     }
 
-    public void removeDeadObjects(){
+    public void removeDeadObjects() {
         ArrayList<Object> notDeleted = new ArrayList<>();
         ArrayList<Firetruck> remainingFTs = new ArrayList<>();
-        for (Firetruck ft: firetrucks){
-            if(ft.hitpoints > 0)
+        for (Firetruck ft : firetrucks) {
+            if (ft.hitpoints > 0)
                 remainingFTs.add(ft);
         }
-        for (Object obj: objs){
-            if(obj.hitpoints >= 0){
+
+        for (Object obj : objs) {
+            if (obj.hitpoints >= 0) {
                 notDeleted.add(obj);
-            }
-            else{
-                if(obj instanceof Firetruck){
-                    System.out.println("DELETE ME");
-                    if(activeFiretruck == obj){
+            } else {
+                //if a firetruck has low health check if it is the active firetruck
+                // if the fire truck is the active firetruck then switch to a remaining firetruck if possible
+                if (obj instanceof Firetruck) {
+                    if (activeFiretruck == obj) {
 
                         switchFiretruck();
                     }
 
                 }
                 obj.body.setUserData(null);
-                world.destroyBody(obj.body);
+                Constants.world.destroyBody(obj.body);
             }
         }
         objs = notDeleted;
         firetrucks = remainingFTs;
-        if(remainingFTs.size() <= 0){
+        // if there are no firetrucks remaining the game ends
+        if (remainingFTs.size() <= 0) {
             game.setScreen(new MainMenuScreen(game));
         }
     }
@@ -354,13 +357,13 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         this.height = height;
-        this.width  = width;
-        ratioW = width/game.WIDTH;
-        ratioH = height/game.HEIGHT;
+        this.width = width;
+        ratioW = width / game.WIDTH;
+        ratioH = height / game.HEIGHT;
         viewport.update(width, height);
-        hudViewport.update(width,height);
+        hudViewport.update(width, height);
         hudCamera.update();
-        camera  .update();
+        camera.update();
 
         //     camera = new OrthographicCamera(0.63f * width, 0.77f * height);
         System.out.println("----");
@@ -391,32 +394,26 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-
-
     // handles inputs not covered by the InputProcessor
-    public void handleInput(){
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+    public void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_FORWARD;
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_BACKWARD;
-        }
-        else {
+        } else {
             activeFiretruck.mDriveDirection = activeFiretruck.DRIVE_DIRECTION_NONE;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_LEFT;
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_RIGHT;
-        }
-        else {
+        } else {
             activeFiretruck.mTurnDirection = activeFiretruck.TURN_DIRECTION_NONE;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            if (activeFiretruck.getFiredelay()<0f && (activeFiretruck.getAmmo() > 0)){
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (activeFiretruck.getFiredelay() < 0f && (activeFiretruck.getAmmo() > 0)) {
                 Projectile p = activeFiretruck.createProjectile();
 
                 objs.add(p);
@@ -444,7 +441,7 @@ public class PlayScreen implements Screen, InputProcessor {
             camera.translate(0, 10f);
         }
         if (keycode == Input.Keys.Q) {
-            camera.zoom = camera.zoom -10f;
+            camera.zoom = camera.zoom - 10f;
         }
         if (keycode == Input.Keys.E) {
             camera.zoom = camera.zoom + 10f;
@@ -480,7 +477,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if(activeFiretruck != null){
+        if (activeFiretruck != null) {
             if (keycode == (Input.Keys.W)) {
                 System.out.println("W key is pressed");
                 activeFiretruck.setUp(false);
@@ -493,7 +490,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 System.out.println("A key is pressed");
                 activeFiretruck.setLeft(false);
             }
-            if(keycode == (Input.Keys.S)) {
+            if (keycode == (Input.Keys.S)) {
                 System.out.println("S key is pressed");
                 activeFiretruck.setDown(false);
             }
@@ -502,16 +499,15 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
 
-    void switchFiretruck(){
-        for (int i = 0; i < firetrucks.size(); i++){
-            if(activeFiretruck.ufid == firetrucks.get(i).ufid){
+    void switchFiretruck() {
+        for (int i = 0; i < firetrucks.size(); i++) {
+            if (activeFiretruck.ufid == firetrucks.get(i).ufid) {
                 System.out.println("ID: " + activeFiretruck.ufid);
                 activeFiretruck.setActive(false);
-                if(i < firetrucks.size() - 1){
+                if (i < firetrucks.size() - 1) {
                     activeFiretruck = firetrucks.get(i + 1);
 
-                }
-                else{
+                } else {
                     activeFiretruck = firetrucks.get(0);
                 }
                 activeFiretruck.setActive(true);
@@ -521,7 +517,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(toggleActive.hasBeenClicked(screenX, screenY, true)){
+        if (toggleActive.hasBeenClicked(screenX, screenY, true)) {
             System.out.println("BUTTON PRESSED");
             switchFiretruck();
             return false;
@@ -553,6 +549,7 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         camera.zoom = camera.zoom + amount;
-        return false;
+        return
+                false;
     }
 }

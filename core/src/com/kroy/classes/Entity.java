@@ -28,7 +28,7 @@ public class Entity extends Object{
 
     public Entity(Vector3 position, Texture texture, float scale, short cb, short mb, short gindex) {
         super(
-                position, PlayScreen.world,
+                position, Constants.world,
                 BodyDef.BodyType.DynamicBody,
                 new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
                 cb, mb, gindex
@@ -41,7 +41,7 @@ public class Entity extends Object{
 
         super(
                 new Vector3(start.x, start.y, 0.0f),
-                PlayScreen.world,
+                Constants.world,
                 BodyDef.BodyType.DynamicBody,
                 new Vector2(texture.getWidth()*scale* Constants.PPM, texture.getHeight()*scale* Constants.PPM),
                 cb, mb, gindex
