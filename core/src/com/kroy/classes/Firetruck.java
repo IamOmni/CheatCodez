@@ -26,16 +26,17 @@ import com.kroy.screens.PlayScreen;
 import java.util.ArrayList;
 import java.util.Random;
 public class Firetruck extends Entity {
-    private int waterVol, waterCap, waterDmg, waterRange;
     private boolean active;
 
     // Our attributes
-    float x,y, degree,  rotationSpeed, rotation, acceleration, decelleration, maxSpeed, dx, dy, radians, firedelay, v;
+    float x,y,firedelay;
     double xSpeed, ySpeed;
-    private boolean left, right, up, down;
-    int height, width, ammo;
+
+    private int ammo;
+    private int ammoCap;
     private ArrayList<Projectile> bullets;
-    private Texture model;
+
+    public int ufid;
     public static final int DRIVE_DIRECTION_NONE = 0;
     public static final int DRIVE_DIRECTION_FORWARD = 1;
     public static final int DRIVE_DIRECTION_BACKWARD = 2;
@@ -43,10 +44,8 @@ public class Firetruck extends Entity {
     public static final int TURN_DIRECTION_NONE = 0;
     public static final int TURN_DIRECTION_LEFT = 1;
     public static final int TURN_DIRECTION_RIGHT = 2;
-    public int ufid;
     public int mDriveDirection = DRIVE_DIRECTION_NONE;
     public int mTurnDirection = TURN_DIRECTION_NONE;
-    public int ammoCap;
     /**
      * Constructor for Firetruck object
      * @param mapGraph - MapGraph object for traversal
@@ -55,29 +54,13 @@ public class Firetruck extends Entity {
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, AssetManager manager){
         super(mapGraph, start, manager.get("Firetruck.png", Texture.class), 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
-        waterCap =  new Random().nextInt(20) + 5;
-        waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20) + 5;
-        hitpoints = hitpointCap;
+        setHitpoints(hitpointCap);
         this.scale = 0.15f;
-        model = manager.get("Firetruck.png", Texture.class);
+        setModel(manager.get("Firetruck.png", Texture.class));
 
         body.setUserData(this);
 
-        down=false;
-        up=false;
-        right=false;
-        left=false;
-        rotationSpeed = 120;
-        acceleration = 200f;
-        decelleration = 30f;
-        maxSpeed = 200;
-        height=50;
-        width=100;
-        rotation = 0.0f;
-        degree = 0;
-        xSpeed = 0;
-        ySpeed = 0;
         bullets = new ArrayList<Projectile>();
         firedelay = 0f;
         ammoCap=50;
@@ -86,27 +69,12 @@ public class Firetruck extends Entity {
     public Firetruck(MapGraph mapGraph, Coord start, int ufid, Texture texture){
         super(mapGraph, start, texture, 0.15f, CollisionBits.FIRETRUCK, (short) (CollisionBits.WALL ), (short) 1);
         this.ufid = ufid;
-        waterCap =  new Random().nextInt(20) + 5;
-        waterVol = waterCap;
         hitpointCap =  new Random().nextInt(20) + 5;
-        hitpoints = hitpointCap;
+        setHitpoints(hitpointCap);
         this.scale = 0.15f;
-        model = texture;
+        setModel(texture);
 
         body.setUserData(this);
-
-        down=false;
-        up=false;
-        right=false;
-        left=false;
-        rotationSpeed = 120;
-        acceleration = 200f;
-        decelleration = 30f;
-        maxSpeed = 200;
-        height=50;
-        width=100;
-        rotation = 0.0f;
-        degree = 0;
         xSpeed = 0;
         ySpeed = 0;
 
@@ -117,29 +85,6 @@ public class Firetruck extends Entity {
         ammo=ammoCap;
     }
 
-    public int getWaterVol() {
-        return waterVol;
-    }
-
-    public void setWaterVol(int waterVol) {
-        this.waterVol = waterVol;
-    }
-
-    public int getWaterDmg() {
-        return waterDmg;
-    }
-
-    public void setWaterDmg(int waterDmg) {
-        this.waterDmg = waterDmg;
-    }
-
-    public int getWaterRange() {
-        return waterRange;
-    }
-
-    public void setWaterRange(int waterRange) {
-        this.waterRange = waterRange;
-    }
 
     public boolean isActive() {
         return active;
@@ -149,20 +94,6 @@ public class Firetruck extends Entity {
         this.active = active;
     }
 
-    public void Control(){};
-    public void CPUAttack(){};
-    public void CPUDefent(){};
-    public void fireWater(){};
-    public void getWaterLevel(){};
-    public void returnToBase(){};
-
-    /**
-     *
-     *
-     */
-    public void refill(){
-
-    }
 
     /**
      * Fetches all bullets from specific firetruck
@@ -175,21 +106,10 @@ public class Firetruck extends Entity {
     public int getAmmo(){
         return ammo;
     }
-
-    /**
-     * Helper funciton for collision detection
-     * @return int - v
-     */
-    public float getV() { return v; }
-
-
-    /**
-     * Helper function
-     * @return float - Degree, the degree in which the player is facing
-     */
-    public float getDegree() { return degree; }
-
-
+    public void refillAmmo(int amt){
+        if(ammo < ammoCap)
+            ammo += amt;
+    }
 
     /**
      * Updater method for class player
@@ -223,52 +143,8 @@ public class Firetruck extends Entity {
         firedelay-=dt;
 
     }
-
-
-    /**
-     * Method to reset directions of the player
-     */
-    private void resetDirections(){
-        setUp(false);
-        setRight(false);
-        setLeft(false);
-        setDown(false);
-    }
-
-    /**
-     * Set left attribute
-     * @param a
-     */
-    public void setLeft(boolean a){ left=a; };
-    /**
-     * Set right attribute
-     * @param a
-     */
-    public void setRight(boolean a){ right=a; };
-    /**
-     * Set down attribute
-     * @param a
-     */
-    public void setDown(boolean a){ down=a; };
-    /**
-     * Set up attribute
-     * @param a
-     */
-    public void setUp(boolean a){ up=a; };
-
-
-    /**
-     * Function to shoot a Projectile
-     */
-    public void fire_water(){
-
-    }
-
     public int getX() { return (int) this.x; }
     public int getY() { return (int) this.y; }
-    public int getHeight() {return (int) this.height;};
-
-
     public float getFiredelay() {
         return firedelay;
     }
@@ -294,7 +170,7 @@ public class Firetruck extends Entity {
             PlayScreen.font.setColor(Color.RED);
             PlayScreen.font.getData().scale(0.25f);
 
-            String text = String.format("%d HP / %d WP", hitpoints, ammo);
+            String text = String.format("%d HP / %d WP", getHitpoints(), getAmmo());
             final GlyphLayout layout = new GlyphLayout(PlayScreen.font, text);
             PlayScreen.font.draw(sb, text, body.getPosition().x - layout.width/2, body.getPosition().y + 1 * getOffsets().y + PlayScreen.font.getLineHeight());
 

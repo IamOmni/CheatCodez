@@ -38,7 +38,7 @@ public class Building extends Object {
 
         setModel(texture);
         height = texture.getHeight();
-        hitpoints = health;
+        setHitpoints(health);
         width = texture.getWidth();
         sprite.setPosition(body.getPosition().x/Constants.PPM*scale,body.getPosition().y/Constants.PPM*scale);
 
@@ -70,17 +70,9 @@ public class Building extends Object {
 //        hit = false;
 //    }
 
-    /**
-     * Helper method for taking damage
-     * @param dmg_taken
-     */
-    private void take_dmg(int dmg_taken){
-        hitpoints-=dmg_taken;
-    }
 
     public void render(SpriteBatch sp){
         super.render(sp);
-        hit = false;
     }
 
 }
