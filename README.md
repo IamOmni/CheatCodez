@@ -41,8 +41,6 @@ To run the tests use gradlew tests:test
 ```
 ## Testing
 
-To run all tests use ```gradlew tests:test``` in a terminal. This will run all tests that are in ```tests/src```
-
 ### Creating Tests
 
 To create new tests use JUnit structure. If you require the LibGDX environment then you must include ```@RunWith(GameTestRunner.class)``` at the top of the test as shown below.
@@ -58,7 +56,9 @@ If your test doesn't require the environment then do not include this line. You 
 **BOX2D PHYSICS DO NOT WORK IN THE TESTS.**
 Running anything from the Box2D library will not work in the test. E.g. body.applyForceToCenter(vector, true); this will have no effect. 
 
+### Running Tests
 
+To run all tests use ```gradlew tests:test``` in a terminal. This will run all tests that are in ```tests/src```
 
 
 
