@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Queue;
 import com.kroy.game.Constants;
 import com.kroy.pathfinding.Coord;
+import com.kroy.pathfinding.MapGraph;
 
 public class Entity extends Object{
     protected int hitpointCap, speedMove;

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.kroy.game.Constants;
 import com.kroy.game.kroyGame;
 import com.kroy.pathfinding.Coord;
+import com.kroy.pathfinding.MapGraph;
 import com.kroy.screens.PlayScreen;
 import com.kroy.modules.MapLoader.*;
 
