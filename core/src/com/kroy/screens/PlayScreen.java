@@ -294,10 +294,17 @@ public class PlayScreen implements Screen, InputProcessor {
         removeDeadObjects();
         processCollisions();
 
+        //increase score over time
         if (time % 1000 == 0) {
             score += 10;
         }
-        if (time > 3000) time = 0;
+        //remove bases over time until just one remains
+        if(bases.size() > 1 && time % 10000==0){
+            bases.get(0).setHitpoints(0);
+        }
+        if (score > 30000) time = 0;
+
+
 
     }
 
