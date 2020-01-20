@@ -1,7 +1,9 @@
 # CheatCodez
 
 To import in Eclipse: File -> Import -> Gradle -> Gradle Project
+
 To import to Intellij IDEA: File -> Open -> build.gradle
+
 To import to NetBeans: File -> Open Project...
 
 
@@ -9,6 +11,17 @@ To import to NetBeans: File -> Open Project...
 To run the tests use gradlew tests:test
 
 ## Main Game
+
+### Asset Manager
+    All textures and tmx files are loaded in by an AssetManager in kroyGame.java
+    The AssetManager can then be used to retrieve any loaded files without having to reload the actual file.
+    It is set up to already load all textures in the assets folder
+
+Retrieval:
+```Java
+        Texture tex = manager.get(TextureName, Texture.class);
+        TiledMap map = manager.get(TiledMap filename, TiledMap.class);
+```
 
 ### Constants
     Game constants are largely set in the Constants.java file for easy access and modification
