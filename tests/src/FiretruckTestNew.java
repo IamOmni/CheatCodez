@@ -14,6 +14,7 @@ import com.kroy.game.Constants;
 import com.kroy.game.kroyGame;
 import com.kroy.modules.MapLoader;
 import com.kroy.pathfinding.Coord;
+import com.kroy.pathfinding.MapGraph;
 import junit.textui.TestRunner;
 import org.junit.Assert;
 import org.junit.Test;
