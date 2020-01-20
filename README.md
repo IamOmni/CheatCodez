@@ -53,5 +53,7 @@ To create new tests use JUnit structure. If you require the LibGDX environment t
 public class FiretruckTestNew {
 ```
 
-If your test doesn't require the environment then do not include this line
+If your test doesn't require the environment then do not include this line.
+
+You don't have to run all the tests at the same time. You can run them individually. 
 
