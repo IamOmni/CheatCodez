@@ -53,7 +53,14 @@ To create new tests use JUnit structure. If you require the LibGDX environment t
 public class FiretruckTestNew {
 ```
 
-If your test doesn't require the environment then do not include this line.
+If your test doesn't require the environment then do not include this line. You don't have to run all the tests at the same time. You can run them individually (running through IDE is easiest way, make sure working directory is set to android to eleviate any errors surrounding assets)
 
-You don't have to run all the tests at the same time. You can run them individually. 
+**BOX2D PHYSICS DO NOT WORK IN THE TESTS.**
+Running anything from the Box2D library will not work in the test. E.g. body.applyForceToCenter(vector, true); this will have no effect. 
+
+
+
+
+
+
 
