@@ -17,7 +17,8 @@ jobs:
     - name: Build with Gradle
       run: .\gradlew desktop:build
 
-    - task: Gradle@2
+    - name: Build dist
+      task: Gradle@2
         inputs:
           workingDirectory: ''
           gradleWrapperFile: 'gradlew'
