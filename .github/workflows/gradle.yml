@@ -16,5 +16,14 @@ jobs:
         java-version: 8
     - name: Build with Gradle
       run: .\gradlew desktop:build
-      
+
+    - task: Gradle@2
+        inputs:
+          workingDirectory: ''
+          gradleWrapperFile: 'gradlew'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.8'
+          jdkArchitectureOption: 'x64'
+          tasks: 'build'
+
 
